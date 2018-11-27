@@ -21,5 +21,7 @@ namespace BrainStorm.Models.Interface
 
         void DeleteArticle(Guid? Id);
         Task<Article> DeleteArticleAsync(Guid? Id);
+
+        bool ArticleExists(Guid id);
     }
 }

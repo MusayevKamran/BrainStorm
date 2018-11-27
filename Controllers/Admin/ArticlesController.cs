@@ -59,9 +59,11 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,Like,CreatedDate,UpdateDate,PostCategory")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,Like,PostCategory")] Article article)
         {
             _articleService = new ArticleService(_context);
+            article.PostCategory = PostCategory.Tutorial;
+            article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
             {
@@ -92,9 +94,12 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,URL,Row,Category,Content,Picture,Like,CreatedDate,UpdateDate,PostCategory")] Article article)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,CreatedDate,Picture,PostCategory")] Article article)
         {
             _articleService = new ArticleService(_context);
+
+            article.URL = $@"{article.Title}_{article.Id}";
+            article.PostCategory = PostCategory.Tutorial;
 
             if (id != article.Id)
             {

@@ -34,6 +34,10 @@ namespace BrainStorm.Areas.Identity.Services
         public async Task<Article> CreateArticleAsync(Article article)
         {
             article.Id = Guid.NewGuid();
+            article.URL = $@"{article.Title}_{article.Id}";
+            article.CreatedDate = DateTime.Now;
+            article.UpdateDate = DateTime.Now;
+
             _context.Add(article);
             await _context.SaveChangesAsync();
             return article;
@@ -93,6 +97,7 @@ namespace BrainStorm.Areas.Identity.Services
 
         public async Task<Article> UpdateArticleAsync(Guid? Id, Article article)
         {
+            article.UpdateDate = DateTime.Now;
             _context.Update(article);
             await _context.SaveChangesAsync();
 

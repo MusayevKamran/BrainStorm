@@ -4,24 +4,15 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
-
-<h4>Article</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="URL" class="control-label"></label>
-                <input asp-for="URL" class="form-control" />
-                <span asp-validation-for="URL" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Row" class="control-label"></label>
@@ -33,47 +24,49 @@
                 <input asp-for="Category" class="form-control" />
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
+        </div>
+        <div class="col-md-4 pull-right">       
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
                 <input asp-for="Picture" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Like" class="control-label"></label>
-                <input asp-for="Like" class="form-control" />
-                <span asp-validation-for="Like" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
+                <input asp-for="CreatedDate" class="form-control" readonly="readonly" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UpdateDate" class="control-label"></label>
-                <input asp-for="UpdateDate" class="form-control" />
-                <span asp-validation-for="UpdateDate" class="text-danger"></span>
+                <input asp-for="UpdateDate" class="form-control" readonly="readonly" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PostCategory" class="control-label"></label>
-                <select asp-for="PostCategory" class="form-control"></select>
-                <span asp-validation-for="PostCategory" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <label asp-for="Content" class="control-label"></label>
+        <textarea asp-for="Content" id="editor"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@section ScriptsRichTextEditor
+    {
+
+    <script type="text/javascript" src="~/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">CKEDITOR.replace('editor');</script>
+    <script type="text/javascript">CKEDITOR.config.skin = 'kama'</script>
+    <script type="text/javascript">CKEDITOR.config.language = 'az'</script>
+    <script type="text/javascript">CKEDITOR.config.filebrowserImageUploadUrl = "../wwwroot"</script>
+
+}
 
 @*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
