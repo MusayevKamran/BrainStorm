@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
+using BrainStorm.Areas.Identity.Services;
 
 namespace BrainStorm.Controllers.Admin
 {
     public class ArticlesController : Controller
     {
         private readonly BrainStormDbContext _context;
+        ArticleService _articleService;
 
         public ArticlesController(BrainStormDbContext context)
         {
@@ -22,19 +24,22 @@ namespace BrainStorm.Controllers.Admin
         // GET: Articles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Articles.ToListAsync());
+            _articleService = new ArticleService(_context);
+            var articles = await _articleService.GetArticlesAsync();
+            return View(articles);
         }
 
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+            _articleService = new ArticleService(_context);
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var article = await _articleService.GetArticleByIdAsync(id);
+
             if (article == null)
             {
                 return NotFound();
@@ -56,11 +61,11 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,Like,CreatedDate,UpdateDate,PostCategory")] Article article)
         {
+            _articleService = new ArticleService(_context);
+
             if (ModelState.IsValid)
             {
-                article.Id = Guid.NewGuid();
-                _context.Add(article);
-                await _context.SaveChangesAsync();
+                await _articleService.CreateArticleAsync(article);
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
@@ -89,6 +94,8 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,URL,Row,Category,Content,Picture,Like,CreatedDate,UpdateDate,PostCategory")] Article article)
         {
+            _articleService = new ArticleService(_context);
+
             if (id != article.Id)
             {
                 return NotFound();
@@ -98,8 +105,7 @@ namespace BrainStorm.Controllers.Admin
             {
                 try
                 {
-                    _context.Update(article);
-                    await _context.SaveChangesAsync();
+                    await _articleService.UpdateArticleAsync(id, article);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,13 +126,15 @@ namespace BrainStorm.Controllers.Admin
         // GET: Articles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
+            _articleService = new ArticleService(_context);
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var article = await _articleService.DeleteArticleAsync(id);
+
             if (article == null)
             {
                 return NotFound();
@@ -140,15 +148,16 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var article = await _context.Articles.FindAsync(id);
-            _context.Articles.Remove(article);
-            await _context.SaveChangesAsync();
+            _articleService = new ArticleService(_context);
+            await _articleService.DeleteArticleConfirmedAsync(id);
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(Guid id)
         {
-            return _context.Articles.Any(e => e.Id == id);
+            _articleService = new ArticleService(_context);
+            return _articleService.ArticleExists(id);
         }
     }
 }

@@ -1,4 +1,5 @@
 using BrainStorm.Areas.Identity.Data;
+using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,9 @@ namespace BrainStorm
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.RegisterServices();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -31,14 +35,13 @@ namespace BrainStorm
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            
 
             services.AddDbContext<BrainStormDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("BrainStormDbContextConnection")));
 
             services.AddDefaultIdentity<BrainStormUser>()
                 .AddEntityFrameworkStores<BrainStormDbContext>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -71,7 +74,7 @@ namespace BrainStorm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=Index}/{id?}");
+                    template: "{controller=articles}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
