@@ -96,7 +96,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,Picture,PostCategory")] Article postArticle, IFormFile files)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,PostCategory")] Article postArticle, IFormFile files)
         {
             _articleService = new ArticleService(_context);
             var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
@@ -115,11 +115,14 @@ namespace BrainStorm.Controllers.Admin
                     article.Row = postArticle.Row;
                     article.Category = postArticle.Category;
                     article.Content = postArticle.Content;
-                    article.Picture = postArticle.Picture;
-                    article.PostCategory = postArticle.PostCategory;   
+                    article.PostCategory = postArticle.PostCategory;
                     await _articleService.UpdateArticleAsync(id, article);
-                    ImageHelper imageHelper = new ImageHelper(_context);
-                    imageHelper.SaveArticleImage(id, files);
+                    if (files != null && files.Length > 0)
+                    {
+                        ImageHelper imageHelper = new ImageHelper(_context);
+                        imageHelper.UpdateArticleImage(id, files, "article");
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

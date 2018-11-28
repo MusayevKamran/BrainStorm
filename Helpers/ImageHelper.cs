@@ -21,44 +21,35 @@ namespace BrainStorm.Helpers
         {
             this._context = context;
         }
-
-        //public void SaveUserImage(List<IFormFile> files, string Id)
-        //{
-        //    _userService = new UserService(_context);
-
-        //    List<TutorialUser> TutorialUser = _userService.GetUserById(Id);
-
-        //    var filePath = Path.GetTempFileName();
-        //    foreach (var formFile in files)
-        //    {
-        //        var staticPath = Path.Combine("wwwroot", "images", "user");
-        //        var staticPathDB = Path.Combine("images", "user");
-        //        var fullPath = Path.Combine(staticPathDB, GetUniqueFileName(formFile.FileName));
-        //        var fullPathCreate = Path.Combine("wwwroot", fullPath);
-        //        var fullPathDB = fullPath.Replace('\\', '/');
-
-        //        var user = _context.TutorialUser.FirstOrDefault(item => item.Id == Id);
-        //        user.AvatarImage = fullPathDB;
-        //        _context.Update(user);
-        //        _context.SaveChanges();
-
-        //        formFile.CopyTo(new FileStream(fullPathCreate, FileMode.Create));
-        //    }
-        //}
-
-        public void SaveArticleImage(Guid Id, IFormFile files)
+        public void UpdateUserImage(Guid Id, IFormFile files, string path)
         {
-            _articleService = new ArticleService(_context);
-
             var filePath = Path.GetTempFileName();
-            var staticPath = Path.Combine("wwwroot", "images", "article");
-            var staticPathDB = Path.Combine("images", "article");
+            var staticPath = Path.Combine("wwwroot", "images", path);
+            var staticPathDB = Path.Combine("images", path);
+            var fullPath = Path.Combine(staticPathDB, GetUniqueFileName(files.FileName));
+            var fullPathCreate = Path.Combine("wwwroot", fullPath);
+            var fullPathDB = fullPath.Replace('\\', '/');
+
+            var article = _context.BrainStormUser.FirstOrDefault(item => item.Id == Id.ToString());
+            article.AvatarImage = fullPathDB;
+
+            _context.Update(article);
+            _context.SaveChanges();
+
+            files.CopyTo(new FileStream(fullPathCreate, FileMode.Create));
+        }
+        public void UpdateArticleImage(Guid Id, IFormFile files, string path)
+        {
+            var filePath = Path.GetTempFileName();
+            var staticPath = Path.Combine("wwwroot", "images", path);
+            var staticPathDB = Path.Combine("images", path);
             var fullPath = Path.Combine(staticPathDB, GetUniqueFileName(files.FileName));
             var fullPathCreate = Path.Combine("wwwroot", fullPath);
             var fullPathDB = fullPath.Replace('\\', '/');
 
             var article = _context.Articles.FirstOrDefault(item => item.Id == Id);
             article.Picture = fullPathDB;
+
             _context.Update(article);
             _context.SaveChanges();
 
