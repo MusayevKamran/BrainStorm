@@ -120,7 +120,7 @@ namespace BrainStorm.Controllers.Admin
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
-                        imageHelper.UpdateArticleImage(id, files, "article");
+                        imageHelper.UpdateImage(id, files, "article", article);
                     }
 
                 }

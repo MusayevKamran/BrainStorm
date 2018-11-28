@@ -17,6 +17,7 @@ namespace BrainStorm.Areas.Identity.Data
         public BrainStormDbContext(DbContextOptions<BrainStormDbContext> options) : base(options) { }
 
         public DbSet<BrainStorm.Models.Comment> Comment { get; set; }
+        public object T { get; internal set; }
 
 
         //protected override void OnModelCreating(ModelBuilder builder)

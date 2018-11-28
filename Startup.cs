@@ -74,7 +74,7 @@ namespace BrainStorm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=articles}/{action=Index}/{id?}");
+                    template: "{controller=tutorial}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
