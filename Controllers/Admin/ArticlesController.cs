@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
 using BrainStorm.Areas.Identity.Services;
+using BrainStorm.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace BrainStorm.Controllers.Admin
 {
@@ -59,7 +61,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,Like,PostCategory")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory")] Article article)
         {
             _articleService = new ArticleService(_context);
             article.PostCategory = PostCategory.Tutorial;
@@ -94,14 +96,12 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,CreatedDate,Picture,PostCategory")] Article article)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,Picture,PostCategory")] Article postArticle, IFormFile files)
         {
             _articleService = new ArticleService(_context);
+            var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
 
-            article.URL = $@"{article.Title}_{article.Id}";
-            article.PostCategory = PostCategory.Tutorial;
-
-            if (id != article.Id)
+            if (id != postArticle.Id)
             {
                 return NotFound();
             }
@@ -110,11 +110,20 @@ namespace BrainStorm.Controllers.Admin
             {
                 try
                 {
+                    article.Title = postArticle.Title;
+                    article.URL = $@"{postArticle.Title}_{postArticle.Id}";
+                    article.Row = postArticle.Row;
+                    article.Category = postArticle.Category;
+                    article.Content = postArticle.Content;
+                    article.Picture = postArticle.Picture;
+                    article.PostCategory = postArticle.PostCategory;   
                     await _articleService.UpdateArticleAsync(id, article);
+                    ImageHelper imageHelper = new ImageHelper(_context);
+                    imageHelper.SaveArticleImage(id, files);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(article.Id))
+                    if (!ArticleExists(postArticle.Id))
                     {
                         return NotFound();
                     }
