@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace BrainStorm.Controllers.Admin
 {
-    public class ArticlesController : Controller
+    public class TutorialsController : Controller
     {
         private readonly BrainStormDbContext _context;
         ArticleService _articleService;
 
-        public ArticlesController(BrainStormDbContext context)
+        public TutorialsController(BrainStormDbContext context)
         {
             _context = context;
         }
