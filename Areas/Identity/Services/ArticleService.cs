@@ -4,6 +4,7 @@ using BrainStorm.Models.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,6 +60,11 @@ namespace BrainStorm.Areas.Identity.Services
         public async Task DeleteArticleConfirmedAsync(Guid? Id)
         {
             var article = await _context.Articles.FindAsync(Id);
+            var imagePath = article.Picture;
+            if (imagePath != null && imagePath.Length > 0)
+            {
+                File.Delete($@"wwwroot/{imagePath}")    ;
+            }
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
         }
@@ -89,8 +95,10 @@ namespace BrainStorm.Areas.Identity.Services
 
         public async Task<List<Article>> GetUserArticlesAsync(Guid Id)
         {
-            var articles = await _context.Articles.Where(item => item.BrainStormUser.Id == Id)
+            var articles = await _context.Articles
+                .Where(m => m.BrainStormUser.Id == Id)
                 .ToListAsync();
+
             return articles;
         }
 

@@ -10,6 +10,8 @@ using BrainStorm.Models;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using BrainStorm.Areas.Identity.Service;
 
 namespace BrainStorm.Controllers.Admin
 {
@@ -27,7 +29,9 @@ namespace BrainStorm.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             _articleService = new ArticleService(_context);
-            var articles = await _articleService.GetArticlesAsync();
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var articles = await _articleService.GetUserArticlesAsync(Guid.Parse(userId));
             return View(articles);
         }
 
@@ -61,10 +65,14 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory,BrainStormUser")] Article article)
         {
             _articleService = new ArticleService(_context);
+            var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            UserService userService = new UserService(_context);
+
             article.PostCategory = PostCategory.Tutorial;
+            article.BrainStormUser = await userService.GetUsersByIdAsync(userId);
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
@@ -96,7 +104,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,PostCategory")] Article postArticle, IFormFile files)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content")] Article postArticle, IFormFile files)
         {
             _articleService = new ArticleService(_context);
             var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
@@ -115,14 +123,12 @@ namespace BrainStorm.Controllers.Admin
                     article.Row = postArticle.Row;
                     article.Category = postArticle.Category;
                     article.Content = postArticle.Content;
-                    article.PostCategory = postArticle.PostCategory;
                     await _articleService.UpdateArticleAsync(id, article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
                         imageHelper.UpdateImage(id, files, "article", article);
                     }
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
