@@ -27,7 +27,9 @@ namespace BrainStorm
         {
             services.RegisterServices();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options=>
+                options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
 
             services.Configure<CookiePolicyOptions>(options =>
             {

@@ -1,15 +1,27 @@
 ﻿using BrainStorm.Models;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-
-namespace Tutorial.Controllers.Interface
+namespace BrainStorm.Controllers.Interface
 {
     public interface IUser
     {
-        List<BrainStormUser> GetAllUsers();
-        List<BrainStormUser> GetUserById(string Id);
+        List<BrainStormUser> GetUsers();
+        Task<List<BrainStormUser>> GetUsersAsync();
 
-        List<Article> GetUserArticles();
-        Article GetUserArticleById();
+        BrainStormUser GetUsersById(Guid? Id);
+        Task<BrainStormUser> GetUsersByIdAsync(Guid? Id);
+
+        BrainStormUser CreateUsers(BrainStormUser BrainStormUser);
+        Task<BrainStormUser> CreateUsersAsync(BrainStormUser BrainStormUser);
+
+        BrainStormUser UpdateUsers(Guid? Id, BrainStormUser BrainStormUser);
+        Task<BrainStormUser> UpdateUsersAsync(Guid? Id, BrainStormUser BrainStormUser);
+
+        void DeleteUsers(Guid? Id);
+        Task<BrainStormUser> DeleteUsersAsync(Guid? Id);
+
+        bool UsersExists(Guid id);
     }
 }
