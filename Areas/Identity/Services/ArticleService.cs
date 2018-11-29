@@ -87,6 +87,13 @@ namespace BrainStorm.Areas.Identity.Services
             return articles;
         }
 
+        public async Task<List<Article>> GetUserArticlesAsync(Guid Id)
+        {
+            var articles = await _context.Articles.Where(item => item.BrainStormUser.Id == Id)
+                .ToListAsync();
+            return articles;
+        }
+
         public Article UpdateArticle(Guid? Id, Article article)
         {
             _context.Update(article);

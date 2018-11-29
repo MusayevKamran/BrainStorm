@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrainStorm.Areas.Identity.Data
 {
-    public class BrainStormDbContext : IdentityDbContext<BrainStormUser>
+    public class BrainStormDbContext : IdentityDbContext<BrainStormUser, Role, Guid>
     {
         public DbSet<BrainStormUser> BrainStormUser { get; set; }
         public DbSet<Article> Articles { get; set; }
@@ -20,27 +20,39 @@ namespace BrainStorm.Areas.Identity.Data
         public object T { get; internal set; }
 
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    builder.Entity<BrainStormUser>()
-        //       .HasMany<Article>(a => a.Article)
-        //       .WithOne(b => b.BrainStormUser)
-        //       .HasPrincipalKey(c => c.Id);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
 
-        //    builder.Entity<BrainStormUser>()
-        //        .HasMany<Comment>(a => a.Comment)
-        //        .WithOne(b => b.BrainStormUser)
-        //        .HasPrincipalKey(c => c.Id);
+            builder.Entity<BrainStormUser>(b =>
+            {
+                b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+            });
 
-        //    builder.Entity<Article>()
-        //        .HasMany<Comment>(a => a.Comment)
-        //        .WithOne(b => b.Article)
-        //        .HasPrincipalKey(c => c.Id);
+            builder.Entity<Role>(b =>
+            {
+                b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
+            });
 
-        //    base.OnModelCreating(builder);
-        //    // Customize the ASP.NET Identity model and override the defaults if needed.
-        //    // For example, you can rename the ASP.NET Identity table names and more.
-        //    // Add your customizations after calling base.OnModelCreating(builder);
-        //}
+
+            builder.Entity<BrainStormUser>()
+               .HasMany<Article>(a => a.Article)
+               .WithOne(b => b.BrainStormUser)
+               .HasPrincipalKey(c => c.Id);
+
+            builder.Entity<BrainStormUser>()
+                .HasMany<Comment>(a => a.Comment)
+                .WithOne(b => b.BrainStormUser)
+                .HasPrincipalKey(c => c.Id);
+
+            builder.Entity<Article>()
+                .HasMany<Comment>(a => a.Comment)
+                .WithOne(b => b.Article)
+                .HasPrincipalKey(c => c.Id);
+
+            base.OnModelCreating(builder);
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
+        }
     }
 }

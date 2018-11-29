@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace BrainStorm
 {
@@ -27,8 +29,9 @@ namespace BrainStorm
         {
             services.RegisterServices();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(options=>
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -37,13 +40,20 @@ namespace BrainStorm
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
 
             services.AddDbContext<BrainStormDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("BrainStormDbContextConnection")));
 
-            services.AddDefaultIdentity<BrainStormUser>()
-                .AddEntityFrameworkStores<BrainStormDbContext>();
+            services.AddIdentity<BrainStormUser, Role>(
+            identity =>
+            {
+                // whatever identity options you want
+                identity.Password.RequiredLength = 8;
+            }).
+            AddEntityFrameworkStores<BrainStormDbContext>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -76,7 +86,7 @@ namespace BrainStorm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=tutorial}/{action=Index}/{id?}");
+                    template: "{controller=admin}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

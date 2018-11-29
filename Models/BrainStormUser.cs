@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Models
 {
-    public class BrainStormUser : IdentityUser
+    public class BrainStormUser : IdentityUser<Guid>
     {
         public string AvatarImage { get; set; }
 

@@ -22,7 +22,7 @@ namespace BrainStorm.Areas.Identity.Service
 
         public BrainStormUser CreateUsers(BrainStormUser brainStormUser)
         {
-            brainStormUser.Id = Guid.NewGuid().ToString();
+            brainStormUser.Id = Guid.NewGuid();
             _context.Add(brainStormUser);
             _context.SaveChanges();
             return brainStormUser;
@@ -30,7 +30,7 @@ namespace BrainStorm.Areas.Identity.Service
 
         public async Task<BrainStormUser> CreateUsersAsync(BrainStormUser brainStormUser)
         {
-            brainStormUser.Id = Guid.NewGuid().ToString();
+            brainStormUser.Id = Guid.NewGuid();
             brainStormUser.URL = $@"{brainStormUser.UserName}_{brainStormUser.Id}";
 
             _context.Add(brainStormUser);
@@ -40,13 +40,13 @@ namespace BrainStorm.Areas.Identity.Service
 
         public void DeleteUsers(Guid? Id)
         {
-            _context.BrainStormUser.FirstOrDefault(m => m.Id == Id.ToString());
+            _context.BrainStormUser.FirstOrDefault(m => m.Id == Id);
         }
 
         public async Task<BrainStormUser> DeleteUsersAsync(Guid? Id)
         {
             BrainStormUser BrainStormUser = await _context.BrainStormUser
-                .FirstOrDefaultAsync(m => m.Id == Id.ToString());
+                .FirstOrDefaultAsync(m => m.Id == Id);
             return BrainStormUser;
         }
 
@@ -64,13 +64,13 @@ namespace BrainStorm.Areas.Identity.Service
 
         public BrainStormUser GetUsersById(Guid? Id)
         {
-            var BrainStormUser = _context.BrainStormUser.FirstOrDefault(m => m.Id == Id.ToString());
+            var BrainStormUser = _context.BrainStormUser.FirstOrDefault(m => m.Id == Id);
             return BrainStormUser;
         }
 
         public async Task<BrainStormUser> GetUsersByIdAsync(Guid? Id)
         {
-            var BrainStormUser = await _context.BrainStormUser.FirstOrDefaultAsync(m => m.Id == Id.ToString());
+            var BrainStormUser = await _context.BrainStormUser.FirstOrDefaultAsync(m => m.Id == Id);
             return BrainStormUser;
         }
 
@@ -93,7 +93,7 @@ namespace BrainStorm.Areas.Identity.Service
 
         public bool UsersExists(Guid id)
         {
-            return _context.BrainStormUser.Any(e => e.Id == id.ToString());
+            return _context.BrainStormUser.Any(e => e.Id == id);
         }
     }
 }

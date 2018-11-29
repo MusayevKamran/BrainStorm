@@ -46,9 +46,9 @@ namespace BrainStorm.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,PostCategory")] BrainStormUser BrainStormUser, IFormFile files)
         {
             _userService = new UserService(_context);
-            var user = await _userService.GetUsersByIdAsync(Guid.Parse(BrainStormUser.Id));
+            var user = await _userService.GetUsersByIdAsync(BrainStormUser.Id);
 
-            if (id != Guid.Parse(BrainStormUser.Id))
+            if (id != BrainStormUser.Id)
             {
                 return NotFound();
             }
@@ -67,7 +67,7 @@ namespace BrainStorm.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsersExists(Guid.Parse(BrainStormUser.Id)))
+                    if (!UsersExists(BrainStormUser.Id))
                     {
                         return NotFound();
                     }

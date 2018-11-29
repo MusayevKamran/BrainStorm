@@ -37,7 +37,7 @@ namespace BrainStorm.Helpers
             }
             else if (model.GetType() == typeof(BrainStormUser))
             {
-                var BrainStormUser = _context.BrainStormUser.FirstOrDefault(item => item.Id == Id.ToString());
+                var BrainStormUser = _context.BrainStormUser.FirstOrDefault(item => item.Id == Id);
                 BrainStormUser.AvatarImage = fullPathDB;
                 _context.Update(BrainStormUser);
             }
