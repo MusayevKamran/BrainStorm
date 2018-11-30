@@ -65,7 +65,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory,BrainStormUser")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Row,Category,Content,BrainStormUser")] Article article, IFormFile files)
         {
             _articleService = new ArticleService(_context);
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -78,6 +78,11 @@ namespace BrainStorm.Controllers.Admin
             if (ModelState.IsValid)
             {
                 await _articleService.CreateArticleAsync(article);
+                if (files != null && files.Length > 0)
+                {
+                    ImageHelper imageHelper = new ImageHelper(_context);
+                    imageHelper.UpdateImage(article.Id, files, "article", article);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
