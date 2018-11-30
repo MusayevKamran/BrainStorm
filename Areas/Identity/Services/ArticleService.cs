@@ -61,7 +61,8 @@ namespace BrainStorm.Areas.Identity.Services
         {
             var article = await _context.Articles.FindAsync(Id);
             var imagePath = article.Picture;
-            if (imagePath != null && imagePath.Length > 0 && File.Exists(imagePath))
+
+            if (imagePath != null && imagePath.Length > 0 && File.Exists($@"wwwroot/{imagePath}"))
             {
                 await Task.Factory.StartNew(() => File.Delete($@"wwwroot/{imagePath}"));
             }

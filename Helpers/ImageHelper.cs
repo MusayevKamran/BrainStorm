@@ -44,7 +44,9 @@ namespace BrainStorm.Helpers
 
             _context.SaveChanges();
 
-            files.CopyTo(new FileStream(fullPathCreate, FileMode.Create));
+            FileStream fileStream = new FileStream(fullPathCreate, FileMode.Create);
+            files.CopyTo(fileStream);
+            fileStream.Dispose();
         }
 
         private string GetUniqueFileName(string fileName)

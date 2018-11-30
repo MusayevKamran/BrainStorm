@@ -143,6 +143,7 @@ namespace BrainStorm.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(article);
         }
 
