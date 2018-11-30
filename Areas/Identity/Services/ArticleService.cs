@@ -61,12 +61,13 @@ namespace BrainStorm.Areas.Identity.Services
         {
             var article = await _context.Articles.FindAsync(Id);
             var imagePath = article.Picture;
-            if (imagePath != null && imagePath.Length > 0)
+            if (imagePath != null && imagePath.Length > 0 && File.Exists(imagePath))
             {
-                File.Delete($@"wwwroot/{imagePath}")    ;
+                await Task.Factory.StartNew(() => File.Delete($@"wwwroot/{imagePath}"));
             }
+
             _context.Articles.Remove(article);
-            await _context.SaveChangesAsync();
+            Task.WaitAll(_context.SaveChangesAsync());
         }
 
         public Article GetArticleById(Guid? Id)
