@@ -41,15 +41,18 @@ namespace BrainStorm.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    SecondName = table.Column<string>(nullable: true),
                     AvatarImage = table.Column<string>(nullable: true),
-                    View = table.Column<int>(nullable: false),
                     URL = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    Quote = table.Column<string>(nullable: true),
-                    Job = table.Column<string>(nullable: true),
                     Education = table.Column<string>(nullable: true),
+                    Job = table.Column<string>(nullable: true),
                     About = table.Column<string>(nullable: true),
-                    UserCategory = table.Column<int>(nullable: false)
+                    Like = table.Column<int>(nullable: false),
+                    View = table.Column<int>(nullable: false),
+                    Quote = table.Column<string>(nullable: true),
+                    UserStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

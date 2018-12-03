@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Models
 {
-    public enum UserCategory
+    public enum UserStatus
     {
         Admin = 1,
         Teacher = 2,

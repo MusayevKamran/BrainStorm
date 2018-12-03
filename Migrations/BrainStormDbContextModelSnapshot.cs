@@ -75,7 +75,11 @@ namespace BrainStorm.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("FirstName");
+
                     b.Property<string>("Job");
+
+                    b.Property<int>("Like");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -95,6 +99,8 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("Quote");
 
+                    b.Property<string>("SecondName");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<int>("Status");
@@ -103,10 +109,10 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("URL");
 
-                    b.Property<int>("UserCategory");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<int>("UserStatus");
 
                     b.Property<int>("View");
 

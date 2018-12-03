@@ -40,6 +40,23 @@ namespace BrainStorm.Controllers
             return View("index", BrainStormUser);
         }
 
+        // GET: Articles/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.BrainStormUser.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -61,7 +78,7 @@ namespace BrainStorm.Controllers
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
-                        imageHelper.UpdateImage(id, files, "article", user);
+                        imageHelper.UpdateImage(id, files, "user", user);
                     }
 
                 }
@@ -80,6 +97,8 @@ namespace BrainStorm.Controllers
             }
             return View(BrainStormUser);
         }
+
+
         private bool UsersExists(Guid id)
         {
             _userService = new UserService(_context);
