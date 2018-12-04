@@ -30,8 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181203134136_Initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="wwwroot\images\article\" />
     <Folder Include="wwwroot\images\user\" />
   </ItemGroup>
 

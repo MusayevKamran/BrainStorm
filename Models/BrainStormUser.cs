@@ -26,6 +26,8 @@ namespace BrainStorm.Models
 
         public int Like { get; set; }
 
+        public int Follower { get; set; }
+
         public int View { get; set; }
 
         public UserStatus UserStatus { get; set; }

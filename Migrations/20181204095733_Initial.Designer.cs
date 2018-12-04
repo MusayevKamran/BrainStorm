@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    [Migration("20181203134136_Initial")]
+    [Migration("20181204095733_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,8 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<int>("Follower");
+
                     b.Property<string>("Job");
 
                     b.Property<int>("Like");
@@ -104,8 +106,6 @@ namespace BrainStorm.Migrations
                     b.Property<string>("SecondName");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<int>("Status");
 
                     b.Property<bool>("TwoFactorEnabled");
 

@@ -45,13 +45,13 @@ namespace BrainStorm.Migrations
                     SecondName = table.Column<string>(nullable: true),
                     AvatarImage = table.Column<string>(nullable: true),
                     URL = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
                     Education = table.Column<string>(nullable: true),
                     Job = table.Column<string>(nullable: true),
                     About = table.Column<string>(nullable: true),
-                    Like = table.Column<int>(nullable: false),
-                    View = table.Column<int>(nullable: false),
                     Quote = table.Column<string>(nullable: true),
+                    Like = table.Column<int>(nullable: false),
+                    Follower = table.Column<int>(nullable: false),
+                    View = table.Column<int>(nullable: false),
                     UserStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

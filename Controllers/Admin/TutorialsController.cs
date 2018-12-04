@@ -97,6 +97,10 @@ namespace BrainStorm.Controllers.Admin
             }
 
             var article = await _context.Articles.FindAsync(id);
+            if (article.Picture == null)
+            {
+                article.Picture = "images/article/default_article.jpg";
+            }
             if (article == null)
             {
                 return NotFound();

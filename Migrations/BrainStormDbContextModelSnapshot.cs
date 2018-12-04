@@ -77,6 +77,8 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<int>("Follower");
+
                     b.Property<string>("Job");
 
                     b.Property<int>("Like");
@@ -102,8 +104,6 @@ namespace BrainStorm.Migrations
                     b.Property<string>("SecondName");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<int>("Status");
 
                     b.Property<bool>("TwoFactorEnabled");
 
