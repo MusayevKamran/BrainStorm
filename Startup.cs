@@ -11,7 +11,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using NJsonSchema;
+using NSwag.AspNetCore;
+using System.Reflection;
+
 
 namespace BrainStorm
 {
@@ -30,9 +33,10 @@ namespace BrainStorm
             services.RegisterServices();
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -55,6 +59,7 @@ namespace BrainStorm
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
+            services.AddHealthChecks();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -67,7 +72,9 @@ namespace BrainStorm
         {
             if (env.IsDevelopment())
             {
+                app.UseHealthChecks("/health");
                 app.UseDeveloperExceptionPage();
+                
             }
             else
             {
