@@ -21,13 +21,11 @@ namespace BrainStorm.Controllers
         BrainStormDbContext _context;
         UserService _userService;
         private readonly UserManager<BrainStormUser> _userManager;
-        private readonly IHostingEnvironment _appEnvironment;
 
-        public UserController(BrainStormDbContext context, UserManager<BrainStormUser> userManager, IHostingEnvironment hostingEnvironment)
+        public UserController(BrainStormDbContext context, UserManager<BrainStormUser> userManager)
         {
             this._context = context;
             this._userManager = userManager;
-            this._appEnvironment = hostingEnvironment;
         }
 
         [Route("admin/user")]
@@ -36,7 +34,11 @@ namespace BrainStorm.Controllers
             _userService = new UserService(_context);
             var Id = _userManager.GetUserId(HttpContext.User);
             BrainStormUser BrainStormUser = _userService.GetUsersById(Guid.Parse(Id));
-
+            if (BrainStormUser.AvatarImage == null)
+            {
+                BrainStormUser.AvatarImage = "images/user/default_user.png";
+                _context.SaveChanges();
+            }
             return View("index", BrainStormUser);
         }
 

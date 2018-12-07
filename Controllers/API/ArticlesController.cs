@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
+
 namespace BrainStorm.Controllers.API
 {
     [Route("api/[controller]")]
@@ -32,11 +34,6 @@ namespace BrainStorm.Controllers.API
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArticle([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var article = await _context.Articles.FindAsync(id);
 
             if (article == null)
@@ -51,11 +48,6 @@ namespace BrainStorm.Controllers.API
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArticle([FromRoute] Guid id, [FromBody] Article article)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != article.Id)
             {
                 return BadRequest();
@@ -86,11 +78,6 @@ namespace BrainStorm.Controllers.API
         [HttpPost]
         public async Task<IActionResult> PostArticle([FromBody] Article article)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             _context.Articles.Add(article);
             await _context.SaveChangesAsync();
 
@@ -101,11 +88,6 @@ namespace BrainStorm.Controllers.API
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticle([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var article = await _context.Articles.FindAsync(id);
             if (article == null)
             {

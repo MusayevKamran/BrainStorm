@@ -100,6 +100,7 @@ namespace BrainStorm.Controllers.Admin
             if (article.Picture == null)
             {
                 article.Picture = "images/article/default_article.jpg";
+                await _context.SaveChangesAsync();
             }
             if (article == null)
             {

@@ -1,10 +1,5 @@
 ﻿using BrainStorm.Models.Interface;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BrainStorm.Controllers.Interface;
 
 namespace BrainStorm.Areas.Identity.Services
 {
@@ -12,7 +7,7 @@ namespace BrainStorm.Areas.Identity.Services
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IArticle, ArticleService>();
+            services.AddSingleton<IArticle, ArticleService>();
 
             // Add all other services here.
             return services;

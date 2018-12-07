@@ -13,27 +13,12 @@ namespace BrainStorm.Areas.Identity.Data
     {
         public DbSet<BrainStormUser> BrainStormUser { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         public BrainStormDbContext(DbContextOptions<BrainStormDbContext> options) : base(options) { }
 
-        public DbSet<BrainStorm.Models.Comment> Comment { get; set; }
-        public object T { get; internal set; }
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
-            builder.Entity<BrainStormUser>(b =>
-            {
-                b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
-            });
-
-            builder.Entity<Role>(b =>
-            {
-                b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
-            });
-
-
             builder.Entity<BrainStormUser>()
                .HasMany<Article>(a => a.Article)
                .WithOne(b => b.BrainStormUser)
@@ -50,9 +35,6 @@ namespace BrainStorm.Areas.Identity.Data
                 .HasPrincipalKey(c => c.Id);
 
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
         }
     }
 }

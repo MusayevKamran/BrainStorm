@@ -10,12 +10,13 @@
         "jquery.js",
         "jquery.min.map"
       ]
-    },
-    {
-      "destination": "wwwroot/css/bootstrapt",
-      "library": "bootstrap@4.1.3",
-      "provider": "unpkg",
-      "files": [ "dist/css/bootstrap-grid.min.css" ]
     }
+    //,
+    //{
+    //  "destination": "wwwroot/css/bootstrapt",
+    //  "library": "bootstrap@4.1.3",
+    //  "provider": "unpkg",
+    //  "files": [ "dist/css/bootstrap-grid.min.css" ]
+    //}
   ]
 }

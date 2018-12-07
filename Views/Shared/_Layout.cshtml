@@ -23,9 +23,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-
-        @Html.Partial("_header")
-        @Html.Partial("_sidebar")
+        @{await Html.RenderPartialAsync("_header");}
+        @{await Html.RenderPartialAsync("_sidebar");}
 
         <div class="content-wrapper">
             <section class="content-header">
@@ -39,9 +38,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @RenderBody()
             </section>
         </div>
-
-        @Html.Partial("_footer")
-        @Html.Partial("_control_sidebar")
+        @{await Html.RenderPartialAsync("_footer");}
+        @{await Html.RenderPartialAsync("_control_sidebar");}
 
         <div class="control-sidebar-bg"></div>
     </div>
