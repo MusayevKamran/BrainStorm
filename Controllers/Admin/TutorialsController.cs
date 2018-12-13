@@ -12,25 +12,26 @@ using BrainStorm.Helpers;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using BrainStorm.Areas.Identity.Service;
+using BrainStorm.Models.Interface;
 
 namespace BrainStorm.Controllers.Admin
 {
     public class TutorialsController : Controller
     {
         private readonly BrainStormDbContext _context;
-        ArticleService _articleService;
+        IArticle _articleService; //IArticle interfeysi duzelt
 
-        public TutorialsController(BrainStormDbContext context)
+
+        public TutorialsController(BrainStormDbContext context, IArticle articleService)
         {
             _context = context;
+            _articleService= articleService;
         }
 
         // GET: Articles
         public async Task<IActionResult> Index()
         {
-            _articleService = new ArticleService(_context);
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var articles = await _articleService.GetUserArticlesAsync(Guid.Parse(userId));
             return View(articles);
         }
@@ -38,7 +39,6 @@ namespace BrainStorm.Controllers.Admin
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            _articleService = new ArticleService(_context);
             if (id == null)
             {
                 return NotFound();
@@ -65,9 +65,8 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Row,Category,Content,BrainStormUser")] Article article, IFormFile files)
+        public async Task<IActionResult> Create([Bind("Id,Title,Row,Category,Content,BrainStormUser")] Article article, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
         {
-            _articleService = new ArticleService(_context);
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             UserService userService = new UserService(_context);
 
@@ -116,7 +115,6 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content")] Article postArticle, IFormFile files)
         {
-            _articleService = new ArticleService(_context);
             var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
 
             if (id != postArticle.Id)
@@ -160,8 +158,6 @@ namespace BrainStorm.Controllers.Admin
         // GET: Articles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            _articleService = new ArticleService(_context);
-
             if (id == null)
             {
                 return NotFound();
@@ -182,7 +178,6 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _articleService = new ArticleService(_context);
             await _articleService.DeleteArticleConfirmedAsync(id);
 
             return RedirectToAction(nameof(Index));
@@ -190,7 +185,6 @@ namespace BrainStorm.Controllers.Admin
 
         private bool ArticleExists(Guid id)
         {
-            _articleService = new ArticleService(_context);
             return _articleService.ArticleExists(id);
         }
     }

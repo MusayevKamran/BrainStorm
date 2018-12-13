@@ -24,13 +24,14 @@ namespace BrainStorm.Controllers
 
         public UserController(BrainStormDbContext context, UserManager<BrainStormUser> userManager)
         {
-            this._context = context;
-            this._userManager = userManager;
+            _context = context;
+            _userManager = userManager;
         }
 
         [Route("admin/user")]
         public IActionResult Index()
         {
+            ViewData["Message"] = "Xos Gelmisiniz";
             _userService = new UserService(_context);
             var Id = _userManager.GetUserId(HttpContext.User);
             BrainStormUser BrainStormUser = _userService.GetUsersById(Guid.Parse(Id));

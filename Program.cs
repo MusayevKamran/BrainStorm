@@ -13,6 +13,10 @@ namespace BrainStorm
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
+                .UseDefaultServiceProvider(options =>
+                {
+                    options.ValidateScopes = true;
+                })
                 .UseStartup<Startup>();
     }
 }

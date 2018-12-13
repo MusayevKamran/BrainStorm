@@ -7,7 +7,7 @@ namespace BrainStorm.Areas.Identity.Services
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddSingleton<IArticle, ArticleService>();
+            services.AddScoped<IArticle, ArticleService>();
 
             // Add all other services here.
             return services;
