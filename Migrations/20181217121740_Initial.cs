@@ -12,10 +12,12 @@ namespace BrainStorm.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "newsequentialid()"),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +28,7 @@ namespace BrainStorm.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "newsequentialid()"),
+                    Id = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -51,8 +53,7 @@ namespace BrainStorm.Migrations
                     Quote = table.Column<string>(nullable: true),
                     Like = table.Column<int>(nullable: false),
                     Follower = table.Column<int>(nullable: false),
-                    View = table.Column<int>(nullable: false),
-                    UserStatus = table.Column<int>(nullable: false)
+                    View = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

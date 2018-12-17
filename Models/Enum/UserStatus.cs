@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BrainStorm.Models
+﻿namespace BrainStorm.Models
 {
-    public enum UserStatus
+    public static class UserStatus
     {
-        Admin = 1,
-        Teacher = 2,
-        Course = 3 
+        //Used enum item name like an attribute parameter
+        public const string ADMIN = "Admin";
+        public const string TEACHER = "Teacher";
+        public const string USER = "User";
     }
 }

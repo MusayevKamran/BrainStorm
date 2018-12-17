@@ -1,5 +1,6 @@
 ﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers.API
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticlesController : ControllerBase

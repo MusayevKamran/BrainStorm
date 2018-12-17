@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    [Migration("20181204095733_Initial")]
+    [Migration("20181217121740_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -55,11 +55,62 @@ namespace BrainStorm.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("BrainStorm.Models.BrainStormUser", b =>
+            modelBuilder.Entity("BrainStorm.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("newsequentialid()");
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("ArticleId");
+
+                    b.Property<Guid?>("BrainStormUserId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<int>("Count");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("BrainStormUserId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.System.BrainStormRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.System.BrainStormUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("About");
 
@@ -114,8 +165,6 @@ namespace BrainStorm.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int>("UserStatus");
-
                     b.Property<int>("View");
 
                     b.HasKey("Id");
@@ -129,55 +178,6 @@ namespace BrainStorm.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("BrainStorm.Models.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("ArticleId");
-
-                    b.Property<Guid?>("BrainStormUserId");
-
-                    b.Property<string>("Content");
-
-                    b.Property<int>("Count");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("BrainStormUserId");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("BrainStorm.Models.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("newsequentialid()");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -265,7 +265,7 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("BrainStorm.Models.Article", b =>
                 {
-                    b.HasOne("BrainStorm.Models.BrainStormUser", "BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser", "BrainStormUser")
                         .WithMany("Article")
                         .HasForeignKey("BrainStormUserId");
                 });
@@ -276,14 +276,14 @@ namespace BrainStorm.Migrations
                         .WithMany("Comment")
                         .HasForeignKey("ArticleId");
 
-                    b.HasOne("BrainStorm.Models.BrainStormUser", "BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser", "BrainStormUser")
                         .WithMany("Comment")
                         .HasForeignKey("BrainStormUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("BrainStorm.Models.Role")
+                    b.HasOne("BrainStorm.Models.System.BrainStormRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -291,7 +291,7 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("BrainStorm.Models.BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -299,7 +299,7 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("BrainStorm.Models.BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -307,12 +307,12 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("BrainStorm.Models.Role")
+                    b.HasOne("BrainStorm.Models.System.BrainStormRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BrainStorm.Models.BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -320,7 +320,7 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("BrainStorm.Models.BrainStormUser")
+                    b.HasOne("BrainStorm.Models.System.BrainStormUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,6 +1,6 @@
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Areas.Identity.Services;
-using BrainStorm.Models;
+using BrainStorm.Models.System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using System;
 
 namespace BrainStorm
 {
@@ -41,13 +41,13 @@ namespace BrainStorm
             services.AddDbContext<BrainStormDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("BrainStormDbContextConnection")));
 
-            services.AddIdentity<BrainStormUser, Role>(
+            services.AddIdentity<BrainStormUser, BrainStormRole>(
             identity =>
             {
                 // whatever identity options you want
                 identity.Password.RequiredLength = 8;
-            }).
-            AddEntityFrameworkStores<BrainStormDbContext>()
+            })
+            .AddEntityFrameworkStores<BrainStormDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
@@ -60,7 +60,10 @@ namespace BrainStorm
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            BrainStormDbContext context,
+            RoleManager<BrainStormRole> roleManager,
+            UserManager<BrainStormUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -87,6 +90,8 @@ namespace BrainStorm
                     name: "default",
                     template: "{controller=admin}/{action=Index}/{id?}");
             });
+
+            DBInitializer.InitializeAsync(context,userManager,roleManager).Wait();
 
             app.UseSpa(spa =>
             {

@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BrainStorm.Models.System;
 using BrainStorm.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrainStorm.Areas.Identity.Data
 {
-    public class BrainStormDbContext : IdentityDbContext<BrainStormUser, Role, Guid>
+    public class BrainStormDbContext : IdentityDbContext<BrainStormUser, BrainStormRole, Guid>
     {
-        public DbSet<BrainStormUser> BrainStormUser { get; set; }
-        public DbSet<Article> Articles { get; set; }
-        public DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<BrainStormUser> BrainStormUser { get; set; }
+ 
 
         public BrainStormDbContext(DbContextOptions<BrainStormDbContext> options) : base(options) { }
 

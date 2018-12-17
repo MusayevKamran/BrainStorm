@@ -4,14 +4,16 @@ using BrainStorm.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    partial class BrainStormDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181217125505_s")]
+    partial class s
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,4 @@
-﻿@model BrainStorm.Models.BrainStormUser
+﻿@model BrainStorm.Models.System.BrainStormUser
 @{
     ViewData["Title"] = "Edit";
 }
@@ -40,21 +40,21 @@
 
             <div class="col-sm-9">
                     <div class="form-group">
-                        <label for="first_name"><h4>First name</h4></label>
+                        <h4><label for="first_name">First name</label></h4>
                         <input asp-for="UserName" placeholder="@Model.UserName">
                     </div>
                     <div class="form-group">
-                        <label for="last_name"><h4>Last name</h4></label>
+                        <h4><label for="last_name">Last name</label></h4>
                         <input asp-for="UserName" placeholder="@Model.UserName">
                     </div>
 
                     <div class="form-group">
-                        <label for="phone"><h4>Phone</h4></label>
+                        <h4> <label for="phone">Phone</label></h4>
                         <input asp-for="UserName" placeholder="@Model.PhoneNumber">
                     </div>
 
                     <div class="form-group">
-                        <label for="email"><h4>Email</h4></label>
+                        <h4> <label for="email">Email</label></h4>
                         <input asp-for="Email" placeholder="@Model.Email">
                     </div>
                     <div class="form-group">
