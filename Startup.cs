@@ -91,7 +91,7 @@ namespace BrainStorm
                     template: "{controller=admin}/{action=Index}/{id?}");
             });
 
-            DBInitializer.InitializeAsync(context,userManager,roleManager).Wait();
+            DBInitializer.InitializeAsync(context, userManager, roleManager).Wait();
 
             app.UseSpa(spa =>
             {

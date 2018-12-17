@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Areas.Identity.Data
 {
-    public static class DBInitializer
+    public class DBInitializer
     {
         public static async Task InitializeAsync(BrainStormDbContext context,
             UserManager<BrainStormUser> userManager,
@@ -44,7 +44,7 @@ namespace BrainStorm.Areas.Identity.Data
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await userManager.AddPasswordAsync(user, password.ToString());
+                    await userManager.AddPasswordAsync(user, password);
                     await userManager.AddToRoleAsync(user, role1);
                 }
                 adminId1 = user.Id.ToString();
@@ -61,7 +61,7 @@ namespace BrainStorm.Areas.Identity.Data
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await userManager.AddPasswordAsync(user, password.ToString());
+                    await userManager.AddPasswordAsync(user, password);
                     await userManager.AddToRoleAsync(user, role2);
                 }
                 adminId2 = user.Id.ToString();
