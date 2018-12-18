@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using BrainStorm.Models;
 
 namespace BrainStorm.Areas.Identity.Pages.Account
 {
@@ -69,6 +70,8 @@ namespace BrainStorm.Areas.Identity.Pages.Account
             {
                 var user = new BrainStormUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                //added default role
+                await _userManager.AddToRoleAsync(user, UserStatus.USER);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

@@ -1,4 +1,5 @@
-﻿using BrainStorm.Models.System;
+﻿using BrainStorm.Models;
+using BrainStorm.Models.System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,57 +15,41 @@ namespace BrainStorm.Areas.Identity.Data
         {
             context.Database.EnsureCreated();
 
-            string adminId1 = "";
-            string adminId2 = "";
+            string roleADMIN = UserStatus.ADMIN;
+            string descADMIN = "This is adminstrator role";
 
-            string role1 = "Admin";
-            string desc1 = "This is adminstrator role";
+            string roleTEACHER = UserStatus.TEACHER;
+            string descTEACHER = "This is TEACHER role";
 
-            string role2 = "Member";
-            string desc2 = "This is meembers role";
+            string roleUSER = UserStatus.USER;
+            string descUSER = "This is USER role";
 
-            string password = "test";
-
-            if (await roleManager.FindByNameAsync(role1) == null)
+            if (await roleManager.FindByNameAsync(roleADMIN) == null)
             {
-                await roleManager.CreateAsync(new BrainStormRole(role1, desc1, DateTime.Now));
+                await roleManager.CreateAsync(new BrainStormRole(roleADMIN, descADMIN, DateTime.Now));
             }
-            if (await roleManager.FindByNameAsync(role2) == null)
+            if (await roleManager.FindByNameAsync(roleTEACHER) == null)
             {
-                await roleManager.CreateAsync(new BrainStormRole(role2, desc2, DateTime.Now));
+                await roleManager.CreateAsync(new BrainStormRole(roleTEACHER, descTEACHER, DateTime.Now));
             }
-            if (await userManager.FindByEmailAsync("aa@aa.aa") == null)
+            if (await roleManager.FindByNameAsync(roleUSER) == null)
+            {
+                await roleManager.CreateAsync(new BrainStormRole(roleUSER, descUSER, DateTime.Now));
+            }
+
+            if (await userManager.FindByEmailAsync("Kamran@gmail.com") == null)
             {
                 var user = new BrainStormUser
                 {
-                    UserName = "aa@aa.aa",
-                    Email = "aa@aa.aa"
+                    UserName = "Kamran@gmail.com",
+                    Email = "Kamran@gmail.com"
                 };
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await userManager.AddPasswordAsync(user, "Test123456789");
-                    await userManager.AddToRoleAsync(user, role1);
+                    await userManager.AddPasswordAsync(user, "Kamran123456");
+                    await userManager.AddToRoleAsync(user, UserStatus.ADMIN);
                 }
-                adminId1 = user.Id.ToString();
-
-            }
-            if (await userManager.FindByEmailAsync("bb@bb.bb") == null)
-            {
-                var user = new BrainStormUser
-                {
-                    UserName = "bb@bb.bb",
-                    Email = "bb@bb.bb",
-                    FirstName = "Bayram"
-                };
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
-                }
-                adminId2 = user.Id.ToString();
-
             }
         }
     }
