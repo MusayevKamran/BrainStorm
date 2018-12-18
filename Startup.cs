@@ -42,11 +42,15 @@ namespace BrainStorm
              options.UseSqlServer(Configuration.GetConnectionString("BrainStormDbContextConnection")));
 
             services.AddIdentity<BrainStormUser, BrainStormRole>(
-            identity =>
-            {
-                // whatever identity options you want
-                identity.Password.RequiredLength = 8;
-            })
+            options => {
+                options.Password.RequiredLength = 10;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Stores.MaxLengthForKeys = 128;
+                }           
+            )
             .AddEntityFrameworkStores<BrainStormDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();

@@ -23,7 +23,7 @@ namespace BrainStorm.Areas.Identity.Data
             string role2 = "Member";
             string desc2 = "This is meembers role";
 
-            string password = "password";
+            string password = "test";
 
             if (await roleManager.FindByNameAsync(role1) == null)
             {
@@ -38,13 +38,12 @@ namespace BrainStorm.Areas.Identity.Data
                 var user = new BrainStormUser
                 {
                     UserName = "aa@aa.aa",
-                    Email = "aa@aa.aa",
-                    FirstName = "Kamran"
+                    Email = "aa@aa.aa"
                 };
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await userManager.AddPasswordAsync(user, password);
+                    await userManager.AddPasswordAsync(user, "Test123456789");
                     await userManager.AddToRoleAsync(user, role1);
                 }
                 adminId1 = user.Id.ToString();
