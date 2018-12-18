@@ -70,11 +70,13 @@ namespace BrainStorm.Areas.Identity.Pages.Account
             {
                 var user = new BrainStormUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                //added default role
-                await _userManager.AddToRoleAsync(user, UserStatus.USER);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //added default role
+                    await _userManager.AddToRoleAsync(user, UserStatus.USER);
+                    _logger.LogInformation($"User added {UserStatus.USER} Role");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(

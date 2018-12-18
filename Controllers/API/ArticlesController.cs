@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers.API
 {
-    [Authorize]
+    [Authorize(Roles = UserStatus.ADMIN)]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticlesController : ControllerBase
