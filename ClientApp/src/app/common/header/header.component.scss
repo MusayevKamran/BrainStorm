@@ -1,0 +1,23 @@
+header{
+    ul{
+       display: block;
+       border-bottom: 1px solid #ddd;
+       box-shadow: 0 3px 3px 0 rgba(0,0,0,.2);  
+        
+       li{
+            display: inline-block;
+            margin: 10px;
+            padding: 5px;    
+            a{
+                font-weight: bold;
+                 color: red !important;
+                 text-decoration: none;      
+                 
+            }
+            a:hover{
+                color: blue !important;
+            }
+            
+        }
+    }
+}

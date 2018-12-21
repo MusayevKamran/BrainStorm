@@ -118,7 +118,7 @@ namespace BrainStorm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=}/{action=Index}/{id?}");
+                    template: "{controller}/{action=Index}/{id?}");
             });
 
             DBInitializer.InitializeAsync(context, userManager, roleManager).Wait();
