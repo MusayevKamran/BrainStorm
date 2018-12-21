@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BrainStorm.Areas.Identity.Data;
-using BrainStorm.Models;
+﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
-using BrainStorm.Areas.Identity.Service;
+using BrainStorm.Models;
 using BrainStorm.Models.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers.Admin
 {
@@ -27,7 +24,7 @@ namespace BrainStorm.Controllers.Admin
         public TutorialsController(BrainStormDbContext context, IArticle articleService)
         {
             _context = context;
-            _articleService= articleService;
+            _articleService = articleService;
         }
 
         // GET: Articles

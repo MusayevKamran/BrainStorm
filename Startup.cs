@@ -34,38 +34,39 @@ namespace BrainStorm
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+            {
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/Login";
+                options.LogoutPath = "/Login";
+                options.ExpireTimeSpan = TimeSpan.FromHours(10);
+            });
+
+
             services.AddDbContext<BrainStormDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("BrainStormDbContextConnection")));
 
             services.AddIdentity<BrainStormUser, BrainStormRole>(
-            options => {
+            options =>
+            {
                 options.Password.RequiredLength = 5;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
                 options.Stores.MaxLengthForKeys = 128;
-                }           
+            }
             )
             .AddEntityFrameworkStores<BrainStormDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
-            services.AddHealthChecks();
-
             services.RegisterServices();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath = "/Login";
-                    options.AccessDeniedPath = "/Login";
-                    options.LogoutPath = "/Login";
-                    options.ExpireTimeSpan = TimeSpan.FromHours(10);
-                });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddHealthChecks();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

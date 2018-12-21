@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BrainStorm.Areas.Identity.Data;
-using BrainStorm.Areas.Identity.Service;
+using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
 using BrainStorm.Models;
 using BrainStorm.Models.System;

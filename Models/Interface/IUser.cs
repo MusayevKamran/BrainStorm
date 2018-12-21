@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BrainStorm.Controllers.Interface
+namespace BrainStorm.Models.Interface
 {
     public interface IUser
     {

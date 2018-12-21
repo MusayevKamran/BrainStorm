@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models.Interface;
 using BrainStorm.Models;
-using BrainStorm.Controllers.Interface;
 using BrainStorm.Models.System;
 
-namespace BrainStorm.Areas.Identity.Service
+namespace BrainStorm.Areas.Identity.Services
 {
     public class UserService : IUser
     {

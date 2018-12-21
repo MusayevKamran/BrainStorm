@@ -8,6 +8,7 @@ namespace BrainStorm.Areas.Identity.Services
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IArticle, ArticleService>();
+            services.AddScoped<IUser, UserService>();
 
             // Add all other services here.
             return services;
