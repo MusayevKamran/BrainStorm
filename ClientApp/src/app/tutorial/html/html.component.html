@@ -1,0 +1,11 @@
+<div class="left-sidebar">
+  <ul>
+    <li *ngFor='let key of htmlUrlName'>
+      <a routerLink="{{key.url}}" routerLinkActive="active">{{key.name}}</a>
+    </li>
+  </ul>
+
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

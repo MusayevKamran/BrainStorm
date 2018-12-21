@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HeaderModule } from './common/header/header.module';
 import { HeaderComponent } from './common/header/header.component';
+import { TutorialModule } from './tutorial/tutorial.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,7 @@ import { HeaderComponent } from './common/header/header.component';
     AppRoutingModule,
 
     HeaderModule,
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    TutorialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
