@@ -84,22 +84,36 @@ namespace BrainStorm
             if (env.IsDevelopment())
             {
                 app.UseHealthChecks("/health");
-                app.UseDeveloperExceptionPage();
 
+                // When the app runs in the Development environment:
+                //   Use the Developer Exception Page to report app runtime errors.
+                //   Use the Database Error Page to report database runtime errors.
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
+                // When the app doesn't run in the Development environment:
+                //   Enable the Exception Handler Middleware to catch exceptions
+                //     thrown in the following middlewares.
+                //   Use the HTTP Strict Transport Security Protocol (HSTS)
+                //     Middleware.
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
+            // Use HTTPS Redirection Middleware to redirect HTTP requests to HTTPS.
             app.UseHttpsRedirection();
+            // Return static files and end the pipeline.
             app.UseStaticFiles();
-            app.UseAuthentication();
+            // Use Cookie Policy Middleware to conform to EU General Data 
+            // Protection Regulation (GDPR) regulations.
             app.UseCookiePolicy();
+            // Authenticate before the user accesses secure resources.
+            app.UseAuthentication();
 
             app.UseSpaStaticFiles();
-
+            // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
