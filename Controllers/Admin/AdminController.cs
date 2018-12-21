@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BrainStorm.Controllers
 {
     //[Authorize(Roles = UserStatus.ADMIN)]
+    [Authorize]
     public class AdminController : Controller
     {
         public IActionResult Index()

@@ -1,6 +1,7 @@
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Models.System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,11 +27,6 @@ namespace BrainStorm
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.RegisterServices();
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -43,7 +39,7 @@ namespace BrainStorm
 
             services.AddIdentity<BrainStormUser, BrainStormRole>(
             options => {
-                options.Password.RequiredLength = 10;
+                options.Password.RequiredLength = 5;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -56,6 +52,21 @@ namespace BrainStorm
             .AddDefaultTokenProviders();
 
             services.AddHealthChecks();
+
+            services.RegisterServices();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath = "/Login";
+                    options.AccessDeniedPath = "/Login";
+                    options.LogoutPath = "/Login";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(10);
+                });
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -92,7 +103,7 @@ namespace BrainStorm
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=admin}/{action=Index}/{id?}");
+                    template: "{controller=}/{action=Index}/{id?}");
             });
 
             DBInitializer.InitializeAsync(context, userManager, roleManager).Wait();

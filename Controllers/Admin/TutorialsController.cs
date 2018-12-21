@@ -13,9 +13,11 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using BrainStorm.Areas.Identity.Service;
 using BrainStorm.Models.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrainStorm.Controllers.Admin
 {
+    [Authorize]
     public class TutorialsController : Controller
     {
         private readonly BrainStormDbContext _context;

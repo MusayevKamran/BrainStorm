@@ -10,9 +10,11 @@ using BrainStorm.Models;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrainStorm.Controllers.Admin
 {
+    [Authorize]
     public class BlogsController : Controller
     {
         private readonly BrainStormDbContext _context;
