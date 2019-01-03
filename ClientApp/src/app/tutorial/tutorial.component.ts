@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TutorialService } from './tutorial.service';
 
 @Component({
   selector: 'app-tutorial',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialComponent implements OnInit {
 
-  constructor() { }
+  public tutorials = [];
+  constructor(private _tutorialService: TutorialService) { }
 
   ngOnInit() {
+    this._tutorialService.getTutorial()
+      .subscribe(data => this.tutorials = data);
   }
 
 }
