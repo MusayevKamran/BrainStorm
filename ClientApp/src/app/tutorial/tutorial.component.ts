@@ -8,12 +8,13 @@ import { TutorialService } from './tutorial.service';
 })
 export class TutorialComponent implements OnInit {
 
-  public tutorials = [];
+  public categories = [];
+
   constructor(private _tutorialService: TutorialService) { }
 
   ngOnInit() {
     this._tutorialService.getTutorial()
-      .subscribe(data => this.tutorials = data);
+      .subscribe(data => this.categories = data);
   }
 
 }

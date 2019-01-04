@@ -1,8 +1,7 @@
 <div style="width: 25%;display: inline-block; vertical-align: top;">
 
-  <ul *ngFor="let tutorial of tutorials">
-    <a routerLink="{{tutorial.id}}" routerLinkActive="active">{{tutorial.title}}</a>
-    <li>{{tutorial.content}}</li>
+  <ul *ngFor="let category of categories">
+    <a routerLink="{{category.id}}" routerLinkActive="active">{{category.name}}</a>
   </ul>
 
   <ul class="header-ul">
