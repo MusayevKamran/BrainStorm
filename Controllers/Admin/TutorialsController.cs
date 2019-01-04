@@ -18,7 +18,7 @@ namespace BrainStorm.Controllers.Admin
     public class TutorialsController : Controller
     {
         private readonly BrainStormDbContext _context;
-        IArticle _articleService; //IArticle interfeysi duzelt
+        IArticle _articleService;
 
 
         public TutorialsController(BrainStormDbContext context, IArticle articleService)

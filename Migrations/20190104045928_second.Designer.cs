@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    [Migration("20181217133337_Initial")]
-    partial class Initial
+    [Migration("20190104045928_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,8 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("Title");
 
+                    b.Property<int?>("TutorialCategoryId");
+
                     b.Property<string>("URL");
 
                     b.Property<DateTime>("UpdateDate");
@@ -52,7 +54,26 @@ namespace BrainStorm.Migrations
 
                     b.HasIndex("BrainStormUserId");
 
+                    b.HasIndex("TutorialCategoryId");
+
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Raw");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Comment", b =>
@@ -220,9 +241,11 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -252,9 +275,11 @@ namespace BrainStorm.Migrations
                 {
                     b.Property<Guid>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
@@ -268,6 +293,10 @@ namespace BrainStorm.Migrations
                     b.HasOne("BrainStorm.Models.System.BrainStormUser", "BrainStormUser")
                         .WithMany("Article")
                         .HasForeignKey("BrainStormUserId");
+
+                    b.HasOne("BrainStorm.Models.Category", "TutorialCategory")
+                        .WithMany()
+                        .HasForeignKey("TutorialCategoryId");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Comment", b =>

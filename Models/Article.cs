@@ -26,6 +26,8 @@ namespace BrainStorm.Models
 
         public DateTime UpdateDate { get; set; }
 
+        public Category TutorialCategory { get; set; }
+
         public PostCategory PostCategory { get; set; }
 
         public IList<Comment> Comment { get; set; }

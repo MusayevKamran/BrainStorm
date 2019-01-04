@@ -4,14 +4,16 @@ using BrainStorm.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    partial class BrainStormDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190103124807_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +68,6 @@ namespace BrainStorm.Migrations
                     b.Property<int>("Count");
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("Raw");
 
                     b.HasKey("Id");
 
