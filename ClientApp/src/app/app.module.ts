@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { HeaderModule } from './common/header/header.module';
 import { HeaderComponent } from './common/header/header.component';
 import { TutorialModule } from './tutorial/tutorial.module';
+import { TutorialService } from './services/tutorial.service';
+import { CategoryService } from './services/category.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,7 @@ import { TutorialModule } from './tutorial/tutorial.module';
     HeaderModule,
     TutorialModule
   ],
-  providers: [],
+  providers: [TutorialService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

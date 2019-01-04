@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TutorialService } from './tutorial.service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-tutorial',
@@ -10,10 +10,10 @@ export class TutorialComponent implements OnInit {
 
   public categories = [];
 
-  constructor(private _tutorialService: TutorialService) { }
+  constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
-    this._tutorialService.getTutorial()
+    this._categoryService.getCategory()
       .subscribe(data => this.categories = data);
   }
 

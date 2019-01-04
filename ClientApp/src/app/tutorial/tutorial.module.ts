@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TutorialRoutingModule } from './tutorial-routing.module';
 import { TutorialComponent } from './tutorial.component';
 import { HtmlModule } from './html/html.module';
-import { TutorialService } from './tutorial.service';
-
 
 
 @NgModule({
@@ -18,6 +16,5 @@ import { TutorialService } from './tutorial.service';
   ],
   exports: [
   ],
-  providers: [TutorialService]
 })
 export class TutorialModule { }
