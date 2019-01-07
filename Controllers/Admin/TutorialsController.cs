@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -35,7 +36,26 @@ namespace BrainStorm.Controllers.Admin
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var articles = await _articleService.GetUserArticlesAsync(Guid.Parse(userId));
-            return View(articles);
+
+            var articlesViewModel = new List<ArticlesViewModel>();
+            foreach (var item in articles)
+            {
+                var category = await _categoryService.GetCategoryByIdAsyncExtra(item.Id);
+
+                ArticlesViewModel ArticleCategory = new ArticlesViewModel()
+                {
+                    Id = articles.First().Id,
+                    Title = articles.First().Title,
+                    ArticleCategory = category,
+                    //articles.First().ArticleCategory,
+                    PostCategory = articles.First().PostCategory,
+                    Row = articles.First().Row,
+                    CreatedDate = articles.First().CreatedDate,
+                    UpdateDate = articles.First().UpdateDate       
+                };
+                articlesViewModel.Add(ArticleCategory);
+            }
+            return View(articlesViewModel);
         }
 
         // GET: Articles/Details/5
@@ -59,11 +79,10 @@ namespace BrainStorm.Controllers.Admin
         // GET: Articles/Create
         public IActionResult Create()
         {
-            ArticlesViewModel article = new ArticlesViewModel()
+            ArticleViewModel article = new ArticleViewModel()
             {
                 ArticleCategory = _categoryService.GetCategories()
             };
-
             return View(article);
         }
 
@@ -72,11 +91,16 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Row,ArticleCategory,Content,BrainStormUser")] Article article, int? Category, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
+        public async Task<IActionResult> Create([Bind("Id,Title,Row,Content,BrainStormUser")] Article article, List<int> CategoryId, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
         {
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             UserService userService = new UserService(_context);
-            //Category category = await _categoryService.GetCategoryByIdAsync(Category);
+
+
+            article.ArticleCategory = new List<ArticleCategory>() {
+                new ArticleCategory { CategoryId = CategoryId.First() },
+                new ArticleCategory { CategoryId = CategoryId.Last() }
+            };
 
             article.PostCategory = PostCategory.Tutorial;
             //article.Category = category;

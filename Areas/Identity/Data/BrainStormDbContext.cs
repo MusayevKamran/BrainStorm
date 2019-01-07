@@ -8,6 +8,7 @@ namespace BrainStorm.Areas.Identity.Data
 {
     public class BrainStormDbContext : IdentityDbContext<BrainStormUser, BrainStormRole, Guid>
     {
+        public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
@@ -46,7 +47,6 @@ namespace BrainStorm.Areas.Identity.Data
                 .HasOne(a => a.Category)
                 .WithMany(b => b.ArticleCategory)
                 .HasForeignKey(a => a.CategoryId);
-
 
             base.OnModelCreating(builder);
         }

@@ -62,7 +62,7 @@ namespace BrainStorm.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategory");
+                    b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Category", b =>

@@ -81,6 +81,38 @@ namespace BrainStorm.Areas.Identity.Services
             return category;
         }
 
+        public async Task<ArticleCategory> GetCategoryByIdAsyncExtra(int? Id)
+        {
+            var category = await _context.ArticleCategories.FirstOrDefaultAsync(m => m.CategoryId == Id);
+            return category;
+        }
+
+        public List<Category> GetCategoryListById(List<int> Id)
+        {
+            List<Category> categories = new List<Category>();
+
+            foreach (var id in Id)
+            {
+                Category category =  _context.Category.FirstOrDefault(m => m.Id == id);
+                categories.Add(category);
+            }
+
+            return categories;
+        }
+
+        public async Task<List<Category>> GetCategoryListByIdAsync(List<int> Id)
+        {
+            List<Category> categories = new List<Category>();
+
+            foreach (var id in Id)
+            {
+                Category category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
+                categories.Add(category);
+            }
+            
+            return categories;
+        }
+
         public Category UpdateCategory(int? Id, Category category)
         {
             _context.Update(category);

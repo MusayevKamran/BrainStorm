@@ -10,8 +10,12 @@ namespace BrainStorm.Models.Interface
         List<Category> GetCategories();
         Task<List<Category>> GetCategoriesAsync();
 
-        Category GetCategoryById(int? Id);
+        Category GetCategoryById(int? Id);       
         Task<Category> GetCategoryByIdAsync(int? Id);
+        Task<ArticleCategory> GetCategoryByIdAsyncExtra(int? Id);
+
+        List<Category> GetCategoryListById(List<int> Id);
+        Task<List<Category>> GetCategoryListByIdAsync(List<int> Id);
 
         Category CreateCategory(Category category);
         Task<Category> CreateCategoryAsync(Category category);

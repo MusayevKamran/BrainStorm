@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    [Migration("20190107063310_Initial")]
+    [Migration("20190107104725_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace BrainStorm.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategory");
+                    b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Category", b =>

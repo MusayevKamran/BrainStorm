@@ -24,11 +24,11 @@ namespace BrainStorm.Models
 
         public DateTime UpdateDate { get; set; }
 
-        public List<ArticleCategory> ArticleCategory { get; set; }
+        public List<ArticleCategory> ArticleCategory { get; set; } 
 
         public PostCategory PostCategory { get; set; }
 
-        public IList<Comment> Comment { get; set; }
+        public ICollection<Comment> Comment { get; set; }
 
         public virtual BrainStormUser BrainStormUser { get; set; }
     }

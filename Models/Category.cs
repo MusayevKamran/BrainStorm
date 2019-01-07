@@ -15,6 +15,6 @@ namespace BrainStorm.Models
 
         public int Count { get; set; }
 
-        public List<ArticleCategory> ArticleCategory { get; set; }
+        public List<ArticleCategory> ArticleCategory { get; set; } 
     }
 }

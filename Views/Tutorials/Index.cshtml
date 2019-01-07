@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrainStorm.Models.Article>
+﻿@model IEnumerable<BrainStorm.ViewModel.ArticlesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,9 +12,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.URL)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Row)
@@ -41,13 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.URL)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Row)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArticleCategory)
+                @Html.DisplayFor(modelItem => item.ArticleCategory.CategoryId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)

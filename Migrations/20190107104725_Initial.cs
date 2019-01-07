@@ -210,7 +210,7 @@ namespace BrainStorm.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleCategory",
+                name: "ArticleCategories",
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(nullable: false),
@@ -218,15 +218,15 @@ namespace BrainStorm.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleCategory", x => new { x.ArticleId, x.CategoryId });
+                    table.PrimaryKey("PK_ArticleCategories", x => new { x.ArticleId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_ArticleCategory_Articles_ArticleId",
+                        name: "FK_ArticleCategories_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticleCategory_Category_CategoryId",
+                        name: "FK_ArticleCategories_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id",
@@ -262,8 +262,8 @@ namespace BrainStorm.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleCategory_CategoryId",
-                table: "ArticleCategory",
+                name: "IX_ArticleCategories_CategoryId",
+                table: "ArticleCategories",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -324,7 +324,7 @@ namespace BrainStorm.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticleCategory");
+                name: "ArticleCategories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
