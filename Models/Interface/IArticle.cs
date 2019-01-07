@@ -11,19 +11,19 @@ namespace BrainStorm.Models.Interface
         Task<List<Article>> GetArticlesAsync();
         Task<List<Article>> GetUserArticlesAsync(Guid Id);
 
-        Article GetArticleById(Guid? Id);
-        Task<Article> GetArticleByIdAsync(Guid? Id);
+        Article GetArticleById(int? Id);
+        Task<Article> GetArticleByIdAsync(int? Id);
 
         Article CreateArticle(Article article);
         Task<Article> CreateArticleAsync(Article article);
 
-        Article UpdateArticle(Guid? Id, Article article);
-        Task<Article> UpdateArticleAsync(Guid? Id, Article article);
+        Article UpdateArticle(int? Id, Article article);
+        Task<Article> UpdateArticleAsync(int? Id, Article article);
 
-        void DeleteArticle(Guid? Id);
-        Task DeleteArticleConfirmedAsync(Guid? Id);
-        Task<Article> DeleteArticleAsync(Guid? Id);
+        void DeleteArticle(int? Id);
+        Task DeleteArticleConfirmedAsync(int? Id);
+        Task<Article> DeleteArticleAsync(int? Id);
 
-        bool ArticleExists(Guid id);
+        bool ArticleExists(int id);
     }
 }

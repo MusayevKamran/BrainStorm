@@ -21,12 +21,11 @@ namespace BrainStorm.Migrations
 
             modelBuilder.Entity("BrainStorm.Models.Article", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Guid?>("BrainStormUserId");
-
-                    b.Property<string>("Category");
 
                     b.Property<string>("Content");
 
@@ -42,8 +41,6 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int?>("TutorialCategoryId");
-
                     b.Property<string>("URL");
 
                     b.Property<DateTime>("UpdateDate");
@@ -52,9 +49,20 @@ namespace BrainStorm.Migrations
 
                     b.HasIndex("BrainStormUserId");
 
-                    b.HasIndex("TutorialCategoryId");
-
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.ArticleCategory", b =>
+                {
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("ArticleId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("ArticleCategory");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Category", b =>
@@ -67,7 +75,7 @@ namespace BrainStorm.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Raw");
+                    b.Property<int>("Row");
 
                     b.HasKey("Id");
 
@@ -79,7 +87,7 @@ namespace BrainStorm.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ArticleId");
+                    b.Property<int?>("ArticleId");
 
                     b.Property<Guid?>("BrainStormUserId");
 
@@ -291,10 +299,19 @@ namespace BrainStorm.Migrations
                     b.HasOne("BrainStorm.Models.System.BrainStormUser", "BrainStormUser")
                         .WithMany("Article")
                         .HasForeignKey("BrainStormUserId");
+                });
 
-                    b.HasOne("BrainStorm.Models.Category", "TutorialCategory")
-                        .WithMany()
-                        .HasForeignKey("TutorialCategoryId");
+            modelBuilder.Entity("BrainStorm.Models.ArticleCategory", b =>
+                {
+                    b.HasOne("BrainStorm.Models.Article", "Article")
+                        .WithMany("ArticleCategory")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BrainStorm.Models.Category", "Category")
+                        .WithMany("ArticleCategory")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BrainStorm.Models.Comment", b =>

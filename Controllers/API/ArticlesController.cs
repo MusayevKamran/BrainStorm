@@ -47,7 +47,7 @@ namespace BrainStorm.Controllers.API
 
         // PUT: api/Articles/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArticle([FromRoute] Guid id, [FromBody] Article article)
+        public async Task<IActionResult> PutArticle([FromRoute] int id, [FromBody] Article article)
         {
             if (id != article.Id)
             {
@@ -101,7 +101,7 @@ namespace BrainStorm.Controllers.API
             return Ok(article);
         }
 
-        private bool ArticleExists(Guid id)
+        private bool ArticleExists(int id)
         {
             return _context.Articles.Any(e => e.Id == id);
         }

@@ -24,7 +24,7 @@ namespace BrainStorm.Controllers.Admin
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var category = await _categoryService.GetCategoryAsync();
+            var category = await _categoryService.GetCategoriesAsync();
             return View(category);
         }
 
@@ -57,7 +57,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Raw,Count")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name,Row,Count")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Count")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Row,Count")] Category category)
         {
             if (id != category.Id)
             {

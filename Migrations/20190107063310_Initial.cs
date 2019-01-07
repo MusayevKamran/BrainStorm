@@ -67,6 +67,7 @@ namespace BrainStorm.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    Row = table.Column<int>(nullable: false),
                     Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -93,6 +94,34 @@ namespace BrainStorm.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    URL = table.Column<string>(nullable: true),
+                    Row = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Picture = table.Column<string>(nullable: true),
+                    Like = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    PostCategory = table.Column<int>(nullable: false),
+                    BrainStormUserId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_AspNetUsers_BrainStormUserId",
+                        column: x => x.BrainStormUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,38 +210,27 @@ namespace BrainStorm.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Articles",
+                name: "ArticleCategory",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    URL = table.Column<string>(nullable: true),
-                    Row = table.Column<int>(nullable: false),
-                    Category = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    Picture = table.Column<string>(nullable: true),
-                    Like = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false),
-                    TutorialCategoryId = table.Column<int>(nullable: true),
-                    PostCategory = table.Column<int>(nullable: false),
-                    BrainStormUserId = table.Column<Guid>(nullable: true)
+                    ArticleId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.PrimaryKey("PK_ArticleCategory", x => new { x.ArticleId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_Articles_AspNetUsers_BrainStormUserId",
-                        column: x => x.BrainStormUserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_ArticleCategory_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Articles_Category_TutorialCategoryId",
-                        column: x => x.TutorialCategoryId,
+                        name: "FK_ArticleCategory_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,7 +241,7 @@ namespace BrainStorm.Migrations
                     Count = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    ArticleId = table.Column<Guid>(nullable: true),
+                    ArticleId = table.Column<int>(nullable: true),
                     BrainStormUserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -244,14 +262,14 @@ namespace BrainStorm.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArticleCategory_CategoryId",
+                table: "ArticleCategory",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Articles_BrainStormUserId",
                 table: "Articles",
                 column: "BrainStormUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Articles_TutorialCategoryId",
-                table: "Articles",
-                column: "TutorialCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -306,6 +324,9 @@ namespace BrainStorm.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ArticleCategory");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -324,6 +345,9 @@ namespace BrainStorm.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -331,9 +355,6 @@ namespace BrainStorm.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Category");
         }
     }
 }

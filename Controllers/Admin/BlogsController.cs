@@ -34,7 +34,7 @@ namespace BrainStorm.Controllers.Admin
         }
 
         // GET: Blogs/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int? id)
         {
             _articleService = new ArticleService(_context);
             if (id == null)
@@ -98,7 +98,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,PostCategory")] Article postArticle, IFormFile files)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,ArticleCategory,Content,PostCategory")] Article postArticle, IFormFile files)
         {
             _articleService = new ArticleService(_context);
             var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
@@ -115,7 +115,7 @@ namespace BrainStorm.Controllers.Admin
                     article.Title = postArticle.Title;
                     article.URL = $@"{postArticle.Title}_{postArticle.Id}";
                     article.Row = postArticle.Row;
-                    article.Category = postArticle.Category;
+                    article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
                     article.PostCategory = postArticle.PostCategory;
                     await _articleService.UpdateArticleAsync(id, article);
@@ -143,7 +143,7 @@ namespace BrainStorm.Controllers.Admin
         }
 
         // GET: Blogs/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             _articleService = new ArticleService(_context);
 
@@ -165,7 +165,7 @@ namespace BrainStorm.Controllers.Admin
         // POST: Blogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             _articleService = new ArticleService(_context);
             await _articleService.DeleteArticleConfirmedAsync(id);
@@ -173,7 +173,7 @@ namespace BrainStorm.Controllers.Admin
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArticleExists(Guid id)
+        private bool ArticleExists(int id)
         {
             _articleService = new ArticleService(_context);
             return _articleService.ArticleExists(id);

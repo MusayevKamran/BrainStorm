@@ -22,7 +22,7 @@ namespace BrainStorm.Helpers
             this._context = context;
         }
 
-        public void UpdateImage<T>(Guid Id, IFormFile files, string path, T model)
+        public void UpdateImage<T>(int Id, IFormFile files, string path, T model)
         {
             var filePath = Path.GetTempFileName();
             var staticPath = Path.Combine("wwwroot", "images", path);
@@ -36,7 +36,22 @@ namespace BrainStorm.Helpers
                 article.Picture = fullPathDB;
                 _context.Update(article);
             }
-            else if (model.GetType() == typeof(BrainStormUser))
+            _context.SaveChanges();
+
+            FileStream fileStream = new FileStream(fullPathCreate, FileMode.Create);
+            files.CopyTo(fileStream);
+            fileStream.Dispose();
+        }
+
+        public void UpdateImage<T>(Guid Id, IFormFile files, string path, T model)
+        {
+            var filePath = Path.GetTempFileName();
+            var staticPath = Path.Combine("wwwroot", "images", path);
+            var staticPathDB = Path.Combine("images", path);
+            var fullPath = Path.Combine(staticPathDB, GetUniqueFileName(files.FileName));
+            var fullPathCreate = Path.Combine("wwwroot", fullPath);
+            var fullPathDB = fullPath.Replace('\\', '/');
+            if (model.GetType() == typeof(BrainStormUser))
             {
                 var BrainStormUser = _context.BrainStormUser.FirstOrDefault(item => item.Id == Id);
                 BrainStormUser.AvatarImage = fullPathDB;

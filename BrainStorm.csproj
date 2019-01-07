@@ -29,18 +29,14 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Compile Remove="BindingModel\**" />
-    <Compile Remove="ViewModel\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="BindingModel\**" />
-    <Content Remove="ViewModel\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="BindingModel\**" />
-    <EmbeddedResource Remove="ViewModel\**" />
     <None Remove="BindingModel\**" />
-    <None Remove="ViewModel\**" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

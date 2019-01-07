@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 
+
 @Component({
   selector: 'app-tutorial',
   templateUrl: './tutorial.component.html',
@@ -9,6 +10,7 @@ import { CategoryService } from '../services/category.service';
 export class TutorialComponent implements OnInit {
 
   public categories = [];
+  public errorMsg;
 
   constructor(private _categoryService: CategoryService) { }
 
@@ -16,5 +18,4 @@ export class TutorialComponent implements OnInit {
     this._categoryService.getCategory()
       .subscribe(data => this.categories = data);
   }
-
 }

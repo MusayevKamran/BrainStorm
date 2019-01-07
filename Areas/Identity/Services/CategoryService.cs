@@ -2,7 +2,6 @@
 using BrainStorm.Models;
 using BrainStorm.Models.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,13 +57,13 @@ namespace BrainStorm.Areas.Identity.Services
             Task.WaitAll(_context.SaveChangesAsync());
         }
 
-        public List<Category> GetCategory()
+        public List<Category> GetCategories()
         {
             var category = _context.Category.ToList();
             return category;
         }
 
-        public async Task<List<Category>> GetCategoryAsync()
+        public async Task<List<Category>> GetCategoriesAsync()
         {
             var category = await _context.Category.ToListAsync();
             return category;

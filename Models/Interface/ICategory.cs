@@ -7,8 +7,8 @@ namespace BrainStorm.Models.Interface
 {
     public interface ICategory
     {
-        List<Category> GetCategory();
-        Task<List<Category>> GetCategoryAsync();
+        List<Category> GetCategories();
+        Task<List<Category>> GetCategoriesAsync();
 
         Category GetCategoryById(int? Id);
         Task<Category> GetCategoryByIdAsync(int? Id);

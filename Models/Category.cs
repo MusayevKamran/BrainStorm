@@ -11,9 +11,10 @@ namespace BrainStorm.Models
 
         public string Name { get; set; }
 
-        public int Raw { get; set; }
+        public int Row { get; set; }
 
         public int Count { get; set; }
 
+        public List<ArticleCategory> ArticleCategory { get; set; }
     }
 }

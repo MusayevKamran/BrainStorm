@@ -12,7 +12,7 @@ namespace BrainStorm.Areas.Identity.Data
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<BrainStormUser> BrainStormUser { get; set; }
- 
+
 
         public BrainStormDbContext(DbContextOptions<BrainStormDbContext> options) : base(options) { }
 
@@ -33,6 +33,19 @@ namespace BrainStorm.Areas.Identity.Data
                 .HasMany<Comment>(a => a.Comment)
                 .WithOne(b => b.Article)
                 .HasPrincipalKey(c => c.Id);
+
+            builder.Entity<ArticleCategory>()
+                .HasKey(a => new { a.ArticleId, a.CategoryId });
+
+            builder.Entity<ArticleCategory>()
+                .HasOne(a => a.Article)
+                .WithMany(b => b.ArticleCategory)
+                .HasForeignKey(a => a.ArticleId);
+
+            builder.Entity<ArticleCategory>()
+                .HasOne(a => a.Category)
+                .WithMany(b => b.ArticleCategory)
+                .HasForeignKey(a => a.CategoryId);
 
 
             base.OnModelCreating(builder);
