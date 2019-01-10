@@ -19,19 +19,19 @@ namespace BrainStorm.Areas.Identity.Services
             _context = context;
         }
 
-        public bool ArticleExists(int id)
+        public bool Exists(int id)
         {
             return _context.Articles.Any(e => e.Id == id);
         }
 
-        public Article CreateArticle(Article article)
+        public Article Create(Article article)
         {
             _context.Add(article);
             _context.SaveChanges();
             return article;
         }
 
-        public async Task<Article> CreateArticleAsync(Article article)
+        public async Task<Article> CreateAsync(Article article)
         {
             article.URL = $@"{article.Title}_{article.Id}";
             article.CreatedDate = DateTime.Now;
@@ -42,12 +42,12 @@ namespace BrainStorm.Areas.Identity.Services
             return article;
         }
 
-        public void DeleteArticle(int? Id)
+        public void Delete(int? Id)
         {
             _context.Articles.FirstOrDefault(m => m.Id == Id);
         }
 
-        public async Task<Article> DeleteArticleAsync(int? Id)
+        public async Task<Article> DeleteAsync(int? Id)
         {
             Article article = await _context.Articles
                 .FirstOrDefaultAsync(m => m.Id == Id);
@@ -55,7 +55,7 @@ namespace BrainStorm.Areas.Identity.Services
             return article;
         }
 
-        public async Task DeleteArticleConfirmedAsync(int? Id)
+        public async Task DeleteConfirmedAsync(int? Id)
         {
             var article = await _context.Articles.FindAsync(Id);
             var imagePath = article.Picture;
@@ -69,25 +69,25 @@ namespace BrainStorm.Areas.Identity.Services
             Task.WaitAll(_context.SaveChangesAsync());
         }
 
-        public Article GetArticleById(int? Id)
+        public Article GetById(int? Id)
         {
             var article = _context.Articles.FirstOrDefault(m => m.Id == Id);
             return article;
         }
 
-        public async Task<Article> GetArticleByIdAsync(int? Id)
+        public async Task<Article> GetByIdAsync(int? Id)
         {
             var article = await _context.Articles.FirstOrDefaultAsync(m => m.Id == Id);
             return article;
         }
 
-        public List<Article> GetArticles()
+        public List<Article> GetAll()
         {
             var articles = _context.Articles.ToList();
             return articles;
         }
 
-        public async Task<List<Article>> GetArticlesAsync()
+        public async Task<List<Article>> GetAllAsync()
         {
             var articles = await _context.Articles.ToListAsync();
             return articles;
@@ -102,7 +102,7 @@ namespace BrainStorm.Areas.Identity.Services
             return articles;
         }
 
-        public Article UpdateArticle(int? Id, Article article)
+        public Article Update(int? Id, Article article)
         {
             _context.Update(article);
             _context.SaveChanges();
@@ -110,7 +110,7 @@ namespace BrainStorm.Areas.Identity.Services
             return article;
         }
 
-        public async Task<Article> UpdateArticleAsync(int? Id, Article article)
+        public async Task<Article> UpdateAsync(int? Id, Article article)
         {
             article.UpdateDate = DateTime.Now;
             _context.Update(article);

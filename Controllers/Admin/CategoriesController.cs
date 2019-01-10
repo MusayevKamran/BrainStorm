@@ -24,7 +24,7 @@ namespace BrainStorm.Controllers.Admin
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var category = await _categoryService.GetCategoriesAsync();
+            var category = await _categoryService.GetAllAsync();
             return View(category);
         }
 
@@ -36,7 +36,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _categoryService.GetCategoryByIdAsync(id);
+            var category = await _categoryService.GetByIdAsync(id);
 
             if (category == null)
             {
@@ -61,7 +61,7 @@ namespace BrainStorm.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.CreateCategoryAsync(category);
+                await _categoryService.CreateAsync(category);
 
             }
             return View(category);
@@ -99,7 +99,7 @@ namespace BrainStorm.Controllers.Admin
             {
                 try
                 {
-                    await _categoryService.UpdateCategoryAsync(id, category);
+                    await _categoryService.UpdateAsync(id, category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,7 +125,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _categoryService.DeleteCategoryAsync(id);
+            var category = await _categoryService.DeleteAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace BrainStorm.Controllers.Admin
 
         private bool CategoryExists(int id)
         {
-            return _categoryService.CategoryExists(id);
+            return _categoryService.Exists(id);
         }
     }
 }

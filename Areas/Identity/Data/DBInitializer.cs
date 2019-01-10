@@ -1,6 +1,8 @@
 ﻿using BrainStorm.Models;
 using BrainStorm.Models.System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -9,11 +11,15 @@ namespace BrainStorm.Areas.Identity.Data
 {
     public class DBInitializer
     {
-        public static async Task InitializeAsync(BrainStormDbContext context,
+        public static async Task InitializeAsync(IApplicationBuilder app,
+            BrainStormDbContext context,
             UserManager<BrainStormUser> userManager,
             RoleManager<BrainStormRole> roleManager)
         {
             context.Database.EnsureCreated();
+
+            app.ApplicationServices
+                .GetRequiredService<BrainStormDbContext>().Database.Migrate();
 
             string roleADMIN = UserStatus.ADMIN;
             string descADMIN = "This is adminstrator role";

@@ -66,7 +66,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.GetArticleByIdAsync(id);
+            var article = await _articleService.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -81,7 +81,7 @@ namespace BrainStorm.Controllers.Admin
         {
             ArticleViewModel article = new ArticleViewModel()
             {
-                ArticleCategory = _categoryService.GetCategories()
+                ArticleCategory = _categoryService.GetAll()
             };
             return View(article);
         }
@@ -109,7 +109,7 @@ namespace BrainStorm.Controllers.Admin
 
             if (ModelState.IsValid)
             {
-                await _articleService.CreateArticleAsync(article);
+                await _articleService.CreateAsync(article);
                 if (files != null && files.Length > 0)
                 {
                     ImageHelper imageHelper = new ImageHelper(_context);
@@ -148,7 +148,7 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,Category,Content")] Article postArticle, IFormFile files)
         {
-            var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
+            var article = await _articleService.GetByIdAsync(postArticle.Id);
 
             if (id != postArticle.Id)
             {
@@ -164,7 +164,7 @@ namespace BrainStorm.Controllers.Admin
                     article.Row = postArticle.Row;
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
-                    await _articleService.UpdateArticleAsync(id, article);
+                    await _articleService.UpdateAsync(id, article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -196,7 +196,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.DeleteArticleAsync(id);
+            var article = await _articleService.DeleteAsync(id);
 
             if (article == null)
             {
@@ -211,14 +211,14 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _articleService.DeleteArticleConfirmedAsync(id);
+            await _articleService.DeleteConfirmedAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(int id)
         {
-            return _articleService.ArticleExists(id);
+            return _articleService.Exists(id);
         }
     }
 }

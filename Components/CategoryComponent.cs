@@ -17,7 +17,7 @@ namespace BrainStorm.Components
 
         public IViewComponentResult Invoke()
         {
-            return View( _category.GetCategories());
+            return View( _category.GetAll());
         }
     }
 }

@@ -29,7 +29,7 @@ namespace BrainStorm.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             _articleService = new ArticleService(_context);
-            var articles = await _articleService.GetArticlesAsync();
+            var articles = await _articleService.GetAllAsync();
             return View(articles);
         }
 
@@ -42,7 +42,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.GetArticleByIdAsync(id);
+            var article = await _articleService.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -71,7 +71,7 @@ namespace BrainStorm.Controllers.Admin
 
             if (ModelState.IsValid)
             {
-                await _articleService.CreateArticleAsync(article);
+                await _articleService.CreateAsync(article);
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
@@ -101,7 +101,7 @@ namespace BrainStorm.Controllers.Admin
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,ArticleCategory,Content,PostCategory")] Article postArticle, IFormFile files)
         {
             _articleService = new ArticleService(_context);
-            var article = await _articleService.GetArticleByIdAsync(postArticle.Id);
+            var article = await _articleService.GetByIdAsync(postArticle.Id);
 
             if (id != postArticle.Id)
             {
@@ -118,7 +118,7 @@ namespace BrainStorm.Controllers.Admin
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
                     article.PostCategory = postArticle.PostCategory;
-                    await _articleService.UpdateArticleAsync(id, article);
+                    await _articleService.UpdateAsync(id, article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -152,7 +152,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.DeleteArticleAsync(id);
+            var article = await _articleService.DeleteAsync(id);
 
             if (article == null)
             {
@@ -168,7 +168,7 @@ namespace BrainStorm.Controllers.Admin
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             _articleService = new ArticleService(_context);
-            await _articleService.DeleteArticleConfirmedAsync(id);
+            await _articleService.DeleteConfirmedAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -176,7 +176,7 @@ namespace BrainStorm.Controllers.Admin
         private bool ArticleExists(int id)
         {
             _articleService = new ArticleService(_context);
-            return _articleService.ArticleExists(id);
+            return _articleService.Exists(id);
         }
     }
 }

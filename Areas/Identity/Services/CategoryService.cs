@@ -17,12 +17,12 @@ namespace BrainStorm.Areas.Identity.Services
             _context = context;
         }
 
-        public bool CategoryExists(int id)
+        public bool Exists(int id)
         {
             return _context.Category.Any(e => e.Id == id);
         }
 
-        public Category CreateCategory(Category category)
+        public Category Create(Category category)
         {
             category.Count = _context.Category.Any() == false ? 1 : _context.Category.Max(item => item.Count + 1);
             _context.Add(category);
@@ -30,7 +30,7 @@ namespace BrainStorm.Areas.Identity.Services
             return category;
         }
 
-        public async Task<Category> CreateCategoryAsync(Category category)
+        public async Task<Category> CreateAsync(Category category)
         {
             category.Count = _context.Category.Any() == false ? 1 : _context.Category.Max(item => item.Count + 1);
             _context.Add(category);
@@ -38,44 +38,44 @@ namespace BrainStorm.Areas.Identity.Services
             return category;
         }
 
-        public void DeleteCategory(int? Id)
+        public void Delete(int? Id)
         {
             _context.Category.FirstOrDefault(m => m.Id == Id);
         }
 
-        public async Task<Category> DeleteCategoryAsync(int? Id)
+        public async Task<Category> DeleteAsync(int? Id)
         {
             Category category = await _context.Category.FirstOrDefaultAsync(m => m.Id == Id);
 
             return category;
         }
 
-        public async Task DeleteCategoryConfirmedAsync(int? Id)
+        public async Task DeleteConfirmedAsync(int? Id)
         {
             var category = await _context.Category.FindAsync(Id);
             _context.Category.Remove(category);
             Task.WaitAll(_context.SaveChangesAsync());
         }
 
-        public List<Category> GetCategories()
+        public List<Category> GetAll()
         {
             var category = _context.Category.ToList();
             return category;
         }
 
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Category>> GetAllAsync()
         {
             var category = await _context.Category.ToListAsync();
             return category;
         }
 
-        public Category GetCategoryById(int? Id)
+        public Category GetById(int? Id)
         {
             var category = _context.Category.FirstOrDefault(m => m.Id == Id);
             return category;
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int? Id)
+        public async Task<Category> GetByIdAsync(int? Id)
         {
             var category = await _context.Category.FirstOrDefaultAsync(m => m.Id == Id);
             return category;
@@ -93,7 +93,7 @@ namespace BrainStorm.Areas.Identity.Services
 
             foreach (var id in Id)
             {
-                Category category =  _context.Category.FirstOrDefault(m => m.Id == id);
+                Category category = _context.Category.FirstOrDefault(m => m.Id == id);
                 categories.Add(category);
             }
 
@@ -109,11 +109,11 @@ namespace BrainStorm.Areas.Identity.Services
                 Category category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
                 categories.Add(category);
             }
-            
+
             return categories;
         }
 
-        public Category UpdateCategory(int? Id, Category category)
+        public Category Update(int? Id, Category category)
         {
             _context.Update(category);
             _context.SaveChanges();
@@ -121,7 +121,7 @@ namespace BrainStorm.Areas.Identity.Services
             return category;
         }
 
-        public async Task<Category> UpdateCategoryAsync(int? Id, Category category)
+        public async Task<Category> UpdateAsync(int? Id, Category category)
         {
             _context.Update(category);
             await _context.SaveChangesAsync();
