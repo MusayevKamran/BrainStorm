@@ -18,31 +18,30 @@ namespace BrainStorm.Controllers.Admin
     public class BlogsController : Controller
     {
         private readonly BrainStormDbContext _context;
-        ArticleService _articleService;
+        IUnitService _unitService;
 
-        public BlogsController(BrainStormDbContext context)
+        public BlogsController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
+            _unitService = unitService;
         }
 
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            _articleService = new ArticleService(_context);
-            var articles = await _articleService.GetAllAsync();
+            var articles = await _unitService.Article.GetAllAsync();
             return View(articles);
         }
 
         // GET: Blogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            _articleService = new ArticleService(_context);
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _articleService.GetByIdAsync(id);
+            var article = await _unitService.Article.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -65,13 +64,12 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory")] Article article)
         {
-            _articleService = new ArticleService(_context);
             article.PostCategory = PostCategory.Blog;
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
             {
-                await _articleService.CreateAsync(article);
+                await _unitService.Article.CreateAsync(article);
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
@@ -100,8 +98,7 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,ArticleCategory,Content,PostCategory")] Article postArticle, IFormFile files)
         {
-            _articleService = new ArticleService(_context);
-            var article = await _articleService.GetByIdAsync(postArticle.Id);
+            var article = await _unitService.Article.GetByIdAsync(postArticle.Id);
 
             if (id != postArticle.Id)
             {
@@ -118,7 +115,7 @@ namespace BrainStorm.Controllers.Admin
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
                     article.PostCategory = postArticle.PostCategory;
-                    await _articleService.UpdateAsync(id, article);
+                    await _unitService.Article.UpdateAsync(id, article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -145,14 +142,12 @@ namespace BrainStorm.Controllers.Admin
         // GET: Blogs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            _articleService = new ArticleService(_context);
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _articleService.DeleteAsync(id);
+            var article = await _unitService.Article.DeleteAsync(id);
 
             if (article == null)
             {
@@ -167,16 +162,14 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _articleService = new ArticleService(_context);
-            await _articleService.DeleteConfirmedAsync(id);
+            await _unitService.Article.DeleteConfirmedAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(int id)
         {
-            _articleService = new ArticleService(_context);
-            return _articleService.Exists(id);
+            return _unitService.Article.Exists(id);
         }
     }
 }

@@ -42,15 +42,15 @@ namespace BrainStorm.Controllers.Admin
 
                 ArticlesViewModel ArticleCategory = new ArticlesViewModel()
                 {
-                    Id = articles.First().Id,
-                    Title = articles.First().Title,
+                    Id = item.Id,
+                    Title = item.Title,
                     ArticleCategory = category,
-                    //articles.First().ArticleCategory,
-                    PostCategory = articles.First().PostCategory,
-                    Row = articles.First().Row,
-                    CreatedDate = articles.First().CreatedDate,
-                    UpdateDate = articles.First().UpdateDate
+                    PostCategory = item.PostCategory,
+                    Row = item.Row,
+                    CreatedDate = item.CreatedDate,
+                    UpdateDate = item.UpdateDate
                 };
+
                 articlesViewModel.Add(ArticleCategory);
             }
             return View(articlesViewModel);

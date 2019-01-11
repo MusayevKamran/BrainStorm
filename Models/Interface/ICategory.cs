@@ -8,8 +8,5 @@ namespace BrainStorm.Models.Interface
     public interface ICategory : IGeneric<Category>
     {
         Task<ArticleCategory> GetCategoryByIdAsyncExtra(int? Id);
-
-        List<Category> GetCategoryListById(List<int> Id);
-        Task<List<Category>> GetCategoryListByIdAsync(List<int> Id);
     }
 }

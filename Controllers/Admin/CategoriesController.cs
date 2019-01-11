@@ -7,24 +7,25 @@ using Microsoft.EntityFrameworkCore;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
 using BrainStorm.Models.Interface;
+using BrainStorm.Areas.Identity.Services;
 
 namespace BrainStorm.Controllers.Admin
 {
     public class CategoriesController : Controller
     {
         private readonly BrainStormDbContext _context;
-        ICategory _categoryService;
+        IUnitService _unitService;
 
-        public CategoriesController(BrainStormDbContext context, ICategory categoryService)
+        public CategoriesController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
-            _categoryService = categoryService;
+            _unitService = unitService;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var category = await _categoryService.GetAllAsync();
+            var category = await _unitService.Category.GetAllAsync();
             return View(category);
         }
 
@@ -36,7 +37,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _categoryService.GetByIdAsync(id);
+            var category = await _unitService.Category.GetByIdAsync(id);
 
             if (category == null)
             {
@@ -61,7 +62,7 @@ namespace BrainStorm.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.CreateAsync(category);
+                await _unitService.Category.CreateAsync(category);
 
             }
             return View(category);
@@ -99,7 +100,7 @@ namespace BrainStorm.Controllers.Admin
             {
                 try
                 {
-                    await _categoryService.UpdateAsync(id, category);
+                    await _unitService.Category.UpdateAsync(id, category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,7 +126,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _categoryService.DeleteAsync(id);
+            var category = await _unitService.Category.DeleteAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -147,7 +148,7 @@ namespace BrainStorm.Controllers.Admin
 
         private bool CategoryExists(int id)
         {
-            return _categoryService.Exists(id);
+            return _unitService.Category.Exists(id);
         }
     }
 }
