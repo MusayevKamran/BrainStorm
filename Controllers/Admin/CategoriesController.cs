@@ -65,7 +65,7 @@ namespace BrainStorm.Controllers.Admin
                 await _unitService.Category.CreateAsync(category);
 
             }
-            return View(category);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Edit/5
