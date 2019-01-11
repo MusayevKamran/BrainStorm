@@ -9,6 +9,7 @@ namespace BrainStorm.Areas.Identity.Services
         {
             services.AddScoped<IArticle, ArticleService>();
             services.AddScoped<ICategory, CategoryService>();
+            services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IUser, UserService>();
 
             // Add all other services here.

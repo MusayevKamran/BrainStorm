@@ -20,27 +20,25 @@ namespace BrainStorm.Controllers.Admin
     public class TutorialsController : Controller
     {
         private readonly BrainStormDbContext _context;
-        IArticle _articleService;
-        ICategory _categoryService;
+        IUnitService _unitService;
 
 
-        public TutorialsController(BrainStormDbContext context, IArticle articleService, ICategory categoryService)
+        public TutorialsController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
-            _articleService = articleService;
-            _categoryService = categoryService;
+            _unitService = unitService;
         }
 
         // GET: Articles
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var articles = await _articleService.GetUserArticlesAsync(Guid.Parse(userId));
+            var articles = await _unitService.Article.GetUserArticlesAsync(Guid.Parse(userId));
 
             var articlesViewModel = new List<ArticlesViewModel>();
             foreach (var item in articles)
             {
-                var category = await _categoryService.GetCategoryByIdAsyncExtra(item.Id);
+                var category = await _unitService.Category.GetCategoryByIdAsyncExtra(item.Id);
 
                 ArticlesViewModel ArticleCategory = new ArticlesViewModel()
                 {
@@ -51,7 +49,7 @@ namespace BrainStorm.Controllers.Admin
                     PostCategory = articles.First().PostCategory,
                     Row = articles.First().Row,
                     CreatedDate = articles.First().CreatedDate,
-                    UpdateDate = articles.First().UpdateDate       
+                    UpdateDate = articles.First().UpdateDate
                 };
                 articlesViewModel.Add(ArticleCategory);
             }
@@ -66,7 +64,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.GetByIdAsync(id);
+            var article = await _unitService.Article.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -81,7 +79,7 @@ namespace BrainStorm.Controllers.Admin
         {
             ArticleViewModel article = new ArticleViewModel()
             {
-                ArticleCategory = _categoryService.GetAll()
+                ArticleCategory = _unitService.Category.GetAll()
             };
             return View(article);
         }
@@ -97,10 +95,10 @@ namespace BrainStorm.Controllers.Admin
             UserService userService = new UserService(_context);
 
 
-            article.ArticleCategory = new List<ArticleCategory>() {
-                new ArticleCategory { CategoryId = CategoryId.First() },
-                new ArticleCategory { CategoryId = CategoryId.Last() }
-            };
+            //article.ArticleCategory = new List<ArticleCategory>() {
+            //    new ArticleCategory { CategoryId = CategoryId.First() },
+            //    new ArticleCategory { CategoryId = CategoryId.Last() }
+            //};
 
             article.PostCategory = PostCategory.Tutorial;
             //article.Category = category;
@@ -109,7 +107,7 @@ namespace BrainStorm.Controllers.Admin
 
             if (ModelState.IsValid)
             {
-                await _articleService.CreateAsync(article);
+                await _unitService.Article.CreateAsync(article);
                 if (files != null && files.Length > 0)
                 {
                     ImageHelper imageHelper = new ImageHelper(_context);
@@ -121,7 +119,7 @@ namespace BrainStorm.Controllers.Admin
         }
 
         // GET: Articles/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -148,7 +146,7 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,Category,Content")] Article postArticle, IFormFile files)
         {
-            var article = await _articleService.GetByIdAsync(postArticle.Id);
+            var article = await _unitService.Article.GetByIdAsync(postArticle.Id);
 
             if (id != postArticle.Id)
             {
@@ -164,7 +162,7 @@ namespace BrainStorm.Controllers.Admin
                     article.Row = postArticle.Row;
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
-                    await _articleService.UpdateAsync(id, article);
+                    await _unitService.Article.UpdateAsync(id, article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -196,7 +194,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _articleService.DeleteAsync(id);
+            var article = await _unitService.Article.DeleteAsync(id);
 
             if (article == null)
             {
@@ -211,14 +209,14 @@ namespace BrainStorm.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _articleService.DeleteConfirmedAsync(id);
+            await _unitService.Article.DeleteConfirmedAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(int id)
         {
-            return _articleService.Exists(id);
+            return _unitService.Article.Exists(id);
         }
     }
 }

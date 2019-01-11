@@ -18,8 +18,8 @@ namespace BrainStorm.Areas.Identity.Data
         {
             context.Database.EnsureCreated();
 
-            app.ApplicationServices
-                .GetRequiredService<BrainStormDbContext>().Database.Migrate();
+            //app.ApplicationServices
+            //    .GetRequiredService<BrainStormDbContext>().Database.Migrate();
 
             string roleADMIN = UserStatus.ADMIN;
             string descADMIN = "This is adminstrator role";
