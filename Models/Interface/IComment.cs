@@ -5,16 +5,8 @@ using System.Threading.Tasks;
 
 namespace BrainStorm.Models.Interface
 {
-    interface IComment
+    public interface IComment : IGeneric<Comment>
     {
-        void CreateComment();
 
-        Comment GetCommentById();
-
-        IList<Comment> GetAllComments();
-
-        Comment UpdateComment(string id);
-
-        void DeletCommonet(string id);
     }
 }

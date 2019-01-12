@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BrainStorm.Areas.Identity.Data;
+﻿using BrainStorm.Areas.Identity.Data;
+using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Models;
 using BrainStorm.Models.Interface;
-using BrainStorm.Areas.Identity.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers.Admin
 {
@@ -58,12 +55,11 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Row,Count")] Category category)
+        public IActionResult Create([Bind("Id,Name,Row,Count")] Category category)
         {
             if (ModelState.IsValid)
             {
-                await _unitService.Category.CreateAsync(category);
-
+                _unitService.Category.Create(category);
             }
             return RedirectToAction(nameof(Index));
         }
@@ -76,7 +72,8 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _unitService.Category.GetByIdAsync(id);
+
             if (category == null)
             {
                 return NotFound();
@@ -89,18 +86,17 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Row,Count")] Category category)
+        public IActionResult Edit(int id, [Bind("Id,Name,Row,Count")] Category category)
         {
             if (id != category.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _unitService.Category.UpdateAsync(id, category);
+                    _unitService.Category.Update(category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,7 +122,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var category = await _unitService.Category.DeleteAsync(id);
+            var category = await _unitService.Category.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -138,11 +134,9 @@ namespace BrainStorm.Controllers.Admin
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Category category)
         {
-            var category = await _context.Category.FindAsync(id);
             _context.Category.Remove(category);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

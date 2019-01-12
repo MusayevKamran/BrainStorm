@@ -94,20 +94,13 @@ namespace BrainStorm.Controllers.Admin
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             UserService userService = new UserService(_context);
 
-
-            //article.ArticleCategory = new List<ArticleCategory>() {
-            //    new ArticleCategory { CategoryId = CategoryId.First() },
-            //    new ArticleCategory { CategoryId = CategoryId.Last() }
-            //};
-
             article.PostCategory = PostCategory.Tutorial;
-            //article.Category = category;
             article.BrainStormUser = await userService.GetUsersByIdAsync(userId);
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
             {
-                await _unitService.Article.CreateAsync(article);
+                _unitService.Article.Create(article);
                 if (files != null && files.Length > 0)
                 {
                     ImageHelper imageHelper = new ImageHelper(_context);
@@ -162,7 +155,7 @@ namespace BrainStorm.Controllers.Admin
                     article.Row = postArticle.Row;
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
-                    await _unitService.Article.UpdateAsync(id, article);
+                    _unitService.Article.Update(article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -194,7 +187,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _unitService.Article.DeleteAsync(id);
+            var article = await _unitService.Article.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -207,10 +200,9 @@ namespace BrainStorm.Controllers.Admin
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Article article)
         {
-            await _unitService.Article.DeleteConfirmedAsync(id);
-
+            _unitService.Article.DeleteConfirmed(article);
             return RedirectToAction(nameof(Index));
         }
 

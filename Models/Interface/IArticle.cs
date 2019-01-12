@@ -7,6 +7,7 @@ namespace BrainStorm.Models.Interface
 {
     public interface IArticle : IGeneric<Article>
     {
+        bool Exists(int id);
         Task<List<Article>> GetUserArticlesAsync(Guid Id);
     }
 }

@@ -1,9 +1,6 @@
 ﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BrainStorm.Areas.Identity.Services
 {
@@ -16,6 +13,8 @@ namespace BrainStorm.Areas.Identity.Services
         }
         private IArticle _article;
         public ICategory _category;
+        public IComment _comment;
+        public IUser _user;
 
         public IArticle Article
         {
@@ -29,6 +28,20 @@ namespace BrainStorm.Areas.Identity.Services
             get
             {
                 return _category ?? (_category = new CategoryService(_context));
+            }
+        }
+        public IComment Comment
+        {
+            get
+            {
+                return _comment ?? (_comment = new CommentService(_context));
+            }
+        }
+        public IUser User
+        {
+            get
+            {
+                return _user ?? (_user = new UserService(_context));
             }
         }
 

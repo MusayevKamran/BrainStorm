@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using BrainStorm.Areas.Identity.Data;
+﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
-using BrainStorm.Models;
+using BrainStorm.Models.Interface;
 using BrainStorm.Models.System;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers
 {
@@ -22,22 +17,22 @@ namespace BrainStorm.Controllers
     public class UserController : Controller
     {
         BrainStormDbContext _context;
-        UserService _userService;
+        IUnitService _unitService;
         private readonly UserManager<BrainStormUser> _userManager;
 
-        public UserController(BrainStormDbContext context, UserManager<BrainStormUser> userManager)
+        public UserController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
-            _userManager = userManager;
+            _unitService = unitService;
         }
 
         [Route("admin/user")]
         public IActionResult Index()
         {
             ViewData["Message"] = "Xos Gelmisiniz";
-            _userService = new UserService(_context);
+
             var Id = _userManager.GetUserId(HttpContext.User);
-            BrainStormUser BrainStormUser = _userService.GetUsersById(Guid.Parse(Id));
+            BrainStormUser BrainStormUser = _unitService.User.GetUsersById(Guid.Parse(Id));
             if (BrainStormUser.AvatarImage == null)
             {
                 BrainStormUser.AvatarImage = "images/user/default_user.png";
@@ -68,8 +63,7 @@ namespace BrainStorm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Row,Category,Content,PostCategory")] BrainStormUser BrainStormUser, IFormFile files)
         {
-            _userService = new UserService(_context);
-            var user = await _userService.GetUsersByIdAsync(BrainStormUser.Id);
+            var user = await _unitService.User.GetUsersByIdAsync(BrainStormUser.Id);
 
             if (id != BrainStormUser.Id)
             {
@@ -80,7 +74,7 @@ namespace BrainStorm.Controllers
             {
                 try
                 {
-                    await _userService.UpdateUsersAsync(id, user);
+                    await _unitService.User.UpdateUsersAsync(id, user);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -107,8 +101,7 @@ namespace BrainStorm.Controllers
 
         private bool UsersExists(Guid id)
         {
-            _userService = new UserService(_context);
-            return _userService.UsersExists(id);
+            return _unitService.User.UsersExists(id);
         }
     }
 }

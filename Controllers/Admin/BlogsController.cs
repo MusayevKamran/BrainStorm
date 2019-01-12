@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BrainStorm.Areas.Identity.Data;
-using BrainStorm.Models;
+﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Helpers;
-using Microsoft.AspNetCore.Http;
+using BrainStorm.Models;
+using BrainStorm.Models.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BrainStorm.Controllers.Admin
 {
@@ -62,28 +60,38 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory")] Article article)
+        public IActionResult Create([Bind("Id,Title,URL,Row,Category,Content,Picture,PostCategory")] Article article, IFormFile files)
         {
             article.PostCategory = PostCategory.Blog;
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
             {
-                await _unitService.Article.CreateAsync(article);
+                if (ModelState.IsValid)
+                {
+                    _unitService.Article.Create(article);
+                    if (files != null && files.Length > 0)
+                    {
+                        ImageHelper imageHelper = new ImageHelper(_context);
+                        imageHelper.UpdateImage(article.Id, files, "article", article);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
         }
 
         // GET: Blogs/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles.FindAsync(id);
+            var article = await _unitService.Article.GetByIdAsync(id);
             if (article == null)
             {
                 return NotFound();
@@ -115,7 +123,7 @@ namespace BrainStorm.Controllers.Admin
                     article.ArticleCategory = postArticle.ArticleCategory;
                     article.Content = postArticle.Content;
                     article.PostCategory = postArticle.PostCategory;
-                    await _unitService.Article.UpdateAsync(id, article);
+                    _unitService.Article.Update(article);
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -147,7 +155,7 @@ namespace BrainStorm.Controllers.Admin
                 return NotFound();
             }
 
-            var article = await _unitService.Article.DeleteAsync(id);
+            var article = await _unitService.Article.GetByIdAsync(id);
 
             if (article == null)
             {
@@ -160,10 +168,9 @@ namespace BrainStorm.Controllers.Admin
         // POST: Blogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Article article)
         {
-            await _unitService.Article.DeleteConfirmedAsync(id);
-
+            _unitService.Article.DeleteConfirmed(article);
             return RedirectToAction(nameof(Index));
         }
 
