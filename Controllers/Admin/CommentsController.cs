@@ -54,7 +54,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Count,Content,CreatedDate")] Comment comment)
+        public IActionResult Create([Bind("Id,Count,Content,CreatedDate")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Count,Content,CreatedDate")] Comment comment)
+        public IActionResult Edit(Guid id, [Bind("Id,Count,Content,CreatedDate")] Comment comment)
         {
             if (id != comment.Id)
             {
@@ -136,7 +136,7 @@ namespace BrainStorm.Controllers.Admin
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Comment comment)
+        public IActionResult DeleteConfirmed(Comment comment)
         {
             _unitService.Comment.DeleteConfirmed(comment);
             //await _context.SaveChangesAsync();
