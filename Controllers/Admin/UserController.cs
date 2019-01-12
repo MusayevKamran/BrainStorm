@@ -20,10 +20,12 @@ namespace BrainStorm.Controllers
         IUnitService _unitService;
         private readonly UserManager<BrainStormUser> _userManager;
 
-        public UserController(BrainStormDbContext context, IUnitService unitService)
+        public UserController(BrainStormDbContext context, IUnitService unitService,
+            UserManager<BrainStormUser> userManager)
         {
             _context = context;
             _unitService = unitService;
+            _userManager = userManager;
         }
 
         [Route("admin/user")]
