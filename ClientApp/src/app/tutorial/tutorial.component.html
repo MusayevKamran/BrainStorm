@@ -1,7 +1,9 @@
 <div style="width: 25%;display: inline-block; vertical-align: top;">
 
   <ul *ngFor="let category of categories">
-    <a routerLink="{{category.id}}" routerLinkActive="active">{{category.name}}</a>
+    <li>
+      <a [routerLink]="{{category.name}}" routerLinkActive="active">{{category.name}}</a>
+    </li>
   </ul>
 
   <ul class="header-ul">
