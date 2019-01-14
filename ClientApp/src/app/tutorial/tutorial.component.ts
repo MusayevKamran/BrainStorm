@@ -16,6 +16,6 @@ export class TutorialComponent implements OnInit {
 
   ngOnInit() {
     this._categoryService.getCategory()
-      .subscribe(data => this.categories = data);
+      .subscribe(data => { this.categories = data, console.log(data) });
   }
 }

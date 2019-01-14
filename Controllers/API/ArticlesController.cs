@@ -33,7 +33,7 @@ namespace BrainStorm.Controllers.API
 
         // GET: api/Articles/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetArticle([FromRoute] Guid id)
+        public async Task<IActionResult> GetArticle([FromRoute] int id)
         {
             var article = await _context.Articles.FindAsync(id);
 
@@ -87,7 +87,7 @@ namespace BrainStorm.Controllers.API
 
         // DELETE: api/Articles/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArticle([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteArticle([FromRoute] int id)
         {
             var article = await _context.Articles.FindAsync(id);
             if (article == null)
