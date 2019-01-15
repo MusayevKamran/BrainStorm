@@ -42,6 +42,7 @@ namespace BrainStorm
                 options.LogoutPath = "/Login";
                 options.ExpireTimeSpan = TimeSpan.FromHours(10);
             });
+            services.AddCors();
 
 
             services.AddDbContext<BrainStormDbContext>(options =>
@@ -113,6 +114,8 @@ namespace BrainStorm
             app.UseAuthentication();
 
             app.UseSpaStaticFiles();
+
+            app.UseCors( x=>x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {

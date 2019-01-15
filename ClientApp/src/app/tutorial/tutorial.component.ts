@@ -10,12 +10,17 @@ import { CategoryService } from '../services/category.service';
 export class TutorialComponent implements OnInit {
 
   public categories = [];
-  public errorMsg;
+  public errorMsg: any;
 
   constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
-    this._categoryService.getCategory()
-      .subscribe(data => { this.categories = data, console.log(data) });
+    this.getValue();
+  }
+
+  getValue() {
+    this._categoryService.getCategory().subscribe(response => {
+      this.categories = response, console.log(response);
+      }, error => console.log(error));
   }
 }
