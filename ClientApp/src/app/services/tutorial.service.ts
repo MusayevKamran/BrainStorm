@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ITutorial } from '../interface/tutorial';
+import { environment } from 'src/environments/environment';
 
 
 
 @Injectable()
 export class TutorialService {
 
-  private _Url = 'http://localhost:2924/';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   getTutorial(): Observable<ITutorial[]> {
-    return this.http.get<ITutorial[]>(this._Url + 'api/articles');
+    return this.http.get<ITutorial[]>(this.baseUrl + 'articles');
   }
 }
