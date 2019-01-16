@@ -28,7 +28,9 @@ import { CategoryModule } from './category/category.module';
       TutorialModule,
    ],
    providers: [
-      AlertifyService
+      AlertifyService,
+      CategoryService,
+      TutorialService
    ],
    bootstrap: [
       AppComponent

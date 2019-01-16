@@ -19,7 +19,8 @@ export class CategoryComponent implements OnInit {
 
   getValue() {
     this._categoryService.getCategory().subscribe(response => {
-      this.categories = response, console.log(response);
+      this.categories = response,
+      console.log(response);
       }, error => console.log(error));
   }
 

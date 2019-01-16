@@ -3,6 +3,6 @@
 </p>
 <ul *ngFor="let category of categories">
   <li>
-    <a >{{category.name}}</a>
+      <a routerLink="{{category.name}}" routerLinkActive="active">{{category.name}}</a>
   </li>
 </ul>

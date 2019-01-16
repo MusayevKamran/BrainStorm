@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TutorialRoutingModule } from './tutorial-routing.module';
 import { TutorialComponent } from './tutorial.component';
 import { CategoryModule } from '../category/category.module';
-import { TutorialService } from '../services/tutorial.service';
 import { HtmlModule } from './html/html.module';
 
 
@@ -15,10 +14,10 @@ import { HtmlModule } from './html/html.module';
     HtmlModule
   ],
   declarations: [
-    TutorialComponent,
+    TutorialComponent
   ],
-  providers : [
-    TutorialService,
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
   ],
