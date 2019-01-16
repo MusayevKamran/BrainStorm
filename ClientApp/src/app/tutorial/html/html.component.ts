@@ -11,9 +11,6 @@ import { Component, OnInit } from '@angular/core';
 export class HtmlComponent implements OnInit {
   constructor() { }
 
-  ngOnInit() {
-  }
-
   htmlUrlName = [
     { url: 'html-home', name: 'Home' },
     { url: 'html-introduction', name: 'Introduction' },
@@ -28,12 +25,12 @@ export class HtmlComponent implements OnInit {
     { url: 'html-tables', name: 'Tables' },
     { url: 'html-lists', name: 'Lists' },
     { url: 'html-forms', name: 'Forms' },
-    { url: 'html-iframes', name: 'Iframes' },
-    
+    { url: 'html-iframes', name: 'Iframes' },  
     { url: 'html-javascript', name: 'Javascript' },
     { url: 'html-layout', name: 'Layout' },
     { url: 'html-head', name: 'Head' },
-
-
   ];
+
+  ngOnInit() {
+  }
 }

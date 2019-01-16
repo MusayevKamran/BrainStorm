@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../services/category.service';
-
 
 @Component({
   selector: 'app-tutorial',
@@ -9,18 +7,10 @@ import { CategoryService } from '../services/category.service';
 })
 export class TutorialComponent implements OnInit {
 
-  public categories = [];
-  public errorMsg: any;
-
-  constructor(private _categoryService: CategoryService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.getValue();
+
   }
 
-  getValue() {
-    this._categoryService.getCategory().subscribe(response => {
-      this.categories = response, console.log(response);
-      }, error => console.log(error));
-  }
 }

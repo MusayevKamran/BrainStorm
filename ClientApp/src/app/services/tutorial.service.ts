@@ -8,11 +8,11 @@ import { ITutorial } from '../interface/tutorial';
 @Injectable()
 export class TutorialService {
 
-  private _url: string = "http://localhost:2924/api/articles";
+  private _Url = 'http://localhost:2924/';
 
   constructor(private http: HttpClient) { }
 
-  getTutorial(): Observable<ITutorial> {
-    return this.http.get<ITutorial>(this._url);
+  getTutorial(): Observable<ITutorial[]> {
+    return this.http.get<ITutorial[]>(this._Url + 'api/articles');
   }
 }

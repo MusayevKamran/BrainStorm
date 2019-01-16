@@ -11,21 +11,27 @@ import { HeaderComponent } from './common/header/header.component';
 import { TutorialModule } from './tutorial/tutorial.module';
 import { TutorialService } from './services/tutorial.service';
 import { CategoryService } from './services/category.service';
+import { AlertifyService } from './services/alertify.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
+import { CategoryModule } from './category/category.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-
-    HeaderModule,
-    TutorialModule
-  ],
-  providers: [TutorialService, CategoryService],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      HeaderComponent
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      AppRoutingModule,
+      HeaderModule,
+      TutorialModule,
+   ],
+   providers: [
+      AlertifyService
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

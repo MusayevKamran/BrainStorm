@@ -115,7 +115,8 @@ namespace BrainStorm
 
             app.UseSpaStaticFiles();
 
-            app.UseCors( x=>x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
