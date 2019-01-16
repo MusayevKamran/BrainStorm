@@ -4,6 +4,7 @@ import { TutorialRoutingModule } from './tutorial-routing.module';
 import { TutorialComponent } from './tutorial.component';
 import { CategoryModule } from '../category/category.module';
 import { HtmlModule } from './html/html.module';
+import { TutorialService } from '../services/tutorial.service';
 
 
 @NgModule({
@@ -15,6 +16,9 @@ import { HtmlModule } from './html/html.module';
   ],
   declarations: [
     TutorialComponent
+  ],
+  providers: [
+    TutorialService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

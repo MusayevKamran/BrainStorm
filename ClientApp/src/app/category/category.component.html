@@ -1,8 +1,5 @@
-<p>
-  category works!
-</p>
 <ul *ngFor="let category of categories">
-  <li>
-      <a routerLink="{{category.name}}" routerLinkActive="active">{{category.name}}</a>
+  <li routerLinkActive="active">
+      <a routerLink="{{category.name}}">{{category.name}}</a>
   </li>
 </ul>
