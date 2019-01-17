@@ -16,4 +16,8 @@ export class TutorialService {
   getTutorial(): Observable<ITutorial[]> {
     return this.http.get<ITutorial[]>(this.baseUrl + 'articles');
   }
+
+  getTutorialById(id): Observable<ITutorial> {
+    return this.http.get<ITutorial>(this.baseUrl + 'articles' + id);
+  }
 }
