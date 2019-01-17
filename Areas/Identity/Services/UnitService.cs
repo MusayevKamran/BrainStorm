@@ -13,6 +13,7 @@ namespace BrainStorm.Areas.Identity.Services
         }
         private IArticle _article;
         public ICategory _category;
+        public IArticleCategory _articleCategory;
         public IComment _comment;
         public IUser _user;
 
@@ -28,6 +29,13 @@ namespace BrainStorm.Areas.Identity.Services
             get
             {
                 return _category ?? (_category = new CategoryService(_context));
+            }
+        }
+        public IArticleCategory ArticleCategory
+        {
+            get
+            {
+                return _articleCategory ?? (_articleCategory = new ArticleCategoryService(_context));
             }
         }
         public IComment Comment
