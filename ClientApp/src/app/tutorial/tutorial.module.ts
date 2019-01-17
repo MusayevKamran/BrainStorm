@@ -2,26 +2,28 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TutorialRoutingModule } from './tutorial-routing.module';
 import { TutorialComponent } from './tutorial.component';
-import { CategoryModule } from '../category/category.module';
 import { HtmlModule } from './html/html.module';
 import { TutorialService } from '../services/tutorial.service';
-import { CategoryComponent } from '../category/category.component';
+import { CategoryComponent } from './category/category.component';
+import { CategoryService } from '../services/category.service';
+import { ContextComponent } from './context/context.component';
+
 
 
 @NgModule({
   imports: [
     CommonModule,
     TutorialRoutingModule,
-    CategoryModule,
-    HtmlModule,
-    CategoryModule
+    HtmlModule
   ],
   declarations: [
     TutorialComponent,
-    CategoryComponent
+    CategoryComponent,
+    ContextComponent
   ],
   providers: [
-    TutorialService
+    TutorialService,
+    CategoryService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
