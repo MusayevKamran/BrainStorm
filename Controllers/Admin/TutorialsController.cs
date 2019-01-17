@@ -79,7 +79,7 @@ namespace BrainStorm.Controllers.Admin
         {
             ArticleViewModel article = new ArticleViewModel()
             {
-                ArticleCategory = _unitService.Category.GetAll()
+                Category = _unitService.Category.GetAll()
             };
             return View(article);
         }
@@ -89,13 +89,18 @@ namespace BrainStorm.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Row,Content,BrainStormUser")] Article article, List<int> CategoryId, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
+        public async Task<IActionResult> Create([Bind("Id,Title,Row,Content")] Article article, int CategoryId, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
         {
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            UserService userService = new UserService(_context);
 
+            List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
+            var category = await _unitService.Category.GetByIdAsync(CategoryId);
+            ArticleCategory cat = new ArticleCategory { Category = category };
+            articleCategory.Add(cat);
+
+            article.ArticleCategory = articleCategory;
             article.PostCategory = PostCategory.Tutorial;
-            article.BrainStormUser = await userService.GetUsersByIdAsync(userId);
+            article.BrainStormUser = await _unitService.User.GetUsersByIdAsync(userId);
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
             if (ModelState.IsValid)
