@@ -5,6 +5,7 @@ import { TutorialComponent } from './tutorial.component';
 import { CategoryModule } from '../category/category.module';
 import { HtmlModule } from './html/html.module';
 import { TutorialService } from '../services/tutorial.service';
+import { CategoryComponent } from '../category/category.component';
 
 
 @NgModule({
@@ -12,10 +13,12 @@ import { TutorialService } from '../services/tutorial.service';
     CommonModule,
     TutorialRoutingModule,
     CategoryModule,
-    HtmlModule
+    HtmlModule,
+    CategoryModule
   ],
   declarations: [
-    TutorialComponent
+    TutorialComponent,
+    CategoryComponent
   ],
   providers: [
     TutorialService
