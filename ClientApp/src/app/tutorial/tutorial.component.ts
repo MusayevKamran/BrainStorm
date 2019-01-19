@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ICategory } from '../interface/category';
 
 @Component({
   selector: 'app-tutorial',
