@@ -14,11 +14,10 @@ import { CategoryService } from '../services/category.service';
     CategoryComponent
   ],
   providers: [
-    CategoryService,
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
+ ],
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA
+  // ],
   exports: [
   ],
 })

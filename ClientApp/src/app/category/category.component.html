@@ -1,5 +1,29 @@
-<ul *ngFor="let category of categories">
+<!-- <ul *ngFor="let category of categories">
   <li routerLinkActive="active">
-      <a routerLink="{{category.name}}">{{category.name}}</a>
+      <a routerLink="{{category.name}}">{{category.name}} test </a>
   </li>
-</ul>
+</ul> -->
+
+test
+<header>
+  <ul class="header-ul">
+    <li>
+      <a routerLink="home" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a routerLink="tutorial" routerLinkActive="active">Tutorail</a>
+    </li>
+    <li>
+      <a routerLink="about" routerLinkActive="active">About</a>
+    </li>
+    <li>
+      <a routerLink="admin" routerLinkActive="active" target="_parent">Login</a>
+    </li>
+  </ul>
+</header>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+<footer style="margin-bottom: 100px"></footer>

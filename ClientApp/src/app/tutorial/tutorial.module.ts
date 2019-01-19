@@ -11,14 +11,13 @@ import { TutorialService } from '../services/tutorial.service';
   imports: [
     CommonModule,
     TutorialRoutingModule,
-    CategoryModule,
-    HtmlModule
-  ],
+    HtmlModule,
+    ],
   declarations: [
     TutorialComponent
   ],
   providers: [
-    TutorialService
+
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

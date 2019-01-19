@@ -9,19 +9,23 @@ import { CategoryService } from '../services/category.service';
 })
 export class CategoryComponent implements OnInit {
 
-  public categories: ICategory[] = [];
+  language = 'html';
+  content = '<p>test</p>';
+  
+  
+  // categories: ICategory[] = [];
 
-  constructor(private _categoryService: CategoryService) { }
+  // constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.getValue();
+    // this.getValue();
   }
 
-  getValue() {
-    this._categoryService.getCategories().subscribe(response => {
-      this.categories = response,
-      console.log(response);
-      }, error => console.log(error));
-  }
+  // getValue() {
+  //   this._categoryService.getCategories().subscribe(response => {
+  //     this.categories = response,
+  //     console.log(response);
+  //     }, error => console.log(error));
+  // }
 
 }

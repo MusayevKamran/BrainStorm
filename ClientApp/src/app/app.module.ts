@@ -9,22 +9,28 @@ import { HeaderModule } from './common/header/header.module';
 import { HeaderComponent } from './common/header/header.component';
 import { TutorialModule } from './tutorial/tutorial.module';
 import { AlertifyService } from './services/alertify.service';
+import { CategoryModule } from './category/category.module';
+import { CategoryService } from './services/category.service';
+import { TutorialService } from './services/tutorial.service';
 
 
 @NgModule({
    declarations: [
       AppComponent,
-      HeaderComponent
+      HeaderComponent,
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
       HeaderModule,
-      TutorialModule
+      TutorialModule,
+      CategoryModule
    ],
    providers: [
-      AlertifyService
+      AlertifyService,
+      CategoryService,
+      TutorialService
    ],
    bootstrap: [
       AppComponent
