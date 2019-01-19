@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BrainStorm.Models;
 using BrainStorm.Models.System;
-using BrainStorm.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BrainStorm.Areas.Identity.Data
 {

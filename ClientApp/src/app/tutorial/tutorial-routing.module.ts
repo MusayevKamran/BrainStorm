@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HtmlComponent } from './html/html.component';
+import { ContextComponent } from './context/context.component';
 
 
 const routes: Routes = [
   {
     path: 'tutorial', children: [
+      { path: '', component: ContextComponent },
+      { path: 'category/:id', component: ContextComponent },
       { path: 'html', component: HtmlComponent }
     ]
   }

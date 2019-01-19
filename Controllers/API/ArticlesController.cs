@@ -1,5 +1,7 @@
 ﻿using BrainStorm.Areas.Identity.Data;
+using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Models;
+using BrainStorm.Models.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +20,12 @@ namespace BrainStorm.Controllers.API
     public class ArticlesController : ControllerBase
     {
         private readonly BrainStormDbContext _context;
+        private readonly IUnitService _unitService;
 
-        public ArticlesController(BrainStormDbContext context)
+        public ArticlesController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
+            _unitService = unitService;
         }
 
         // GET: api/Articles
@@ -36,6 +40,19 @@ namespace BrainStorm.Controllers.API
         public async Task<IActionResult> GetArticle([FromRoute] int id)
         {
             var article = await _context.Articles.FindAsync(id);
+
+            List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
+            var category = await _unitService.Category.GetByIdAsync(id);
+
+            var arCat = _unitService.ArticleCategory.findByArticleID(id);
+
+            ArticleCategory cat = new ArticleCategory {
+                Article = article,
+                Category = category
+            };
+            articleCategory.Add(arCat);
+
+            article.ArticleCategory = articleCategory;
 
             if (article == null)
             {

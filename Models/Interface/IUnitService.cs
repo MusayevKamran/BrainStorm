@@ -8,6 +8,7 @@ namespace BrainStorm.Models.Interface
     {
         IArticle Article { get; }
         ICategory Category { get; }
+        IArticleCategory ArticleCategory { get; }
         IComment Comment { get; }
         IUser User { get; }
 
