@@ -7,19 +7,23 @@ import { CategoryComponent } from './category/category.component';
 import { ContextComponent } from './context/context.component';
 import { TutorialService } from '../shared/services/tutorial.service';
 import { CategoryService } from '../shared/services/category.service';
-
-
+import { TutorialHoverDirective } from '../shared/directive/tutorial-hover.directive';
+import { SearchPipe } from '../shared/pipe/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     TutorialRoutingModule,
     HtmlModule,
+    FormsModule
   ],
   declarations: [
     TutorialComponent,
     CategoryComponent,
-    ContextComponent
+    ContextComponent,
+    TutorialHoverDirective,
+    SearchPipe
   ],
   providers: [
     TutorialService,

@@ -28,3 +28,10 @@
 a{
     color: black;
 }
+
+.hovered{
+   
+    transform: scale(1.13);
+    z-index: 1000;
+        color: red!important;
+}

@@ -11,19 +11,20 @@ import { CategoryService } from './shared/services/category.service';
 import { TutorialService } from './shared/services/tutorial.service';
 import { HeaderComponent } from './tutorial/common/header/header.component';
 import { HeaderModule } from './tutorial/common/header/header.module';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
       AppComponent,
-      HeaderComponent
+      HeaderComponent,
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
       HeaderModule,
-      TutorialModule
+      TutorialModule,
+      FormsModule
    ],
    providers: [
       AlertifyService,

@@ -11,7 +11,6 @@ import { ICategory } from 'src/app/shared/interface/category';
 export class CategoryComponent implements OnInit {
   
   categories: ICategory[] = [];
-
   constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
