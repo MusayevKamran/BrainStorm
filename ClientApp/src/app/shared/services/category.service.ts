@@ -13,13 +13,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   getCategories(): Observable<ICategory[]> {
-    return this.http.get<ICategory[]>(this.baseUrl + 'categories', {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers' : 'Origin, X-Requested-With, Content-Type, Accept'
-      })}
-     );
+    return this.http.get<ICategory[]>(this.baseUrl + 'categories');
   }
 
   getCategoryById(id): Observable<ICategory> {
