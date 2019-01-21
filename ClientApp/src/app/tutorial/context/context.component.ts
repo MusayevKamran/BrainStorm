@@ -31,9 +31,9 @@ export class ContextComponent implements OnInit {
     localStorage.key(this.categoryId);
     console.log(this.categoryId);
 
-    this._articleCategory.getArticleCategory()
+    this._articleCategory.getArticlesByCategoryId(this.categoryId)
       .subscribe(response => {
-        this.articleCategory = response,
+          this.articleCategory = response,
           console.log(response);
       }, error => console.log(error));
   }
