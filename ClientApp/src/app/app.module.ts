@@ -12,6 +12,7 @@ import { TutorialService } from './shared/services/tutorial.service';
 import { HeaderComponent } from './tutorial/common/header/header.component';
 import { HeaderModule } from './tutorial/common/header/header.module';
 import { FormsModule } from '@angular/forms';
+import { ArticlecategoryService } from './shared/services/articlecategory.service';
 
 @NgModule({
    declarations: [
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
    providers: [
       AlertifyService,
       CategoryService,
-      TutorialService
+      TutorialService,
+      ArticlecategoryService
    ],
    bootstrap: [
       AppComponent

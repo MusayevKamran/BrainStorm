@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="input-field col s6">
     <input type="search" placeholder="search" [(ngModel)]="searchStr">
@@ -7,6 +6,6 @@
 
 <ul *ngFor="let category of categories | search : searchStr">
   <li routerLinkActive="active">
-    <a routerLink="category/{{category.name}}" appTutorialHover>{{category.name}}</a>
+    <a routerLink="category/{{category.name}}"  appTutorialHover>{{category.name}}</a>
   </li>
 </ul>

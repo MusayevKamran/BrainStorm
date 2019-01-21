@@ -1,6 +1,6 @@
-import { OnInit, Component } from '@angular/core';
-import { CategoryService } from 'src/app/shared/services/category.service';
-import { ICategory } from 'src/app/shared/interface/category';
+import { OnInit, Component, Output } from '@angular/core';
+import { CategoryService } from '../../shared/services/category.service';
+import { ICategory } from '../../shared/interface/category';
 
 
 @Component({
@@ -9,9 +9,10 @@ import { ICategory } from 'src/app/shared/interface/category';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  
+
   categories: ICategory[] = [];
-  searchStr: string = "";
+  searchStr = '';
+
   constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -21,8 +22,12 @@ export class CategoryComponent implements OnInit {
   getValue() {
     this._categoryService.getCategories().subscribe(response => {
       this.categories = response,
-      console.log(response);
-      }, error => console.log(error));
-  }
+      this.categories.forEach(category => {
+        localStorage.setItem(category.name, JSON.stringify(category.id));
+      }),
+        console.log(response);
+    }, error => console.log(error));
 
+
+  }
 }

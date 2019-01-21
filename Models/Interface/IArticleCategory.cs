@@ -7,7 +7,7 @@ namespace BrainStorm.Models.Interface
 {
     public interface IArticleCategory
     {
-        Task<List<ArticleCategory>> findByArticleIDAsync(int id);
-        Task<List<ArticleCategory>> findByCategoryIDAsync(int id);
+        Task<List<ArticleCategory>> getArticleByCategoryIdAsync(int id);
+        Task<List<ArticleCategory>> getCategoriesByArticleIdAsync(int id);
     }
 }

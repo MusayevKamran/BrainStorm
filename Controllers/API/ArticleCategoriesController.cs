@@ -36,7 +36,7 @@ namespace BrainStorm.Controllers.API
         public async Task<ActionResult<List<ArticleCategory>>> GetCategory(int id)
         {
             //var articleCategory = await _context.ArticleCategories.FindAsync(id);
-            var articleCategory = await _unitService.ArticleCategory.findByCategoryIDAsync(id);
+            var articleCategory = await _unitService.ArticleCategory.getCategoriesByArticleIdAsync(id);
 
             if (articleCategory == null)
             {
@@ -48,7 +48,7 @@ namespace BrainStorm.Controllers.API
         [HttpGet("article/{id}")]
         public async Task<ActionResult<List<ArticleCategory>>> GetArticle(int id)
         {
-            var articleCategory = await _unitService.ArticleCategory.findByArticleIDAsync(id);
+            var articleCategory = await _unitService.ArticleCategory.getArticleByCategoryIdAsync(id);
 
             if (articleCategory == null)
             {

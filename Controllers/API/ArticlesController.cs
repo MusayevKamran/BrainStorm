@@ -44,7 +44,7 @@ namespace BrainStorm.Controllers.API
             List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
 
             var category = await _unitService.Category.GetByIdAsync(id);
-            var arCat = await _unitService.ArticleCategory.findByArticleIDAsync(id);
+            var arCat = await _unitService.ArticleCategory.getCategoriesByArticleIdAsync(id);
 
             foreach (var item in arCat)
             {
