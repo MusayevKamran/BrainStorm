@@ -44,10 +44,13 @@ namespace BrainStorm.Controllers.API
             List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
 
             var category = await _unitService.Category.GetByIdAsync(id);
-            var arCat = _unitService.ArticleCategory.findByArticleID(id);
+            var arCat = await _unitService.ArticleCategory.findByArticleIDAsync(id);
 
-            articleCategory.Add(arCat);
-
+            foreach (var item in arCat)
+            {
+                articleCategory.Add(item);
+            }
+          
             article.ArticleCategory = articleCategory;
 
             if (article == null)

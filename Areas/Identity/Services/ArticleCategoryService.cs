@@ -1,30 +1,34 @@
 ﻿using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
 using BrainStorm.Models.Interface;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BrainStorm.Areas.Identity.Services
 {
-    public class ArticleCategoryService : GenericService<ArticleCategory>, IArticleCategory
+    public class ArticleCategoryService : IArticleCategory
     {
-        public ArticleCategoryService(BrainStormDbContext context) : base(context)
-        { }
-
-        public BrainStormDbContext context
+        BrainStormDbContext _context;
+        public ArticleCategoryService(BrainStormDbContext context)
         {
-            get { return _context as BrainStormDbContext; }
+            _context = context;
         }
 
-        public ArticleCategory findByArticleID(int id)
+        public async Task<List<ArticleCategory>> findByArticleIDAsync(int id)
         {
-            var articleCategory = context.ArticleCategories.Where(a => a.ArticleId == id).FirstOrDefault();
+            var articleCategory = await _context.ArticleCategories
+                .Where(a => a.ArticleId == id).ToAsyncEnumerable().ToList();
 
             return articleCategory;
         }
 
-        public ArticleCategory findByCategoryID(int id)
+        public async Task<List<ArticleCategory>> findByCategoryIDAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var articleCategory = await _context.ArticleCategories
+                    .Where(a => a.CategoryId == id).ToAsyncEnumerable().ToList();
+
+            return articleCategory;
         }
     }
 }

@@ -1,8 +1,8 @@
-import { MyHoverDirective } from './tutorial-hover.directive';
+import { TutorialHoverDirective } from './tutorial-hover.directive';
 
-describe('MyHoverDirective', () => {
+describe('TutorialHoverDirective', () => {
   it('should create an instance', () => {
-    const directive = new MyHoverDirective();
+    const directive = new TutorialHoverDirective();
     expect(directive).toBeTruthy();
   });
 });
