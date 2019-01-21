@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticlecategoryService } from '../../shared/services/articlecategory.service';
 import { IArticleCategory } from '../../shared/interface/IArticleCategory';
+import { ITutorial } from 'src/app/shared/interface/tutorial';
+import { TutorialService } from 'src/app/shared/services/tutorial.service';
 
 
 @Component({
@@ -10,17 +12,23 @@ import { IArticleCategory } from '../../shared/interface/IArticleCategory';
   styleUrls: ['./context.component.scss']
 })
 export class ContextComponent implements OnInit {
-  articleCategory: IArticleCategory[] = [];
+
+  articleList: ITutorial[] = [];
   searchStr = '';
 
-  constructor(private route: ActivatedRoute, private _articleCategory: ArticlecategoryService) { }
+  articleCategory: IArticleCategory[] = [];
   categoryName: string;
   categoryId: number;
+
+  constructor(private route: ActivatedRoute,
+    private _articleCategoryService: ArticlecategoryService,
+    private _tutorialService: TutorialService) { }
+
+
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.categoryName = params.id;
-      console.log(params);
     });
 
     this.getValue();
@@ -28,13 +36,21 @@ export class ContextComponent implements OnInit {
 
   getValue() {
     this.categoryId = Number(localStorage.getItem(this.categoryName));
-    localStorage.key(this.categoryId);
-    console.log(this.categoryId);
 
-    this._articleCategory.getArticlesByCategoryId(this.categoryId)
+    this._articleCategoryService.getArticlesByCategoryId(this.categoryId)
       .subscribe(response => {
-          this.articleCategory = response,
-          console.log(response);
+        this.articleCategory.push(response[0]);
+        console.log(this.articleCategory);
+
+        this.articleCategory.forEach(artclCategory => {
+          console.log(artclCategory.articleId);
+
+          this._tutorialService.getTutorialById(artclCategory.articleId).subscribe(article => {
+            this.articleList.push(article),
+              console.log(this.articleList);
+          }, error => console.log(error));
+        });
+
       }, error => console.log(error));
   }
 }

@@ -18,10 +18,10 @@ export class ArticlecategoryService {
   }
 
   getCategoriesByArticleId(id: number): Observable<IArticleCategory[]> {
-    return this.http.get<IArticleCategory[]>(this.baseUrl + 'articlecategories/category' + id);
+    return this.http.get<IArticleCategory[]>(this.baseUrl + 'articlecategories/category/' + id);
   }
 
   getArticlesByCategoryId(id: number): Observable<IArticleCategory> {
-    return this.http.get<IArticleCategory>(this.baseUrl + 'articlecategories/article' + id);
+    return this.http.get<IArticleCategory>(this.baseUrl + 'articlecategories/article/' + id);
   }
 }

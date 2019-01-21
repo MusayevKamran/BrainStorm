@@ -18,6 +18,6 @@ export class TutorialService {
   }
 
   getTutorialById(id): Observable<ITutorial> {
-    return this.http.get<ITutorial>(this.baseUrl + 'articles' + id);
+    return this.http.get<ITutorial>(this.baseUrl + 'articles/' + id);
   }
 }
