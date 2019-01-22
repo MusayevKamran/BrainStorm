@@ -28,6 +28,7 @@ export class ContextComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.categoryName = params.id;
+      console.log(params);
     });
 
     this.getValue();
@@ -48,6 +49,6 @@ export class ContextComponent implements OnInit {
   }
 
   getArticle() {
-    return this.article;
+    console.log("aaaaaaaa");
   }
 }

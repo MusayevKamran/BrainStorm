@@ -20,6 +20,5 @@ export class ArticleComponent implements OnInit {
       this.articleId = params.id;
     });
     this.article.emit();
-    console.log(this.articleId);
   }
 }
