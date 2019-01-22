@@ -15,10 +15,11 @@ namespace BrainStorm.Areas.Identity.Services
             _context = context;
         }
 
-        public async Task<List<ArticleCategory>> getCategoriesByArticleIdAsync(int id)
+        public async Task<List<ArticleCategory>> getCategoryByArticleIdAsync(int id)
         {
             var articleCategory = await _context.ArticleCategories
-                .Where(a => a.ArticleId == id).ToAsyncEnumerable().ToList();
+                .Where(a => a.ArticleId == id)
+                .ToAsyncEnumerable().ToList();
 
             return articleCategory;
         }
@@ -26,7 +27,8 @@ namespace BrainStorm.Areas.Identity.Services
         public async Task<List<ArticleCategory>> getArticleByCategoryIdAsync(int id)
         {
             var articleCategory = await _context.ArticleCategories
-                    .Where(a => a.CategoryId == id).ToAsyncEnumerable().ToList();
+                    .Where(a => a.CategoryId == id)
+                    .ToAsyncEnumerable().ToList();
 
             return articleCategory;
         }

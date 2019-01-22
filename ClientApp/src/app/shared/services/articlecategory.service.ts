@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { IArticleCategory } from '../interface/IArticleCategory';
 import { HttpClient } from '@angular/common/http';
+import { IArticleCategory } from '../interface/article-category';
 
 @Injectable({
   providedIn: 'root'

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BrainStorm.Areas.Identity.Data;
 using BrainStorm.Models;
+using BrainStorm.Models.Interface;
 
 namespace BrainStorm.Controllers.API
 {
@@ -15,37 +16,50 @@ namespace BrainStorm.Controllers.API
     public class CategoriesController : ControllerBase
     {
         private readonly BrainStormDbContext _context;
+        private readonly IUnitService _unitService;
 
-        public CategoriesController(BrainStormDbContext context)
+        public CategoriesController(BrainStormDbContext context, IUnitService unitService)
         {
             _context = context;
+            _unitService = unitService;
         }
 
         // GET: api/Categories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            return await _context.Category.ToListAsync();
+            return await _unitService.Category.GetAllAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<IActionResult> GetCategory([FromRoute] int id)
         {
-            var category = await _context.Category.FindAsync(id);
+            var category = await _unitService.Category.GetByIdAsync(id);
+            List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
+
+            var article = await _unitService.ArticleCategory.getArticleByCategoryIdAsync(id);
+
+            foreach (var item in article)
+            {
+                articleCategory.Add(item);
+            }
+
+            category.ArticleCategory = articleCategory;
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            return category;
+            return Ok(category);
         }
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
+
             if (id != category.Id)
             {
                 return BadRequest();

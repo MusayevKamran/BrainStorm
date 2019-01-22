@@ -1,3 +1,5 @@
+import { IArticleCategory } from './article-category';
+
 export interface ITutorial {
   id: number;
   title: string;
@@ -8,7 +10,7 @@ export interface ITutorial {
   like: number;
   createdDate: Date;
   updateDate: Date;
-  articleCategory: string;
+  articleCategory: IArticleCategory;
   postCategory: string;
   comment: string;
   brainStormUser: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticlecategoryService } from '../../shared/services/articlecategory.service';
-import { IArticleCategory } from '../../shared/interface/IArticleCategory';
+import { IArticleCategory } from '../../shared/interface/articlecategory';
 import { ITutorial } from 'src/app/shared/interface/tutorial';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 
@@ -39,7 +39,8 @@ export class ContextComponent implements OnInit {
 
     this._articleCategoryService.getArticlesByCategoryId(this.categoryId)
       .subscribe(response => {
-        this.articleCategory.push(response[0]);
+        console.log(response);
+        this.articleCategory.push(response);
         console.log(this.articleCategory);
 
         this.articleCategory.forEach(artclCategory => {
