@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICategory } from '../interface/category';
 import { environment } from 'src/environments/environment';
+import { IArticleCategory } from '../interface/article-category';
 
 
 @Injectable()
@@ -17,6 +18,6 @@ export class CategoryService {
   }
 
   getCategoryById(id): Observable<ICategory> {
-    return this.http.get<ICategory>(this.baseUrl + 'categories' + id);
+    return this.http.get<ICategory>(this.baseUrl + 'categories/' + id);
   }
 }

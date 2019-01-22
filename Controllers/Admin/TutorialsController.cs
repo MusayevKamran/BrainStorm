@@ -36,19 +36,19 @@ namespace BrainStorm.Controllers.Admin
             var articles = await _unitService.Article.GetUserArticlesAsync(Guid.Parse(userId));
 
             var articlesViewModel = new List<ArticlesViewModel>();
-            foreach (var item in articles)
+            foreach (var article in articles)
             {
-                var category = await _unitService.Category.GetCategoryByIdAsyncExtra(item.Id);
+                var category = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(article.Id);
 
                 ArticlesViewModel ArticleCategory = new ArticlesViewModel()
                 {
-                    Id = item.Id,
-                    Title = item.Title,
+                    Id = article.Id,
+                    Title = article.Title,
                     ArticleCategory = category,
-                    PostCategory = item.PostCategory,
-                    Row = item.Row,
-                    CreatedDate = item.CreatedDate,
-                    UpdateDate = item.UpdateDate
+                    PostCategory = article.PostCategory,
+                    Row = article.Row,
+                    CreatedDate = article.CreatedDate,
+                    UpdateDate = article.UpdateDate
                 };
 
                 articlesViewModel.Add(ArticleCategory);

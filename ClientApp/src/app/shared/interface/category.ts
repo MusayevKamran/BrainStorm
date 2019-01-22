@@ -3,5 +3,5 @@ export interface ICategory {
   name: string;
   raw: number;
   count: number;
-  articleCategory: number;
+  articleCategory: any;
 }
