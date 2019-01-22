@@ -1,9 +1,12 @@
-<p>
-  context works!
-</p>
+<div class="left-sidebar">
+  <ul>
+    <li *ngFor='let article of articleList'>
+      <a routerLink="{{article.id}}"  appTutorialHover>{{article.title}}</a>
+      {{article.id}}}
+    </li>
+  </ul>
 
-{{categoryName}} {{categoryId}}
-
-<ul *ngFor="let article of articleList">
-  {{article.title}}
-</ul>
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

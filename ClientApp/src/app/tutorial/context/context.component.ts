@@ -18,6 +18,7 @@ export class ContextComponent implements OnInit {
   articleList: ITutorial[] = [];
   categoryName: string;
   categoryId: number;
+  articleId: number;
   arcticlesOfCategory: IArticleCategory[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class ContextComponent implements OnInit {
       .subscribe(response => {
         this.arcticlesOfCategory = response.articleCategory;
         this.arcticlesOfCategory.forEach(artcle => {
+          this.articleId = artcle.articleId;
           this._tutorialService.getTutorialById(artcle.articleId).subscribe(article => {
             this.articleList.push(article);
           }, error => console.log(error));

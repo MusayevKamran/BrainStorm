@@ -10,6 +10,7 @@ import { CategoryService } from '../shared/services/category.service';
 import { TutorialHoverDirective } from '../shared/directive/tutorial-hover.directive';
 import { SearchPipe } from '../shared/pipe/search.pipe';
 import { FormsModule } from '@angular/forms';
+import { ArticleComponent } from './context/article/article.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,8 @@ import { FormsModule } from '@angular/forms';
     TutorialComponent,
     CategoryComponent,
     ContextComponent,
+    ArticleComponent,
+
     TutorialHoverDirective,
     SearchPipe
   ],
