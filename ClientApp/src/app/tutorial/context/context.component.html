@@ -1,12 +1,9 @@
 <div class="left-sidebar">
   <ul>
     <li *ngFor='let article of articleList'>
-      <a routerLink="{{article.id}}"  appTutorialHover>{{article.title}}</a>
-      {{article.id}}}
+      <a routerLink="{{article.id}}" appTutorialHover >{{article.title}}</a> {{article.id}}}
     </li>
   </ul>
+</div>
 
-</div>
-<div class="content">
-  <router-outlet></router-outlet>
-</div>
+<app-article (article)="getArticle()"></app-article>

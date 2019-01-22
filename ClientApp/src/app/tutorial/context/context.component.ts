@@ -4,7 +4,6 @@ import { ITutorial } from 'src/app/shared/interface/tutorial';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { IArticleCategory } from 'src/app/shared/interface/article-category';
 import { CategoryService } from 'src/app/shared/services/category.service';
-import { ICategory } from 'src/app/shared/interface/category';
 
 
 @Component({
@@ -16,6 +15,7 @@ export class ContextComponent implements OnInit {
 
   searchStr = '';
   articleList: ITutorial[] = [];
+  article: ITutorial;
   categoryName: string;
   categoryId: number;
   articleId: number;
@@ -45,5 +45,9 @@ export class ContextComponent implements OnInit {
           }, error => console.log(error));
         });
       }, error => console.log(error));
+  }
+
+  getArticle() {
+    return this.article;
   }
 }
