@@ -11,7 +11,7 @@ import { ITutorial } from 'src/app/shared/interface/tutorial';
 export class ArticleComponent implements OnInit {
   articleId: number;
   @Output() article = new EventEmitter();
-
+  @Output() outputIdToParent = new EventEmitter();
 
   constructor(private route: ActivatedRoute) { }
 
@@ -19,6 +19,8 @@ export class ArticleComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.articleId = params.id;
     });
+    this.outputIdToParent.emit(this.articleId);
+
     this.article.emit();
   }
 }

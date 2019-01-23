@@ -10,16 +10,14 @@ const routes: Routes = [
     path: 'tutorial', children: [
       { path: '', component: ContextComponent },
       {
-        path: 'category/:id',
+        path: 'category/:name',
         component: ContextComponent,
-        children:
-          [
-            {
-              path: ':id',
-              component: ArticleComponent
-            }
-          ]
       },
+      {
+        path: 'category/:name/:id',
+        component: ContextComponent
+      },
+      
       { path: 'html', component: HtmlComponent }
     ]
   }

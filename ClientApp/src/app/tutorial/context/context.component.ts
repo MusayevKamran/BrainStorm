@@ -4,6 +4,7 @@ import { ITutorial } from 'src/app/shared/interface/tutorial';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { IArticleCategory } from 'src/app/shared/interface/article-category';
 import { CategoryService } from 'src/app/shared/services/category.service';
+import { ITutorialList } from 'src/app/shared/interface/tutorial-list';
 
 
 @Component({
@@ -14,11 +15,10 @@ import { CategoryService } from 'src/app/shared/services/category.service';
 export class ContextComponent implements OnInit {
 
   searchStr = '';
-  articleList: ITutorial[] = [];
-  article: ITutorial;
+  articleList: ITutorialList[] = [];
+  article: ITutorialList;
   categoryName: string;
   categoryId: number;
-  articleId: number;
   arcticlesOfCategory: IArticleCategory[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -27,28 +27,23 @@ export class ContextComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.categoryName = params.id;
-      console.log(params);
+      this.categoryName = params.name;
     });
-
     this.getValue();
+    console.log(this.articleList);
+    console.log('sadsd');
   }
 
   getValue() {
     this.categoryId = Number(localStorage.getItem(this.categoryName));
-    this._categoryService.getCategoryById(this.categoryId)
-      .subscribe(response => {
-        this.arcticlesOfCategory = response.articleCategory;
-        this.arcticlesOfCategory.forEach(artcle => {
-          this.articleId = artcle.articleId;
-          this._tutorialService.getTutorialById(artcle.articleId).subscribe(article => {
-            this.articleList.push(article);
-          }, error => console.log(error));
+
+    this._categoryService.getCategoryById(this.categoryId).subscribe(response => {
+      
+        this._tutorialService.getTutorialsCategoryById(response.id).subscribe(article => {
+          article.forEach(element => {
+            this.articleList.push(element);
+          });
         });
       }, error => console.log(error));
-  }
-
-  getArticle() {
-    console.log("aaaaaaaa");
   }
 }

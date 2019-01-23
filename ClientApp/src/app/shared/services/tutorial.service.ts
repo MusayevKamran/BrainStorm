@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ITutorial } from '../interface/tutorial';
 import { environment } from 'src/environments/environment';
+import { ITutorialList } from '../interface/tutorial-list';
 
 
 
@@ -21,7 +22,7 @@ export class TutorialService {
     return this.http.get<ITutorial>(this.baseUrl + 'articles/' + id);
   }
 
-  getTutorialsById(id): Observable<ITutorial[]> {
-    return this.http.get<ITutorial[]>(this.baseUrl + 'articles/' + id);
+  getTutorialsCategoryById(Id): Observable<ITutorialList[]> {
+    return this.http.get<ITutorialList[]>(this.baseUrl + 'articles/category/' + Id);
   }
 }

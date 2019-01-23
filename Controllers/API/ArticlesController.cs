@@ -2,13 +2,14 @@
 using BrainStorm.Areas.Identity.Services;
 using BrainStorm.Models;
 using BrainStorm.Models.Interface;
-using Microsoft.AspNetCore.Authorization;
+using BrainStorm.ViewModel.API;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -35,6 +36,21 @@ namespace BrainStorm.Controllers.API
             return _context.Articles;
         }
 
+        [HttpGet("category/{id}")]
+        public async Task<List<TutorialsNameViewModel>> GetArticlesName()
+        {
+
+            var articles = await _context.Articles
+                .Select(a => new TutorialsNameViewModel()
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Row = a.Row
+                }).ToListAsync();
+
+            return articles;
+        }
+
         // GET: api/Articles/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArticle([FromRoute] int id)
@@ -52,7 +68,7 @@ namespace BrainStorm.Controllers.API
             //{
             //    articleCategory.Add(item);
             //}
-          
+
             //article.ArticleCategory = articleCategory;
 
             if (article == null)
