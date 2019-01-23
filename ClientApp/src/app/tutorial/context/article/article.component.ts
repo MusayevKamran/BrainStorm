@@ -11,7 +11,7 @@ import { ITutorial } from 'src/app/shared/interface/tutorial';
   styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-  @Input() articleId: number;
+  articleId: number;
   article: ITutorial;
 
   constructor(private route: ActivatedRoute, private _tutorialService: TutorialService) { }
@@ -19,9 +19,7 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.articleId = params.id;
-      console.log(params);
     });
-   
     this.getValue();
   }
 
