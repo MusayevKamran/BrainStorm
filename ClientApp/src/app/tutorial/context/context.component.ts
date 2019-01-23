@@ -15,10 +15,14 @@ import { ITutorialList } from 'src/app/shared/interface/tutorial-list';
 export class ContextComponent implements OnInit {
 
   searchStr = '';
-  articleList: ITutorialList[] = [];
-  article: ITutorialList;
-  categoryName: string;
+  
+  articleId: number;
   categoryId: number;
+
+  article: ITutorialList;
+  articleList: ITutorialList[] = [];
+
+  categoryName: string;
   arcticlesOfCategory: IArticleCategory[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -31,19 +35,18 @@ export class ContextComponent implements OnInit {
     });
     this.getValue();
     console.log(this.articleList);
-    console.log('sadsd');
   }
 
   getValue() {
     this.categoryId = Number(localStorage.getItem(this.categoryName));
 
     this._categoryService.getCategoryById(this.categoryId).subscribe(response => {
-      
-        this._tutorialService.getTutorialsCategoryById(response.id).subscribe(article => {
+        this._tutorialService.getTutorialsNameById(response.id).subscribe(article => {
           article.forEach(element => {
             this.articleList.push(element);
           });
-        });
+        }, error => console.log(error));
+
       }, error => console.log(error));
   }
 }

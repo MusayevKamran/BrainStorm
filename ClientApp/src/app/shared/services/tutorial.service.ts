@@ -22,7 +22,7 @@ export class TutorialService {
     return this.http.get<ITutorial>(this.baseUrl + 'articles/' + id);
   }
 
-  getTutorialsCategoryById(Id): Observable<ITutorialList[]> {
+  getTutorialsNameById(Id): Observable<ITutorialList[]> {
     return this.http.get<ITutorialList[]>(this.baseUrl + 'articles/category/' + Id);
   }
 }

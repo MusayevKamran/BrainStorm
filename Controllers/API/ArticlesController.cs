@@ -39,14 +39,14 @@ namespace BrainStorm.Controllers.API
         [HttpGet("category/{id}")]
         public async Task<List<TutorialsNameViewModel>> GetArticlesName()
         {
-
             var articles = await _context.Articles
                 .Select(a => new TutorialsNameViewModel()
                 {
                     Id = a.Id,
                     Title = a.Title,
                     Row = a.Row
-                }).ToListAsync();
+                })
+                .ToListAsync();
 
             return articles;
         }

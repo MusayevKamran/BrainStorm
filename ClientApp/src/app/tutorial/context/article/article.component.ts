@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { getQueryValue } from '@angular/core/src/view/query';
+import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { ITutorial } from 'src/app/shared/interface/tutorial';
 
 
@@ -9,18 +11,23 @@ import { ITutorial } from 'src/app/shared/interface/tutorial';
   styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-  articleId: number;
-  @Output() article = new EventEmitter();
-  @Output() outputIdToParent = new EventEmitter();
+  @Input() articleId: number;
+  article: ITutorial;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private _tutorialService: TutorialService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
       this.articleId = params.id;
+      console.log(params);
     });
-    this.outputIdToParent.emit(this.articleId);
+   
+    this.getValue();
+  }
 
-    this.article.emit();
+  getValue() {
+    this._tutorialService.getTutorialById(this.articleId).subscribe(article => {
+        this.article = article;
+    });
   }
 }
