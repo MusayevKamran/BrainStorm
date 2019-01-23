@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getQueryValue } from '@angular/core/src/view/query';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { ITutorial } from 'src/app/shared/interface/tutorial';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -14,18 +15,18 @@ export class ArticleComponent implements OnInit {
   articleId: number;
   article: ITutorial;
 
-  constructor(private route: ActivatedRoute, private _tutorialService: TutorialService) { }
+  constructor(private route: ActivatedRoute, private _tutorialService: TutorialService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.articleId = params.id;
+      this.getValue();
     });
-    this.getValue();
   }
 
   getValue() {
     this._tutorialService.getTutorialById(this.articleId).subscribe(article => {
-        this.article = article;
+      this.article = article;
     });
   }
 }

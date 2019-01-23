@@ -1,9 +1,10 @@
 <div class="left-sidebar">
   <ul *ngFor='let article of articleList'>
     <li >
-      <a [routerLink]="" [queryParams]="{ id: article.id }" appTutorialHover >{{article.title}}</a> {{article.id}}}
+      <a [routerLink]="" [queryParams]="{ id: article.id }" appTutorialHover >{{article.title}}</a> 
+      {{article.id}}}
     </li>
   </ul>
 </div>
 
-<app-article></app-article>
+<app-article ></app-article>
