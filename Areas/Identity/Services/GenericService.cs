@@ -48,10 +48,10 @@ namespace BrainStorm.Areas.Identity.Services
             return await _context.Set<T>().FindAsync(Id);
         }
 
-        public void Update(T model)
+        public async void Update(T model)
         {
             _context.Update(model);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

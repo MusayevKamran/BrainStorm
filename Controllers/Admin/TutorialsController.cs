@@ -157,7 +157,8 @@ namespace BrainStorm.Controllers.Admin
                 {
                     article.Title = postArticle.Article.Title;
                     article.URL = $@"{postArticle.Article.Title}_{postArticle.Article.Id}";
-                    article.Row = postArticle.Article.Row;   
+                    article.Row = postArticle.Article.Row;
+   
 
                     if (CategoryId != 0)
                     {
