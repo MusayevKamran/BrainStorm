@@ -35,6 +35,7 @@ namespace BrainStorm.Areas.Identity.Data
                 .WithOne(b => b.Article)
                 .HasPrincipalKey(c => c.Id);
 
+
             builder.Entity<ArticleCategory>()
                 .HasKey(a => new { a.ArticleId, a.CategoryId });
 

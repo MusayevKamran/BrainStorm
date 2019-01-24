@@ -13,7 +13,7 @@
     },
     {
       "destination": "wwwroot/ckeditor",
-      "library": "ckeditor@4.11.1",
+      "library": "ckeditor@4.11.2",
       "provider": "unpkg"
     }
     //,
