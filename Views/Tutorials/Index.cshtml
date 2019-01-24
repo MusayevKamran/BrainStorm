@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.Row)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArticleCategory)
+                @Html.DisplayNameFor(model => model.Category.First().Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedDate)
@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Row)
             </td>
             <td> 
-                @Html.DisplayFor(modelItem => item.ArticleCategory)
+                @Html.DisplayFor(modelItem => item.Category.First().Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)

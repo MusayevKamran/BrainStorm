@@ -14,7 +14,7 @@ namespace BrainStorm.ViewModel
 
         public int Row { get; set; }
 
-        public List<ArticleCategory> ArticleCategory { get; set; }
+        public List<Category> Category { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

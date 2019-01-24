@@ -51,7 +51,6 @@ namespace BrainStorm.Areas.Identity.Services
         public void Update(T model)
         {
             _context.Update(model);
-            _context.SaveChanges();
         }
     }
 }

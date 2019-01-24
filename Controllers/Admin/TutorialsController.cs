@@ -29,7 +29,6 @@ namespace BrainStorm.Controllers.Admin
             _unitService = unitService;
         }
 
-        // GET: Articles
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -38,13 +37,19 @@ namespace BrainStorm.Controllers.Admin
             var articlesViewModel = new List<ArticlesViewModel>();
             foreach (var article in articles)
             {
-                var category = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(article.Id);
-
+                var categories = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(article.Id);
+                var categoryList = new List<Category>(); 
+                foreach (var item in categories)
+                {    
+                    var category = await _unitService.Category.GetByIdAsync(item.CategoryId);
+                    categoryList.Add(category);
+                }
+               
                 ArticlesViewModel ArticleCategory = new ArticlesViewModel()
                 {
                     Id = article.Id,
                     Title = article.Title,
-                    ArticleCategory = category,
+                    Category = categoryList,
                     PostCategory = article.PostCategory,
                     Row = article.Row,
                     CreatedDate = article.CreatedDate,
@@ -56,7 +61,6 @@ namespace BrainStorm.Controllers.Admin
             return View(articlesViewModel);
         }
 
-        // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -74,7 +78,7 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // GET: Articles/Create
+
         public IActionResult Create()
         {
             ArticleViewModel article = new ArticleViewModel()
@@ -84,9 +88,6 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // POST: Articles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Row,Content")] Article article, int CategoryId, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
@@ -100,6 +101,8 @@ namespace BrainStorm.Controllers.Admin
 
             article.ArticleCategory = articleCategory;
             article.PostCategory = PostCategory.Tutorial;
+            article.CreatedDate = DateTime.Now;
+            article.UpdateDate = DateTime.Now;
             article.BrainStormUser = await _unitService.User.GetUsersByIdAsync(userId);
             article.Row = _context.Articles.Any() == false ? 1 : _context.Articles.Max(item => item.Row + 1);
 
@@ -116,18 +119,23 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // GET: Articles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
+            ArticleViewModel article = new ArticleViewModel()
             {
-                return NotFound();
-            }
+                Article = await _unitService.Article.GetByIdAsync(id),
+                Category = _unitService.Category.GetAll()
+            };
 
-            var article = await _context.Articles.FindAsync(id);
-            if (article.Picture == null)
+            var articleCategory = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(id);
+            var catId = articleCategory.First().CategoryId;
+            var catName = await _unitService.Category.GetByIdAsync(catId);
+
+            ViewBag.category = catName.Name;
+
+            if (article.Article.Picture == null)
             {
-                article.Picture = "images/article/default_article.jpg";
+                article.Article.Picture = "images/article/default_article.jpg";
                 await _context.SaveChangesAsync();
             }
             if (article == null)
@@ -137,30 +145,33 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // POST: Articles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Row,Category,Content")] Article postArticle, IFormFile files)
+        public async Task<IActionResult> Edit(int id, ArticleViewModel postArticle, int CategoryId, IFormFile files)
         {
-            var article = await _unitService.Article.GetByIdAsync(postArticle.Id);
-
-            if (id != postArticle.Id)
-            {
-                return NotFound();
-            }
+            var article = await _unitService.Article.GetByIdAsync(id);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    article.Title = postArticle.Title;
-                    article.URL = $@"{postArticle.Title}_{postArticle.Id}";
-                    article.Row = postArticle.Row;
-                    article.ArticleCategory = postArticle.ArticleCategory;
-                    article.Content = postArticle.Content;
+                    article.Title = postArticle.Article.Title;
+                    article.URL = $@"{postArticle.Article.Title}_{postArticle.Article.Id}";
+                    article.Row = postArticle.Article.Row;
+                    if (CategoryId != 0)
+                    {
+                        List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
+                        var category = await _unitService.Category.GetByIdAsync(CategoryId);
+                        ArticleCategory cat = new ArticleCategory { Category = category };
+                        articleCategory.Add(cat);
+                        article.ArticleCategory = articleCategory;
+                    }
+                    
+                    article.Content = postArticle.Article.Content;
+                    article.UpdateDate = DateTime.Now;
                     _unitService.Article.Update(article);
+                    await _context.SaveChangesAsync();
+
                     if (files != null && files.Length > 0)
                     {
                         ImageHelper imageHelper = new ImageHelper(_context);
@@ -169,7 +180,7 @@ namespace BrainStorm.Controllers.Admin
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(postArticle.Id))
+                    if (!ArticleExists(postArticle.Article.Id))
                     {
                         return NotFound();
                     }
@@ -184,7 +195,6 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // GET: Articles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -202,7 +212,6 @@ namespace BrainStorm.Controllers.Admin
             return View(article);
         }
 
-        // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Article article)

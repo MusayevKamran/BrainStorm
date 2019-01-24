@@ -1,4 +1,4 @@
-﻿@model BrainStorm.Models.Article
+﻿@model BrainStorm.ViewModel.ArticleViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,36 +9,41 @@
     <div class="row">
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Article.Title" class="control-label"></label>
+                <input asp-for="Article.Title" class="form-control" />
+                <span asp-validation-for="Article.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ArticleCategory" class="control-label"></label>
-                <input asp-for="ArticleCategory" class="form-control" />
-                <span asp-validation-for="ArticleCategory" class="text-danger"></span>
+                <label asp-for="Category" class="control-label"></label>
+                <select name="CategoryId" class="form-control">
+                    <option value="0">@ViewBag.category</option>
+                    @foreach (var category in Model.Category)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Row" class="control-label"></label>
-                <input asp-for="Row" class="form-control" />
-                <span asp-validation-for="Row" class="text-danger"></span>
+                <label asp-for="Article.Row" class="control-label"></label>
+                <input asp-for="Article.Row" class="form-control" />
+                <span asp-validation-for="Article.Row" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-4 pull-right">
 
             <div class="form-group pull-right">
-                <img src="~/@Model.Picture" id="previewImage" alt="Alternate Text" width="200" height="200" />
+                <img src="~/@Model.Article.Picture" id="previewImage" alt="Alternate Text" width="200" height="200" />
                 <input type="file" id="uploadImage" name="files" width="200" height="200" multiple />
-                <span asp-validation-for="Picture" class="text-danger"></span>
+                <span asp-validation-for="Article.Picture" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label asp-for="Content" class="control-label"></label>
-        <textarea asp-for="Content" id="editor"></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
+        <label asp-for="Article.Content" class="control-label"></label>
+        <textarea asp-for="Article.Content" id="editor"></textarea>
+        <span asp-validation-for="Article.Content" class="text-danger"></span>
     </div>
     <div class="col-md-12">
         <div class="form-group col-md-8">
@@ -48,16 +53,16 @@
             <dl class="dl-horizontal">
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    @Html.DisplayNameFor(model => model.Article.CreatedDate)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.CreatedDate)
+                    @Html.DisplayFor(model => model.Article.CreatedDate)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.UpdateDate)
+                    @Html.DisplayNameFor(model => model.Article.UpdateDate)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.UpdateDate)
+                    @Html.DisplayFor(model => model.Article.UpdateDate)
                 </dd>
             </dl>
         </div>
