@@ -157,20 +157,20 @@ namespace BrainStorm.Controllers.Admin
                 {
                     article.Title = postArticle.Article.Title;
                     article.URL = $@"{postArticle.Article.Title}_{postArticle.Article.Id}";
-                    article.Row = postArticle.Article.Row;
+                    article.Row = postArticle.Article.Row;   
+
                     if (CategoryId != 0)
                     {
-                        List<ArticleCategory> articleCategory = new List<ArticleCategory>() { };
+                        var articleCategory = new List<ArticleCategory>() { };
                         var category = await _unitService.Category.GetByIdAsync(CategoryId);
                         ArticleCategory cat = new ArticleCategory { Category = category };
                         articleCategory.Add(cat);
                         article.ArticleCategory = articleCategory;
                     }
-                    
+
                     article.Content = postArticle.Article.Content;
                     article.UpdateDate = DateTime.Now;
                     _unitService.Article.Update(article);
-                    await _context.SaveChangesAsync();
 
                     if (files != null && files.Length > 0)
                     {
