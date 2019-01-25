@@ -38,13 +38,13 @@ namespace BrainStorm.Controllers.Admin
             foreach (var article in articles)
             {
                 var categories = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(article.Id);
-                var categoryList = new List<Category>(); 
+                var categoryList = new List<Category>();
                 foreach (var item in categories)
-                {    
+                {
                     var category = await _unitService.Category.GetByIdAsync(item.CategoryId);
                     categoryList.Add(category);
                 }
-               
+
                 ArticlesViewModel ArticleCategory = new ArticlesViewModel()
                 {
                     Id = article.Id,
@@ -109,6 +109,7 @@ namespace BrainStorm.Controllers.Admin
             if (ModelState.IsValid)
             {
                 _unitService.Article.Create(article);
+                _unitService.SaveChanges();
                 if (files != null && files.Length > 0)
                 {
                     ImageHelper imageHelper = new ImageHelper(_context);
@@ -158,20 +159,16 @@ namespace BrainStorm.Controllers.Admin
                     article.Title = postArticle.Article.Title;
                     article.URL = $@"{postArticle.Article.Title}_{postArticle.Article.Id}";
                     article.Row = postArticle.Article.Row;
-   
 
                     if (CategoryId != 0)
                     {
-                        var articleCategory = new List<ArticleCategory>() { };
-                        var category = await _unitService.Category.GetByIdAsync(CategoryId);
-                        ArticleCategory cat = new ArticleCategory { Category = category };
-                        articleCategory.Add(cat);
-                        article.ArticleCategory = articleCategory;
+                        var articleCategory = _unitService.ArticleCategory.updateArticleCategoryAsync(id, CategoryId);
                     }
 
                     article.Content = postArticle.Article.Content;
                     article.UpdateDate = DateTime.Now;
                     _unitService.Article.Update(article);
+                    _unitService.SaveChanges();
 
                     if (files != null && files.Length > 0)
                     {
@@ -218,6 +215,8 @@ namespace BrainStorm.Controllers.Admin
         public IActionResult DeleteConfirmed(Article article)
         {
             _unitService.Article.DeleteConfirmed(article);
+            _unitService.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
 

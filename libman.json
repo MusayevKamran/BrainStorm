@@ -15,13 +15,11 @@
       "destination": "wwwroot/ckeditor",
       "library": "ckeditor@4.11.2",
       "provider": "unpkg"
+    },
+    {
+      "destination": "wwwroot/Admin",
+      "library": "admin-lte",
+      "provider": "unpkg"
     }
-    //,
-    //{
-    //  "destination": "wwwroot/css/bootstrapt",
-    //  "library": "bootstrap@4.1.3",
-    //  "provider": "unpkg",
-    //  "files": [ "dist/css/bootstrap-grid.min.css" ]
-    //}
   ]
 }

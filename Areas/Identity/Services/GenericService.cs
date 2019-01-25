@@ -18,13 +18,11 @@ namespace BrainStorm.Areas.Identity.Services
         public void Create(T model)
         {
             _context.Set<T>().Add(model);
-            _context.SaveChanges();
         }
 
         public void DeleteConfirmed(T model)
         {
             _context.Set<T>().Remove(model);
-            _context.SaveChanges();
         }
 
         public List<T> GetAll()
@@ -35,7 +33,6 @@ namespace BrainStorm.Areas.Identity.Services
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
-
         }
 
         public T GetById(int? Id)
@@ -48,10 +45,9 @@ namespace BrainStorm.Areas.Identity.Services
             return await _context.Set<T>().FindAsync(Id);
         }
 
-        public async void Update(T model)
+        public void Update(T model)
         {
             _context.Update(model);
-            await _context.SaveChangesAsync();
         }
     }
 }
