@@ -10,5 +10,8 @@ namespace BrainStorm.Models.Interface
         bool Exists(int id);
         Task<List<Article>> GetUserArticlesAsync(Guid Id);
 
+        Task<List<Article>> GetUserTutorialsAsync(Guid Id);
+        Task<List<Article>> GetUserBlogsAsync(Guid Id);
+
     }
 }

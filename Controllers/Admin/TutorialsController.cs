@@ -32,7 +32,7 @@ namespace BrainStorm.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var articles = await _unitService.Article.GetUserArticlesAsync(Guid.Parse(userId));
+            var articles = await _unitService.Article.GetUserTutorialsAsync(Guid.Parse(userId));
 
             var articlesViewModel = new List<ArticlesViewModel>();
             foreach (var article in articles)
@@ -90,7 +90,7 @@ namespace BrainStorm.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Row,Content")] Article article, int CategoryId, IFormFile files /*IEnumerable<IFormFile>* [FromBody] List<Photo> photos)*/)
+        public async Task<IActionResult> Create([Bind("Id,Title,Row,Content")] Article article, int CategoryId, IFormFile files)
         {
             var userId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
