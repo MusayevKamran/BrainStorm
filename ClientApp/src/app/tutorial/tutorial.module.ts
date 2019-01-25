@@ -11,6 +11,7 @@ import { TutorialHoverDirective } from '../shared/directive/tutorial-hover.direc
 import { SearchPipe } from '../shared/pipe/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { ArticleComponent } from './context/article/article.component';
+import { SafeHtmlPipe } from '../shared/pipe/safeHtml.pipe';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ArticleComponent } from './context/article/article.component';
     ArticleComponent,
 
     TutorialHoverDirective,
-    SearchPipe
+    SearchPipe,
+    SafeHtmlPipe
   ],
   providers: [
     TutorialService,

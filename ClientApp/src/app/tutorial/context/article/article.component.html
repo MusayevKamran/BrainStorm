@@ -1,5 +1,7 @@
 <div>
     <h3>{{article.title}}</h3>
 
-    <p innerHTML="{{article.content | uppercase}}"> </p>
-</div> 
+    <div [innerHTML]="article.content | safeHtml"> </div>
+
+    {{article.content}}
+</div>
