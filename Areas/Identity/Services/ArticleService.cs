@@ -26,6 +26,20 @@ namespace BrainStorm.Areas.Identity.Services
             return context.Articles.Any(e => e.Id == id);
         }
 
+        public async Task<List<Article>> GetBlogsAsync()
+        {
+            return await context.Articles
+                     .Where(article => article.PostCategory == PostCategory.Blog)
+                     .ToListAsync();
+        }
+
+        public async Task<List<Article>> GetTutorialsAsync()
+        {
+            return await context.Articles
+                    .Where(article => article.PostCategory == PostCategory.Tutorial)
+                    .ToListAsync();
+        }
+
         public async Task<List<Article>> GetUserArticlesAsync(Guid Id)
         {
             return await context.Articles

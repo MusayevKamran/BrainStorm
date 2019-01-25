@@ -31,9 +31,21 @@ namespace BrainStorm.Controllers.API
 
         // GET: api/Articles
         [HttpGet]
-        public IEnumerable<Article> GetArticles()
+        public async Task<IEnumerable<Article>> GetArticles()
         {
-            return _context.Articles;
+            return await _context.Articles.ToListAsync();
+        }
+
+        [HttpGet("tutorials")]
+        public async Task<IEnumerable<Article>> GetTutorials()
+        {
+            return await _unitService.Article.GetTutorialsAsync();
+        }
+
+        [HttpGet("blogs")]
+        public async Task<IEnumerable<Article>> GetBlogs()
+        {
+           return await _unitService.Article.GetBlogsAsync();
         }
 
         [HttpGet("category/{id}")]
