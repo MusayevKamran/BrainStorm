@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { getQueryValue } from '@angular/core/src/view/query';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { ITutorial } from 'src/app/shared/interface/tutorial';
-import { Observable } from 'rxjs';
 
 
 @Component({

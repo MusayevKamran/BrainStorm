@@ -12,6 +12,7 @@ import { ArticleComponent } from './tutorials/article/article.component';
 import { SafeHtmlPipe } from '../shared/pipe/safeHtml.pipe';
 import { BlogsComponent } from './blogs/blogs.component';
 import { TutorialsComponent } from './tutorials/tutorials.component';
+import { InputFormatDirective } from '../shared/directive/appInputFormat.directive';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { TutorialsComponent } from './tutorials/tutorials.component';
     BlogsComponent,
 
     TutorialHoverDirective,
+    InputFormatDirective,
     SearchPipe,
     SafeHtmlPipe
   ],
