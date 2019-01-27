@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ITutorial } from 'src/app/shared/interface/tutorial';
 import { TutorialService } from 'src/app/shared/services/tutorial.service';
 import { IArticleCategory } from 'src/app/shared/interface/article-category';
 import { CategoryService } from 'src/app/shared/services/category.service';
@@ -8,14 +7,14 @@ import { ITutorialList } from 'src/app/shared/interface/tutorial-list';
 
 
 @Component({
-  selector: 'app-context',
-  templateUrl: './context.component.html',
-  styleUrls: ['./context.component.scss']
+  selector: 'app-tutorials',
+  templateUrl: './tutorials.component.html',
+  styleUrls: ['./tutorials.component.scss']
 })
-export class ContextComponent implements OnInit {
+export class TutorialsComponent implements OnInit {
 
   searchStr = '';
-  
+
   articleId: number;
   categoryId: number;
 
@@ -41,6 +40,7 @@ export class ContextComponent implements OnInit {
     this.categoryId = Number(localStorage.getItem(this.categoryName));
 
     this._categoryService.getCategoryById(this.categoryId).subscribe(response => {
+      
         this._tutorialService.getTutorialsNameById(response.id).subscribe(article => {
           article.forEach(element => {
             this.articleList.push(element);

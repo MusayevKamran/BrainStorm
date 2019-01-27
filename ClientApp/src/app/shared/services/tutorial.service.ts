@@ -15,7 +15,7 @@ export class TutorialService {
   constructor(private http: HttpClient) { }
 
   getTutorial(): Observable<ITutorial[]> {
-    return this.http.get<ITutorial[]>(this.baseUrl + 'articles');
+    return this.http.get<ITutorial[]>(this.baseUrl + 'articles/tutorials');
   }
 
   getTutorialById(id): Observable<ITutorial> {

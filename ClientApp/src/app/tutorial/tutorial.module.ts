@@ -10,21 +10,23 @@ import { CategoryService } from '../shared/services/category.service';
 import { TutorialHoverDirective } from '../shared/directive/tutorial-hover.directive';
 import { SearchPipe } from '../shared/pipe/search.pipe';
 import { FormsModule } from '@angular/forms';
-import { ArticleComponent } from './context/article/article.component';
+import { ArticleComponent } from './tutorials/article/article.component';
 import { SafeHtmlPipe } from '../shared/pipe/safeHtml.pipe';
+import { BlogsComponent } from './blogs/blogs.component';
+import { TutorialsComponent } from './tutorials/tutorials.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TutorialRoutingModule,
-    HtmlModule,
     FormsModule
   ],
   declarations: [
     TutorialComponent,
     CategoryComponent,
-    ContextComponent,
+    TutorialsComponent,
     ArticleComponent,
+    BlogsComponent,
 
     TutorialHoverDirective,
     SearchPipe,
