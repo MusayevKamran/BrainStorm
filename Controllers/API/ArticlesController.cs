@@ -45,19 +45,23 @@ namespace BrainStorm.Controllers.API
         [HttpGet("blogs")]
         public async Task<IEnumerable<Article>> GetBlogs()
         {
-           return await _unitService.Article.GetBlogsAsync();
+            return await _unitService.Article.GetBlogsAsync();
         }
 
-        [HttpGet("category/{id}")]
-        public async Task<List<TutorialsNameViewModel>> GetArticlesName()
+        [HttpGet("tutorials/category/{id}")]
+        public async Task<List<TutorialsNameViewModel>> GetTutorialsName(int id)
         {
             var articles = await _context.Articles
-                .Select(a => new TutorialsNameViewModel()
-                {
-                    Id = a.Id,
-                    Title = a.Title,
-                    Row = a.Row
-                })
+                .Where(category =>
+                category.ArticleCategory.FirstOrDefault().CategoryId == id &&
+                category.PostCategory == PostCategory.Tutorial
+                )
+              .Select(a => new TutorialsNameViewModel()
+              {
+                  Id = a.Id,
+                  Title = a.Title,
+                  Row = a.Row
+              })
                 .ToListAsync();
 
             return articles;

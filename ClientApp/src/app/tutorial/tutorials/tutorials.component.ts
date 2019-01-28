@@ -40,7 +40,7 @@ export class TutorialsComponent implements OnInit {
     this.categoryId = Number(localStorage.getItem(this.categoryName));
 
     this._categoryService.getCategoryById(this.categoryId).subscribe(response => {
-      
+
         this._tutorialService.getTutorialsNameById(response.id).subscribe(article => {
           article.forEach(element => {
             this.articleList.push(element);
