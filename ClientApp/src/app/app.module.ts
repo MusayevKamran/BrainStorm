@@ -14,8 +14,6 @@ import { TutorialService } from './shared/services/tutorial.service';
 import { HeaderComponent } from './tutorial/common/header/header.component';
 import { HeaderModule } from './tutorial/common/header/header.module';
 
-import {MatMenuModule} from '@angular/material/menu'; 
-
 @NgModule({
    declarations: [
       AppComponent,
@@ -28,8 +26,6 @@ import {MatMenuModule} from '@angular/material/menu';
       AppRoutingModule,
       HeaderModule,
       TutorialModule,
-
-      MatMenuModule
    ],
    providers: [
       AlertifyService,

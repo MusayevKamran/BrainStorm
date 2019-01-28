@@ -60,6 +60,7 @@ namespace BrainStorm.Controllers.Admin
             if (ModelState.IsValid)
             {
                 _unitService.Category.Create(category);
+                _unitService.SaveChanges();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -137,6 +138,7 @@ namespace BrainStorm.Controllers.Admin
         public IActionResult DeleteConfirmed(Category category)
         {
             _context.Category.Remove(category);
+            _unitService.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 

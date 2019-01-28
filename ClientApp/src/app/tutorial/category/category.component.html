@@ -1,4 +1,5 @@
 <div class="row">
+  <div class="input-field col s6">
     <input 
           type="search" 
           placeholder="search" 
@@ -6,6 +7,7 @@
           [(ngModel)]="searchStr"> 
 
     <p>Tab bas</p>
+  </div>
 </div>
 
 <ul *ngFor="let category of categories | search : searchStr">

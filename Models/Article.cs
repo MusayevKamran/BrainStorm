@@ -20,7 +20,7 @@ namespace BrainStorm.Models
 
         public string Like { get; set; }
 
-        public bool isActive { get; set; }
+        //public bool isActive { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
