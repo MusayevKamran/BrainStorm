@@ -13,7 +13,7 @@
 <ul *ngFor="let category of categories | search : searchStr">
   <li routerLinkActive="active">
     <a 
-        routerLink="category/{{category.name}}"  
+        routerLink="category/{{category?.name}}"  
         appTutorialHover>{{category.name}}
     </a>
   </li>

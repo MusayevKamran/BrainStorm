@@ -32,6 +32,7 @@ export class TutorialsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.categoryName = params.name;
     });
+
     this.getValue();
     console.log(this.articleList);
   }
@@ -42,6 +43,7 @@ export class TutorialsComponent implements OnInit {
     this._categoryService.getCategoryById(this.categoryId).subscribe(response => {
 
         this._tutorialService.getTutorialsNameById(response.id).subscribe(article => {
+
           article.forEach(element => {
             this.articleList.push(element);
           });
