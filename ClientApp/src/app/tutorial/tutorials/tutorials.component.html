@@ -2,8 +2,8 @@
   
   <div class="left-sidebar">
     <ul *ngFor='let article of articleList'>
-      <li>
-        <a [routerLink]="" [queryParams]="{ id: article?.id }" appTutorialHover>{{article?.title}}</a>
+      <li routerLinkActive="active">
+        <a [routerLink]="" [queryParams]="{ id: article?.id }"  appTutorialHover>{{article?.title}} </a>
       </li>
     </ul>
   </div>

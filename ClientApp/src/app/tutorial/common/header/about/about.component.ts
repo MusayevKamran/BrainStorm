@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AboutComponent implements OnInit {
   language = 'html';
   content = '<p>test</p>';
-  
+
   constructor() { }
 
   ngOnInit() {

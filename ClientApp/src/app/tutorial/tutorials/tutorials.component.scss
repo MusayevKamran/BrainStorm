@@ -9,12 +9,15 @@
             list-style: none;
             padding-left: 0;
             li {
-                a:hover,
-                .active {
+                a:hover{
                     color: green;
                     text-decoration: none;
                     font-weight: bold;
                 }
+            }
+            .active {
+                text-decoration: none;
+                font-weight: bold;
             }
         }
     }

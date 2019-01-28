@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,6 +14,7 @@ import { TutorialService } from './shared/services/tutorial.service';
 import { HeaderComponent } from './tutorial/common/header/header.component';
 import { HeaderModule } from './tutorial/common/header/header.module';
 
+import {MatMenuModule} from '@angular/material/menu'; 
 
 @NgModule({
    declarations: [
@@ -20,10 +23,13 @@ import { HeaderModule } from './tutorial/common/header/header.module';
    ],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       HttpClientModule,
       AppRoutingModule,
       HeaderModule,
       TutorialModule,
+
+      MatMenuModule
    ],
    providers: [
       AlertifyService,
