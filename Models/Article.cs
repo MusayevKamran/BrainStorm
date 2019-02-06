@@ -16,11 +16,13 @@ namespace BrainStorm.Models
 
         public string Content { get; set; }
 
-        public string Picture { get; set; }
+        public string Image { get; set; }
+
+        public List<ArticleImages> Images { get; set; }
 
         public string Like { get; set; }
 
-        //public bool isActive { get; set; }
+        public bool IsActive { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

@@ -14,7 +14,7 @@ namespace BrainStorm.Models.System
 
         public string SecondName { get; set; }
 
-        public string AvatarImage { get; set; }
+        public string Image { get; set; }
 
         public string URL { get; set; }
 

@@ -45,7 +45,7 @@ namespace BrainStorm.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     SecondName = table.Column<string>(nullable: true),
-                    AvatarImage = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     URL = table.Column<string>(nullable: true),
                     Education = table.Column<string>(nullable: true),
                     Job = table.Column<string>(nullable: true),
@@ -68,11 +68,26 @@ namespace BrainStorm.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Row = table.Column<int>(nullable: false),
-                    Count = table.Column<int>(nullable: false)
+                    Count = table.Column<int>(nullable: false),
+                    IsNew = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Image",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ImageLink = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Image", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,8 +121,9 @@ namespace BrainStorm.Migrations
                     URL = table.Column<string>(nullable: true),
                     Row = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
-                    Picture = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     Like = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: false),
                     PostCategory = table.Column<int>(nullable: false),
@@ -234,6 +250,30 @@ namespace BrainStorm.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleImages",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(nullable: false),
+                    ImageId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleImages", x => new { x.ArticleId, x.ImageId });
+                    table.ForeignKey(
+                        name: "FK_ArticleImages_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleImages_Image_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Image",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
                 {
@@ -265,6 +305,12 @@ namespace BrainStorm.Migrations
                 name: "IX_ArticleCategories_CategoryId",
                 table: "ArticleCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleImages_ImageId",
+                table: "ArticleImages",
+                column: "ImageId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_BrainStormUserId",
@@ -327,6 +373,9 @@ namespace BrainStorm.Migrations
                 name: "ArticleCategories");
 
             migrationBuilder.DropTable(
+                name: "ArticleImages");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -346,6 +395,9 @@ namespace BrainStorm.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Image");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

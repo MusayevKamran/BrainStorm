@@ -15,7 +15,9 @@ namespace BrainStorm.Models
 
         public int Count { get; set; }
 
-        //public bool isNew { get; set; }
+        public bool IsNew { get; set; }
+
+        public bool IsActive { get; set; }
 
         public List<ArticleCategory> ArticleCategory { get; set; } 
     }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainStorm.Migrations
 {
     [DbContext(typeof(BrainStormDbContext))]
-    [Migration("20190128112113_Initial")]
+    [Migration("20190206061518_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,11 @@ namespace BrainStorm.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Like");
+                    b.Property<string>("Image");
 
-                    b.Property<string>("Picture");
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Like");
 
                     b.Property<int>("PostCategory");
 
@@ -67,6 +69,20 @@ namespace BrainStorm.Migrations
                     b.ToTable("ArticleCategories");
                 });
 
+            modelBuilder.Entity("BrainStorm.Models.ArticleImages", b =>
+                {
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int>("ImageId");
+
+                    b.HasKey("ArticleId", "ImageId");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique();
+
+                    b.ToTable("ArticleImages");
+                });
+
             modelBuilder.Entity("BrainStorm.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -74,6 +90,10 @@ namespace BrainStorm.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Count");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsNew");
 
                     b.Property<string>("Name");
 
@@ -106,6 +126,19 @@ namespace BrainStorm.Migrations
                     b.HasIndex("BrainStormUserId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImageLink");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("BrainStorm.Models.System.BrainStormRole", b =>
@@ -145,8 +178,6 @@ namespace BrainStorm.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("AvatarImage");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -160,6 +191,8 @@ namespace BrainStorm.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<int>("Follower");
+
+                    b.Property<string>("Image");
 
                     b.Property<string>("Job");
 
@@ -313,6 +346,19 @@ namespace BrainStorm.Migrations
                     b.HasOne("BrainStorm.Models.Category", "Category")
                         .WithMany("ArticleCategory")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BrainStorm.Models.ArticleImages", b =>
+                {
+                    b.HasOne("BrainStorm.Models.Article", "Article")
+                        .WithMany("Images")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BrainStorm.Models.Image", "Image")
+                        .WithOne("ArticleImages")
+                        .HasForeignKey("BrainStorm.Models.ArticleImages", "ImageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

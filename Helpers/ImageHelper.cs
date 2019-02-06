@@ -33,7 +33,7 @@ namespace BrainStorm.Helpers
             if (model.GetType() == typeof(Article))
             {
                 var article = _context.Articles.FirstOrDefault(item => item.Id == Id);
-                article.Picture = fullPathDB;
+                article.Image = fullPathDB;
                 _context.Update(article);
             }
             _context.SaveChanges();
@@ -54,7 +54,7 @@ namespace BrainStorm.Helpers
             if (model.GetType() == typeof(BrainStormUser))
             {
                 var BrainStormUser = _context.BrainStormUser.FirstOrDefault(item => item.Id == Id);
-                BrainStormUser.AvatarImage = fullPathDB;
+                BrainStormUser.Image = fullPathDB;
                 _context.Update(BrainStormUser);
             }
 

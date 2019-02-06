@@ -134,9 +134,9 @@ namespace BrainStorm.Controllers.Admin
 
             ViewBag.category = catName.Name;
 
-            if (article.Article.Picture == null)
+            if (article.Article.Image == null)
             {
-                article.Article.Picture = "images/article/default_article.jpg";
+                article.Article.Image = "images/article/default_article.jpg";
                 await _context.SaveChangesAsync();
             }
             if (article == null)

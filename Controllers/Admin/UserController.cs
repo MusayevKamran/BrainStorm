@@ -35,9 +35,9 @@ namespace BrainStorm.Controllers
 
             var Id = _userManager.GetUserId(HttpContext.User);
             BrainStormUser BrainStormUser = _unitService.User.GetUsersById(Guid.Parse(Id));
-            if (BrainStormUser.AvatarImage == null)
+            if (BrainStormUser.Image == null)
             {
-                BrainStormUser.AvatarImage = "images/user/default_user.png";
+                BrainStormUser.Image = "images/user/default_user.png";
                 _context.SaveChanges();
             }
             return View("index", BrainStormUser);

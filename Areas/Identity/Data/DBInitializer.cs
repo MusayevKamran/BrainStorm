@@ -49,7 +49,7 @@ namespace BrainStorm.Areas.Identity.Data
                 {
                     UserName = "Kamran@gmail.com",
                     Email = "Kamran@gmail.com",
-                    AvatarImage = "images/user/default_user.png"
+                    Image = "images/user/default_user.png"
             };
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
