@@ -79,7 +79,7 @@ namespace BrainStorm.Controllers.API
 
             var arCat = await _unitService.ArticleCategory.getCategoryByArticleIdAsync(id);
 
-            string a = "";
+            // string a = "";
             //foreach (var item in arCat)
             //{
             //    articleCategory.Add(item);

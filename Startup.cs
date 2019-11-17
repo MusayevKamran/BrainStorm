@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
+using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
 
 namespace BrainStorm
 {
@@ -66,11 +67,12 @@ namespace BrainStorm
 
             services.RegisterServices();
 
-            services.AddMvc()
-                .AddJsonOptions(options => {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.Formatting = Formatting.Indented;})
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddRazorPages().AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddHealthChecks();
 
@@ -82,7 +84,7 @@ namespace BrainStorm
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             BrainStormDbContext context,
             RoleManager<BrainStormRole> roleManager,
             UserManager<BrainStormUser> userManager)
@@ -95,7 +97,6 @@ namespace BrainStorm
                 //   Use the Developer Exception Page to report app runtime errors.
                 //   Use the Database Error Page to report database runtime errors.
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -115,20 +116,22 @@ namespace BrainStorm
             // Use Cookie Policy Middleware to conform to EU General Data 
             // Protection Regulation (GDPR) regulations.
             app.UseCookiePolicy();
+
+            app.UseRouting();
             // Authenticate before the user accesses secure resources.
             app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseSpaStaticFiles();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             // Add MVC to the request pipeline.
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
 
             DBInitializer.InitializeAsync(app, context, userManager, roleManager).Wait();
 
