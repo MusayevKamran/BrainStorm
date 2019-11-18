@@ -97,6 +97,7 @@ namespace BrainStorm
                 //   Use the Developer Exception Page to report app runtime errors.
                 //   Use the Database Error Page to report database runtime errors.
                 app.UseDeveloperExceptionPage();
+               // app.UseDatabaseErrorPage();
             }
             else
             {
@@ -124,7 +125,10 @@ namespace BrainStorm
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Admin}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseSpaStaticFiles();
