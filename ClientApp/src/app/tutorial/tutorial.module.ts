@@ -13,6 +13,8 @@ import { SafeHtmlPipe } from '../shared/pipe/safeHtml.pipe';
 import { BlogsComponent } from './blogs/blogs.component';
 import { TutorialsComponent } from './tutorials/tutorials.component';
 import { InputFormatDirective } from '../shared/directive/appInputFormat.directive';
+import { ChatService } from '../shared/services/chat.service';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   imports: [
@@ -30,11 +32,13 @@ import { InputFormatDirective } from '../shared/directive/appInputFormat.directi
     TutorialHoverDirective,
     InputFormatDirective,
     SearchPipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    ChatComponent
   ],
   providers: [
     TutorialService,
-    CategoryService
+    CategoryService,
+    ChatService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

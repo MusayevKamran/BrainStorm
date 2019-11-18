@@ -5,12 +5,14 @@ import { TutorialComponent } from './tutorial/tutorial.component';
 import { HomeComponent } from './tutorial/common/header/home/home.component';
 import { AboutComponent } from './tutorial/common/header/about/about.component';
 import { BlogsComponent } from './tutorial/blogs/blogs.component';
+import { ChatComponent } from './tutorial/chat/chat.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'tutorial', component: TutorialComponent },
   { path: 'blog', component: BlogsComponent },
+  { path: 'chat', component: ChatComponent },
   { path: 'admin', redirectTo: 'admin', pathMatch: 'full'},
 
 ];

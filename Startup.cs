@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Hosting;
+using BrainStorm.Hubs;
 
 namespace BrainStorm
 {
@@ -76,6 +77,8 @@ namespace BrainStorm
 
             services.AddHealthChecks();
 
+            services.AddSignalR();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -123,8 +126,11 @@ namespace BrainStorm
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chat");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
