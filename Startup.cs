@@ -124,7 +124,7 @@ namespace BrainStorm
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Admin}/{action=Index}");
             });
 
             app.UseSpaStaticFiles();
