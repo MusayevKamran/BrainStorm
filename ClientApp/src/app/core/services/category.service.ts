@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICategory } from '../interface/category';
+import { ICategory } from '../../shared/interfaces/category';
 import { environment } from 'src/environments/environment';
-import { IArticleCategory } from '../interface/article-category';
+import { IArticleCategory } from '../../shared/interfaces/article-category';
 
 
 @Injectable()

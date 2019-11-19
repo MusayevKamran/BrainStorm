@@ -1,8 +1,8 @@
 import { OnInit, Component, Output, OnDestroy } from '@angular/core';
-import { CategoryService } from '../../shared/services/category.service';
-import { ICategory } from '../../shared/interface/category';
+import { CategoryService } from '../../core/services/category.service';
+import { ICategory } from '../../shared/interfaces/category';
 import { Subscription } from 'rxjs';
-import { fade, slide } from 'src/app/shared/animation/animation';
+import { fade, slide } from 'src/app/shared/animations/animation';
 
 
 @Component({

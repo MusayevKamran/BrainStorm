@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TutorialService } from 'src/app/shared/services/tutorial.service';
-import { IArticleCategory } from 'src/app/shared/interface/article-category';
-import { CategoryService } from 'src/app/shared/services/category.service';
-import { ITutorialList } from 'src/app/shared/interface/tutorial-list';
+import { TutorialService } from 'src/app/core/services/tutorial.service';
+import { IArticleCategory } from 'src/app/shared/interfaces/article-category';
+import { CategoryService } from 'src/app/core/services/category.service';
+import { ITutorialList } from 'src/app/shared/interfaces/tutorial-list';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
-import { Message } from 'src/app/shared/models/message';
-import { ChatService } from 'src/app/shared/services/chat.service';
+import { Message } from 'src/app/core/models/message';
+import { ChatService } from 'src/app/core/services/chat.service';
 
 @Component({
   selector: 'app-chat',

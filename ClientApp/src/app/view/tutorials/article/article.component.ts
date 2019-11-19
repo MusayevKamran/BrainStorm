@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TutorialService } from 'src/app/shared/services/tutorial.service';
-import { ITutorial } from 'src/app/shared/interface/tutorial';
+import { TutorialService } from 'src/app/core/services/tutorial.service';
+import { ITutorial } from 'src/app/shared/interfaces/tutorial';
 
 
 @Component({

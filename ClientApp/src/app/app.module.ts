@@ -1,22 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { TutorialModule } from './tutorial/tutorial.module';
-import { AlertifyService } from './shared/services/alertify.service';
-import { CategoryService } from './shared/services/category.service';
-import { TutorialService } from './shared/services/tutorial.service';
-import { HeaderComponent } from './tutorial/common/header/header.component';
-import { HeaderModule } from './tutorial/common/header/header.module';
+import { AlertifyService } from './core/services/alertify.service';
+import { CategoryService } from './core/services/category.service';
+import { TutorialService } from './core/services/tutorial.service';
+import { HeaderComponent } from './shared/layout/header/header.component';
+import { ViewModule } from './view/view.module';
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
    declarations: [
       AppComponent,
+      ViewComponent,
       HeaderComponent,
    ],
    imports: [
@@ -24,8 +25,7 @@ import { HeaderModule } from './tutorial/common/header/header.module';
       BrowserAnimationsModule,
       HttpClientModule,
       AppRoutingModule,
-      HeaderModule,
-      TutorialModule,
+      ViewModule,
    ],
    providers: [
       AlertifyService,
@@ -34,6 +34,9 @@ import { HeaderModule } from './tutorial/common/header/header.module';
    ],
    bootstrap: [
       AppComponent
+   ],
+   schemas: [
+     CUSTOM_ELEMENTS_SCHEMA
    ]
 })
 export class AppModule { }

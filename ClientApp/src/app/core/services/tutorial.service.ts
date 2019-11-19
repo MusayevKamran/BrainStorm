@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ITutorial } from '../interface/tutorial';
+import { ITutorial } from '../../shared/interfaces/tutorial';
 import { environment } from 'src/environments/environment';
-import { ITutorialList } from '../interface/tutorial-list';
+import { ITutorialList } from '../../shared/interfaces/tutorial-list';
 
 
 

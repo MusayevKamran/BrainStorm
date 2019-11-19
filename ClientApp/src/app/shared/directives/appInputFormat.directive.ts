@@ -1,5 +1,4 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { format } from 'util';
 
 @Directive({
   selector: '[appInputFormat]'
