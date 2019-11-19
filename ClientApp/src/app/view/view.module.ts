@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TutorialRoutingModule } from './view-routing.module';
-import { CategoryComponent } from './category/category.component';
+import { CategoryComponent } from './tutorials/category/category.component';
 import { TutorialService } from '../core/services/tutorial.service';
 import { CategoryService } from '../core/services/category.service';
 import { TutorialHoverDirective } from '../shared/directives/tutorial-hover.directive';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { ICategory } from '../../shared/interfaces/category';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,12 @@ export class ArticleCategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories(): Observable<ICategory[]> {
-    return this.http.get<ICategory[]>(this.baseUrl + 'categories');
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.baseUrl + 'api/' + 'categories');
   }
 
-  getCategoryById(id): Observable<ICategory> {
-    return this.http.get<ICategory>(this.baseUrl + 'categories' + id);
+  getCategoryById(id): Observable<Category> {
+    return this.http.get<Category>(this.baseUrl + 'api/' + 'categories' + id);
   }
 
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TutorialService } from 'src/app/core/services/tutorial.service';
-import { IArticleCategory } from 'src/app/shared/interfaces/article-category';
+import { ArticleCategory } from 'src/app/core/models/article-category';
 import { CategoryService } from 'src/app/core/services/category.service';
-import { ITutorialList } from 'src/app/shared/interfaces/tutorial-list';
+import { TutorialList } from 'src/app/core/models/tutorial-list';
 
 
 @Component({
@@ -18,11 +18,11 @@ export class TutorialsComponent implements OnInit {
   articleId: number;
   categoryId: number;
 
-  article: ITutorialList;
-  articleList: ITutorialList[] = [];
+  article: TutorialList;
+  articleList: TutorialList[] = [];
 
   categoryName: string;
-  arcticlesOfCategory: IArticleCategory[] = [];
+  arcticlesOfCategory: ArticleCategory[] = [];
 
   constructor(private route: ActivatedRoute,
     private _categoryService: CategoryService,

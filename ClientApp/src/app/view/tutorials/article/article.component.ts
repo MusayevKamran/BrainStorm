@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TutorialService } from 'src/app/core/services/tutorial.service';
-import { ITutorial } from 'src/app/shared/interfaces/tutorial';
+import { Tutorial } from 'src/app/core/models/tutorial';
 
 
 @Component({
@@ -12,18 +12,18 @@ import { ITutorial } from 'src/app/shared/interfaces/tutorial';
 })
 export class ArticleComponent implements OnInit {
   articleId: number;
-  article: ITutorial;
+  article: Tutorial;
 
   constructor(private route: ActivatedRoute, private _tutorialService: TutorialService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.articleId = params.id;
-      this.getValue();
+      this.getArticleByID();
     });
   }
 
-  getValue() {
+  getArticleByID() {
     this._tutorialService.getTutorialById(this.articleId).subscribe(article => {
       this.article = article;
     });

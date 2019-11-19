@@ -1,4 +1,4 @@
-export interface ITutorialList {
+export class TutorialList {
     id: number;
     title: string;
     row: number;

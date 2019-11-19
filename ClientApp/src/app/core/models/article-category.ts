@@ -1,5 +1,5 @@
 
-export interface IArticleCategory {
+export class ArticleCategory {
     articleId: number;
     article: any;
     categoryId: number;

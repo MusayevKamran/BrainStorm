@@ -1,6 +1,6 @@
-import { IArticleCategory } from './article-category';
+import { ArticleCategory } from './article-category';
 
-export interface ITutorial {
+export class Tutorial {
   id: number;
   title: string;
   url: string;
@@ -10,7 +10,7 @@ export interface ITutorial {
   like: number;
   createdDate: Date;
   updateDate: Date;
-  articleCategory: IArticleCategory;
+  articleCategory: ArticleCategory;
   postCategory: string;
   comment: string;
   brainStormUser: string;

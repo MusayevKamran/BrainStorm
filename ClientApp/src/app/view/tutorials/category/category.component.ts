@@ -1,8 +1,8 @@
-import { OnInit, Component, Output, OnDestroy } from '@angular/core';
-import { CategoryService } from '../../core/services/category.service';
-import { ICategory } from '../../shared/interfaces/category';
+import { OnInit, Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { fade, slide } from 'src/app/shared/animations/animation';
+import { fade } from 'src/app/shared/animations/animation';
+import { Category } from 'src/app/core/models/category';
+import { CategoryService } from 'src/app/core/services/category.service';
 
 
 @Component({
@@ -13,24 +13,25 @@ import { fade, slide } from 'src/app/shared/animations/animation';
 })
 export class CategoryComponent implements OnInit {
 
-  categories: ICategory[] = [];
+  categories: Category[] = [];
   searchStr = '';
   subscription: Subscription;
 
   constructor(private _categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.getValue();
+    this.getCategoryList();
   }
 
 
-  getValue() {
-    this.subscription = this._categoryService.getCategories().subscribe(response => {
+  getCategoryList() {
+    this.subscription = this._categoryService.getCategories()
+    .subscribe(response => {
       this.categories = response,
         this.categories.forEach(category => {
           localStorage.setItem(category.name, JSON.stringify(category.id));
-        }),
-        console.log(response);
+          console.log(this.categories);
+        });
     }, error => console.log(error));
   }
 }
