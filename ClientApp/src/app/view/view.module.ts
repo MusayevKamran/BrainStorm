@@ -13,7 +13,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { TutorialsComponent } from './tutorials/tutorials.component';
 import { InputFormatDirective } from '../shared/directives/appInputFormat.directive';
 import { ChatService } from '../core/services/chat.service';
-import { ChatComponent } from './chat/chat.component';
+import { ChatComponent } from '../shared/components/chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 

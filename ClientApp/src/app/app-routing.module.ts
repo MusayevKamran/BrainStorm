@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './view/home/home.component';
 import { AboutComponent } from './view/about/about.component';
 import { BlogsComponent } from './view/blogs/blogs.component';
-import { ChatComponent } from './view/chat/chat.component';
+import { ChatComponent } from './shared/components/chat/chat.component';
 import { TutorialsComponent } from './view/tutorials/tutorials.component';
 
 
